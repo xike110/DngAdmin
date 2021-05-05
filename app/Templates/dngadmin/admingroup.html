@@ -1,0 +1,957 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="{% static "layui/css/layui.css"%}"  media="all">
+
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body class="baise">
+
+
+
+
+
+<script src="{% static "layui/layui.js"%}" charset="utf-8"></script>
+
+ <script src="{% static "js/jquery.min.js" %}"></script>
+
+<script>
+
+{% if tishi %}
+
+window.onload=function(){
+layer.alert('{{tishi}}', {
+  icon: 0,
+  skin: 'layer-ext-moon'
+    ,time: 2000, //20s后自动关闭
+})
+}
+{% endif %}
+
+{% if jinggao %}
+
+window.onload=function(){
+layer.alert('{{jinggao}}', {
+  icon: 2,
+  skin: 'layer-ext-moon'
+    ,time: 2000, //20s后自动关闭
+
+})
+}
+{% endif %}
+
+
+{% if yes %}
+
+window.onload=function(){
+layer.alert('{{yes}}', {
+    icon: 1,
+    skin: 'layer-ext-moon' ,
+    time: 2000, //20s后自动关闭
+})
+}
+{% endif %}
+
+
+/*====================django ajax ======*/
+jQuery(document).ajaxSend(function(event, xhr, settings) {
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    function sameOrigin(url) {
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+    function safeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    }
+});
+/*===============================django ajax end===*/
+
+
+
+</script>
+
+  <div class="layui-fluid">
+    <div class="layui-card">
+
+
+            <table class="layui-hide" id="Users" lay-filter="test"></table>
+
+    </div>
+  </div>
+
+
+<div class="layui-row" id="EditUser" style="display:none;"><!-- 修改更新-->
+    <div class="layui-col-md10">
+        <form class="layui-form layui-from-pane" id="updateUser"   style="margin-top:20px" >
+
+
+            <input type="hidden" name="{{zd_list.0.0}}" id="{{zd_list.0.0}}">
+
+
+
+            <div class="layui-form-item">
+                    <label class="layui-form-label">{{zd_list.1.1}}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="{{zd_list.0.1}}" id="{{zd_list.0.1}}" disabled required  lay-verify="required" autocomplete="off" placeholder="请输入{{zd_list.1.1}}" class="layui-input layui-disabled">
+                </div>
+            </div>
+               <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.2}}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="{{zd_list.0.2}}" id="{{zd_list.0.2}}" required   autocomplete="off" placeholder="请输入{{zd_list.1.2}}" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.3}}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="{{zd_list.0.3}}" id="{{zd_list.0.3}}" required  lay-verify="number" autocomplete="off" placeholder="请输入{{zd_list.1.3}}" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.4}}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="{{zd_list.0.4}}" id="{{zd_list.0.4}}" required   autocomplete="off" placeholder="请输入{{zd_list.1.4}}" class="layui-input">
+                </div>
+            </div>
+
+          <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.5}}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="{{zd_list.0.5}}" id="{{zd_list.0.5}}" required   autocomplete="off" placeholder="请输入{{zd_list.1.5}}" class="layui-input">
+                </div>
+            </div>
+          <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.6}}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="{{zd_list.0.6}}" id="{{zd_list.0.6}}" required   autocomplete="off" placeholder="请输入{{zd_list.1.6}}" class="layui-input">
+                </div>
+            </div>
+
+          <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.7}}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="{{zd_list.0.7}}" id="{{zd_list.0.7}}" required   autocomplete="off" placeholder="请输入{{zd_list.1.7}}" class="layui-input">
+                </div>
+            </div>
+          <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.8}}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="{{zd_list.0.8}}" id="{{zd_list.0.8}}" required   autocomplete="off" placeholder="请输入{{zd_list.1.8}}" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.9}}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="{{zd_list.0.9}}" id="{{zd_list.0.9}}" required   autocomplete="off" placeholder="请输入{{zd_list.1.9}}" class="layui-input">
+                </div>
+            </div>
+
+
+          <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.10}}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="{{zd_list.0.10}}" id="{{zd_list.0.10}}" required   autocomplete="off" placeholder="请输入{{zd_list.1.10}}" class="layui-input">
+                </div>
+            </div>
+
+          <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.11}}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="{{zd_list.0.11}}" id="{{zd_list.0.11}}" required   autocomplete="off" placeholder="请输入{{zd_list.1.11}}" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.12}}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="{{zd_list.0.12}}" id="{{zd_list.0.12}}" required   autocomplete="off" placeholder="请输入{{zd_list.1.12}}" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.13}}</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="{{zd_list.0.13}}" value="" title="不修改" checked="">
+                  <input type="radio" name="{{zd_list.0.13}}" value="on" title="开启自动审核" >
+                  <input type="radio" name="{{zd_list.0.13}}" value="off" title="关闭自动审核">
+                </div>
+              </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.14}}</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="{{zd_list.0.14}}" value="" title="不修改" checked="">
+                  <input type="radio" name="{{zd_list.0.14}}" value="on" title="允许上传" >
+                  <input type="radio" name="{{zd_list.0.14}}" value="off" title="禁止上传">
+                </div>
+              </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.15}}</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="{{zd_list.0.15}}" value="" title="不修改" checked="">
+                  <input type="radio" name="{{zd_list.0.15}}" value="on" title="允许下载" >
+                  <input type="radio" name="{{zd_list.0.15}}" value="off" title="禁止下载">
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
+
+            <div class="layui-form-item" style="margin-top:40px" id="check">
+                <div class="layui-input-block">
+                    <button class="layui-btn  layui-btn-submit " lay-submit="" lay-filter="formDemo" >确认修改</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="layui-row" id="added" style="display:none;"><!--   新增弹窗-->
+
+    <div class="layui-col-md10">
+        <form class="layui-form layui-from-pane" id="added"   style="margin-top:20px" >
+
+
+            <input type="hidden" name="{{zd_list.0.0}}" id="{{zd_list.0.0}}">
+
+
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.2}}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="{{zd_list.0.2}}" id="{{zd_list.0.2}}" required  lay-verify="required" autocomplete="off" placeholder="请输入{{zd_list.1.2}}" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">{{zd_list.1.3}}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="{{zd_list.0.3}}" id="{{zd_list.0.3}}" required lay-verify="number" value="0" autocomplete="off" placeholder="默认一级用户组" class="layui-input">
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="layui-form-item" style="margin-top:40px" id="check">
+
+                <div class="layui-input-block">
+                    <button class="layui-btn  layui-btn-submit " lay-submit="" lay-filter="formadded" >确认添加</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<div class="layui-row" id="search" style="display:none;">
+    <div class="layui-col-md10">
+
+        {% for value in vist %}
+
+                    {% if   "_str" in value.0  %}
+
+             <div class="layui-form layui-from-pane"   style="margin-top:20px" >
+
+                          <div class="demoTable" style="padding: 1px">
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="layui-inline">
+                                <input class="layui-input" id="find{{value.0}}" lay-verify="required" autocomplete="off" placeholder="请搜索{{value.1}}">
+                            </div>
+                            <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn"  id="query{{value.0}}" >搜索{{value.1}}</button>
+                        </div>
+                      </div>
+                    {% elif "_int" in value.0 %}
+
+        <div class="layui-form layui-from-pane"   style="margin-top:20px" >
+
+                          <div class="demoTable" style="padding: 1px">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="layui-inline">
+                                <input class="layui-input" id="find{{value.0}}" lay-verify="required" autocomplete="off" placeholder="请搜索{{value.1}}">
+                            </div>
+                            <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn"  id="query{{value.0}}" >搜索{{value.1}}</button>
+                        </div>
+                      </div>
+
+
+                             {% elif "_time" in value.0 %}
+
+        <div class="layui-form layui-from-pane"   style="margin-top:20px" >
+
+                          <div class="demoTable" style="padding: 1px">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="layui-inline">
+                                <input class="layui-input" id="find{{value.0}}" lay-verify="required" autocomplete="off" placeholder="请搜索{{value.1}}">
+                            </div>
+                            <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn"  data-type="reload" id="query{{value.0}}" >搜索{{value.1}}</button>
+                        </div>
+                      </div>
+
+
+                    {% endif %}
+
+
+
+
+
+        {% endfor %}
+
+
+<div class="layui-form layui-from-pane"   style="margin-top:20px" >
+<div class="layui-word-aux">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目前版本，暂不支持多条件联合搜索</div>
+     </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+
+            {% if added %}
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="add">添加数据</button>
+        {{added}}
+
+        {% endif %}
+                   {% if xitong.search_bool %}
+        <button  class="layui-btn layui-btn-sm" lay-event="search">搜索表格</button>
+                      {% endif %}
+
+        {% if delete %}
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="getCheckData">批量删除</button>
+          {% endif %}
+<!--        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="getCheckLength">统计选中</button>-->
+        <button class="layui-btn layui-btn-sm layui-btn-warm"lay-event="isAll">刷新页面</button>
+
+
+
+    </div>
+
+</script>
+<script type="text/html" id="barDemo">
+    {% if see %}
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detaadd">查看</a>
+
+      {% endif %}
+{% if update %}
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    {% endif %}
+
+{% if delete %}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    {% endif %}
+</script>
+
+<style type="text/css">
+
+    td div.layui-table-cell{height:28px;
+        line-height: 28px;
+        position: relative;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        box-sizing: border-box;
+        padding: 0px 15px;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    layui.use(['table', 'form', 'layer','upload'], function () {
+        var table = layui.table,
+            layer = layui.layer,
+            upload = layui.upload,
+            form = layui.form;
+        table.render({
+            elem: '#Users'
+            ,url:'/{{get_url}}_json/'
+            ,type:'post'
+             {% if xitong.toolbar_bool %}
+                ,toolbar: '#toolbarDemo'
+             ,defaultToolbar: ['filter', '{{xitong.exports_str}}', '{{xitong.print_str}}',]
+            {% endif %}
+            {% if xitong.page_bool %}
+            ,page: true
+             {% endif %}
+            ,skin:'{{xitong.skinline_str}}'
+
+            ,size: '{{xitong.skinsize_str}}'
+
+            ,title: '{{title}}'
+            ,cellMinWidth: {{xitong.inwidth_int}} //全局定义常规单元格的最小宽度，
+            ,limit:{{xitong.limit_int}}
+         ,cols:[[
+      {type: 'checkbox', fixed: 'left'}
+      ,{field:'{{zd_list.0.0}}', title:'{{zd_list.1.0}}', width:60, fixed: 'left', unresize: true, sort: true , align:'center' },
+            {% if zd_list.0.1 %}
+            {field:'{{zd_list.0.1}}', width:100, title:'{{zd_list.1.1}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.2 %}
+            {field:'{{zd_list.0.2}}', title:'{{zd_list.1.2}}' , sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.3 %}
+            {field:'{{zd_list.0.3}}', title:'{{zd_list.1.3}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.4 %}
+            {field:'{{zd_list.0.4}}', title:'{{zd_list.1.4}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.5 %}
+            {field:'{{zd_list.0.5}}', title:'{{zd_list.1.5}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.6 %}
+            {field:'{{zd_list.0.6}}', title:'{{zd_list.1.6}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.7 %}
+            {field:'{{zd_list.0.7}}', title:'{{zd_list.1.7}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.8 %}
+            {field:'{{zd_list.0.8}}', title:'{{zd_list.1.8}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.9 %}
+            {field:'{{zd_list.0.9}}', title:'{{zd_list.1.9}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.10 %}
+            {field:'{{zd_list.0.10}}', title:'{{zd_list.1.10}}', sort: true , align:'center' },
+            {% endif %}
+ 			{% if zd_list.0.11 %}
+            {field:'{{zd_list.0.11}}', title:'{{zd_list.1.11}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.12 %}
+            {field:'{{zd_list.0.12}}', title:'{{zd_list.1.12}}' , sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.13 %}
+            {field:'{{zd_list.0.13}}', title:'{{zd_list.1.13}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.14 %}
+            {field:'{{zd_list.0.14}}', title:'{{zd_list.1.14}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.15 %}
+            {field:'{{zd_list.0.15}}', title:'{{zd_list.1.15}}', sort: true , align:'center' },
+            {% endif %}
+
+            {% if zd_list.0.21 %}
+            {field:'{{zd_list.0.21}}', title:'{{zd_list.1.21}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.22 %}
+            {field:'{{zd_list.0.22}}', title:'{{zd_list.1.22}}' , sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.23 %}
+            {field:'{{zd_list.0.23}}', title:'{{zd_list.1.23}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.24 %}
+            {field:'{{zd_list.0.24}}', title:'{{zd_list.1.24}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.25 %}
+            {field:'{{zd_list.0.25}}', title:'{{zd_list.1.25}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.26 %}
+            {field:'{{zd_list.0.26}}', title:'{{zd_list.1.26}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.27 %}
+            {field:'{{zd_list.0.27}}', title:'{{zd_list.1.27}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.28 %}
+            {field:'{{zd_list.0.28}}', title:'{{zd_list.1.28}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.29 %}
+            {field:'{{zd_list.0.29}}', title:'{{zd_list.1.29}}', sort: true , align:'center' },
+            {% endif %}
+            {% if zd_list.0.30 %}
+            {field:'{{zd_list.0.30}}', title:'{{zd_list.1.30}}', sort: true , align:'center' },
+            {% endif %}
+
+                 {fixed: 'right', title:'操作',width:180, toolbar: '#barDemo',}
+    ]]
+
+
+        });
+
+
+        // 修改头像
+        // upload.render({
+        //     elem: '#img'
+        //     ,url: '/dngadmin/ip_post'
+        //     ,before: function(obj){
+        //         //预读本地文件示例，不支持ie8
+        //         obj.preview(function(index, file, result){
+        //             $('#demo1').attr('src', result); //图片链接（base64）
+        //         });
+        //     }
+        //     ,done: function(res){
+        //         $("[name=headimg]").val(res.data);
+        //         style:'display:inline-block;max-width:50%;height:auto'
+        //         //如果上传失败
+        //         if(res.code > 0){
+        //             return layer.msg('上传失败');
+        //         }else {
+        //             layer.msg("上传成功");
+        //         }
+        //         //上传成功
+        //     }
+        //     ,error: function(){
+        //         //演示失败状态，并实现重传
+        //         var demoText = $('#demoText');
+        //         demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+        //         demoText.find('.demo-reload').on('click', function(){
+        //             uploadInst.upload();
+        //         });
+        //     }
+        // });
+
+
+        {% for va in zd_list.0 %}
+
+        //根据关键字搜索查询
+        $('#query{{va}}').on('click', function(){
+            var find=document.getElementById("find{{va}}").value;
+            table.reload('Users', {
+                page:{ curr:1 },
+                type:'get',
+                url:'/{{get_url}}_search/?{{va}}='+find,
+                data:{'{{va}}':find},
+
+
+           })
+             layer.closeAll();//关闭所有的弹出层
+        });
+
+        {% endfor %}
+
+
+
+
+
+        form.on('submit(formadded)', function(data) {
+            $.ajax({
+                url:'/{{get_url}}_added/',
+                type:'post',
+
+                data:data.field,
+                success:function (msg) {
+                    if(msg=="yes"){
+                        layer.closeAll('loading');
+                        layer.load(2);
+                        layer.msg("添加成功", {icon: 6});
+                        setTimeout(function(){
+                            layer.closeAll();//关闭所有的弹出层
+                            table.reload("Users");
+                        }, 1000);
+                        window.location.reload();//刷新页面
+                        加载层-风格
+                    }else{
+                        layer.msg(msg, {icon: 5});
+                    }
+                }
+            })
+            return false;
+        })
+
+        form.on('submit(formDemo)', function(data) {
+            $.ajax({
+                url:'/{{get_url}}_update/',
+                type:'post',
+
+                data:data.field,
+                success:function (msg) {
+                    if(msg=="yes"){
+                        layer.closeAll('loading');
+                        layer.load(2);
+                        layer.msg("修改成功", {icon: 6});
+                        setTimeout(function(){
+                            layer.closeAll();//关闭所有的弹出层
+                            table.reload("Users");
+                        }, 1000);
+                        window.location.reload();//刷新页面
+                        加载层-风格
+                    }else{
+                        layer.msg(msg, {icon: 5});
+                    }
+                }
+            })
+            return false;
+        })
+
+
+
+        //工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+
+            switch(obj.event){
+
+                case 'getCheckData':
+                   var data = checkStatus.data;
+                   var arr=[];//存储id的数组
+                        data.forEach(function(data){
+                        arr.push(data.id);
+                        });
+
+                      layer.confirm('真的批量删除么', function(index){
+                    $.ajax({
+                        url:'/{{get_url}}_delete/',
+                        type:'post',
+                        data:{
+                            //csrfmiddlewaretoken: '{{ csrf_token }}',
+                            id:JSON.stringify(arr)
+                        },
+                        success:function (msg) {
+                            if(msg=="yes"){
+                                layer.msg("批量删除成功", {icon: 6});
+                               setTimeout(function(){
+                                layer.closeAll();//关闭所有的弹出层
+                                table.reload("Users");
+                            }, 1000);
+
+
+                            }else{
+                                layer.msg(msg, {icon: 5});
+                            }
+                        }
+                    })
+                    obj.del();
+                    layer.close(index);
+                });
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    window.location.reload();//刷新页面
+                    break;
+                case 'add':
+                    var that = this;
+                    layer.open({
+                    type:1,
+                    offset: '10px',
+                    title:"{{title}}-添加信息",
+                    area: ['{{xitong.wide_int}}px', '{{xitong.high_int}}px'],
+
+                    btn: ['关闭退出'] ,
+                           yes: function(){
+                                 layer.closeAll();
+                                },
+                    content: $("#added")
+                });
+                        break;
+               case 'search'://搜索页面
+                layer.open({
+                    type: 1,
+                    offset: '10px',
+                    title: "{{title}}-搜索表格",
+                    area: ['500px', '600px'],
+
+                    btn: ['关闭退出'],
+                    yes: function () {
+                        layer.closeAll();
+                    },
+                    content: $("#search")
+                });
+                break;
+                };
+            }
+
+
+            );
+
+
+        //监听表格列表
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //查看
+            if(obj.event === 'detaadd'){
+
+                layer.alert(JSON.stringify(data), {
+                          title: '开发者模式查看：',
+                            btn: ['关闭退出'] ,
+                           yes: function(){
+                                 layer.closeAll();
+                                },
+                        });
+
+
+
+
+            } else if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    $.ajax({
+                        url:'/{{get_url}}_delete/',
+                        type:'GET',
+                        data:{
+                            delete_id:data.id
+                        },
+                        success:function (msg) {
+                            if(msg=="yes"){
+                                layer.msg("删除成功", {icon: 6});
+                                setTimeout(function(){
+                                    layer.closeAll();//关闭所有的弹出层
+                                }, 1000);
+
+                            }else{
+                                layer.msg(msg, {icon: 5});
+                            }
+                        }
+                    })
+                    obj.del();
+                    layer.close(index);
+                });
+            }
+         else if(obj.event === 'edit'){
+
+                $("#{{zd_list.0.0}}").val(data.{{zd_list.0.0}});
+                {% if zd_list.0.0 %}
+                $("#{{zd_list.0.1}}").val(data.{{zd_list.0.1}});
+                {% endif %}
+                {% if zd_list.0.2 %}
+                $("#{{zd_list.0.2}}").val(data.{{zd_list.0.2}});
+                {% endif %}
+                {% if zd_list.0.3 %}
+                $("#{{zd_list.0.3}}").val(data.{{zd_list.0.3}});
+                {% endif %}
+                {% if zd_list.0.4 %}
+                $("#{{zd_list.0.4}}").val(data.{{zd_list.0.4}});
+                {% endif %}
+                {% if zd_list.0.5 %}
+                $("#{{zd_list.0.5}}").val(data.{{zd_list.0.5}});
+                {% endif %}
+                {% if zd_list.0.6 %}
+                $("#{{zd_list.0.6}}").val(data.{{zd_list.0.6}});
+                {% endif %}
+                {% if zd_list.0.7 %}
+                $("#{{zd_list.0.7}}").val(data.{{zd_list.0.7}});
+                {% endif %}
+                {% if zd_list.0.8%}
+                $("#{{zd_list.0.8}}").val(data.{{zd_list.0.8}});
+                {% endif %}
+                {% if zd_list.0.9 %}
+                $("#{{zd_list.0.9}}").val(data.{{zd_list.0.9}});
+                {% endif %}
+                {% if zd_list.0.10 %}
+                $("#{{zd_list.0.10}}").val(data.{{zd_list.0.10}});
+                {% endif %}
+                {% if zd_list.0.11 %}
+                $("#{{zd_list.0.11}}").val(data.{{zd_list.0.11}});
+                {% endif %}
+                {% if zd_list.0.12 %}
+                $("#{{zd_list.0.12}}").val(data.{{zd_list.0.12}});
+                {% endif %}
+                {% if zd_list.0.13 %}
+                $("#{{zd_list.0.13}}").val(data.{{zd_list.0.13}});
+                {% endif %}
+                {% if zd_list.0.14 %}
+                $("#{{zd_list.0.14}}").val(data.{{zd_list.0.14}});
+                {% endif %}
+                {% if zd_list.0.15 %}
+                $("#{{zd_list.0.15}}").val(data.{{zd_list.0.15}});
+                {% endif %}
+                {% if zd_list.0.16 %}
+                $("#{{zd_list.0.16}}").val(data.{{zd_list.0.16}});
+                {% endif %}
+                {% if zd_list.0.17 %}
+                $("#{{zd_list.0.17}}").val(data.{{zd_list.0.17}});
+                {% endif %}
+                {% if zd_list.0.18%}
+                $("#{{zd_list.0.18}}").val(data.{{zd_list.0.18}});
+                {% endif %}
+                {% if zd_list.0.19 %}
+                $("#{{zd_list.0.19}}").val(data.{{zd_list.0.19}});
+                {% endif %}
+                {% if zd_list.0.20 %}
+                $("#{{zd_list.0.20}}").val(data.{{zd_list.0.20}});
+                {% endif %}
+                {% if zd_list.0.21 %}
+                $("#{{zd_list.0.21}}").val(data.{{zd_list.0.21}});
+                {% endif %}
+                {% if zd_list.0.22 %}
+                $("#{{zd_list.0.22}}").val(data.{{zd_list.0.22}});
+                {% endif %}
+                {% if zd_list.0.23 %}
+                $("#{{zd_list.0.23}}").val(data.{{zd_list.0.23}});
+                {% endif %}
+                {% if zd_list.0.24 %}
+                $("#{{zd_list.0.24}}").val(data.{{zd_list.0.24}});
+                {% endif %}
+                {% if zd_list.0.25 %}
+                $("#{{zd_list.0.25}}").val(data.{{zd_list.0.25}});
+                {% endif %}
+                {% if zd_list.0.26 %}
+                $("#{{zd_list.0.26}}").val(data.{{zd_list.0.26}});
+                {% endif %}
+                {% if zd_list.0.27 %}
+                $("#{{zd_list.0.27}}").val(data.{{zd_list.0.27}});
+                {% endif %}
+                {% if zd_list.0.28%}
+                $("#{{zd_list.0.28}}").val(data.{{zd_list.0.28}});
+                {% endif %}
+                {% if zd_list.0.29 %}
+                $("#{{zd_list.0.29}}").val(data.{{zd_list.0.29}});
+                {% endif %}
+                {% if zd_list.0.30 %}
+                $("#{{zd_list.0.30}}").val(data.{{zd_list.0.30}});
+                {% endif %}
+
+                $('#imgshow').attr('src', "/file/"+data.headimg);
+                $('#demo1').attr('src', "/file/"+data.headimg);
+                $("#introduce").val(data.introduce);
+                layer.open({
+                    type:1,
+                    offset: '10px',
+                    title:"{{title}}-修改信息",
+                    area: ['{{xitong.wide_int}}px', '{{xitong.high_int}}px'],
+
+                    btn: ['关闭退出'] ,
+                           yes: function(){
+                                 layer.closeAll();
+                                },
+                    content: $("#EditUser")
+                });
+
+            }
+        });
+
+
+
+
+    });
+
+</script>
+
+
+
+
+
+
+
+
+<script>
+layui.use(['form', 'layedit', 'laydate'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+
+  //日期
+  laydate.render({
+    elem: '#date'
+  });
+  laydate.render({
+    elem: '#date1'
+  });
+
+  //创建一个编辑器
+  var editIndex = layedit.build('LAY_demo_editor');
+
+  //自定义验证规则
+  form.verify({
+    title: function(value){
+      if(value.length < 5){
+        return '标题至少得5个字符啊';
+      }
+    }
+    ,pass: [
+      /^[\S]{6,12}$/
+      ,'密码必须6到12位，且不能出现空格'
+    ]
+    ,content: function(value){
+      layedit.sync(editIndex);
+    }
+  });
+
+  //监听指定开关
+  form.on('switch(switchTest)', function(data){
+    layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+      offset: '6px'
+    });
+    layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+  });
+
+  //监听提交
+  form.on('submit(demo1)', function(data){
+    layer.alert(JSON.stringify(data.field), {
+      title: '最终的提交信息'
+    })
+    return false;
+  });
+
+  //表单赋值
+  layui.$('#LAY-component-form-setval').on('click', function(){
+    form.val('example', {
+      "username": "贤心" // "name": "value"
+      ,"password": "123456"
+      ,"interest": 1
+      ,"like[write]": true //复选框选中状态
+      ,"close": true //开关状态
+      ,"sex": "女"
+      ,"desc": "我爱DNGadmin"
+    });
+  });
+
+  //表单取值
+  layui.$('#LAY-component-form-getval').on('click', function(){
+    var data = form.val('example');
+    alert(JSON.stringify(data));
+  });
+
+});
+</script>
+
+
+
+
+
+
+</body>
+</html>

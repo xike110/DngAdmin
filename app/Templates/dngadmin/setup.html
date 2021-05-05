@@ -1,0 +1,453 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="{% static "layui/css/layui.css"%}"  media="all">
+
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body class="baise">
+
+
+<script>
+
+{% if tishi %}
+
+window.onload=function(){
+layer.alert('{{tishi}}', {
+  icon: 0,
+  skin: 'layer-ext-moon'    , time: 1000, //20s后自动关闭
+})
+}
+{% endif %}
+
+{% if jinggao %}
+
+window.onload=function(){
+layer.alert('{{jinggao}}', {
+  icon: 2,
+  skin: 'layer-ext-moon'    , time: 1000, //20s后自动关闭
+})
+}
+{% endif %}
+
+
+{% if yes %}
+
+window.onload=function(){
+layer.alert('{{yes}}', {
+  icon: 1,
+  skin: 'layer-ext-moon'    , time: 1000, //20s后自动关闭
+})
+}
+{% endif %}
+
+</script>
+
+<div class="layui-tab">
+  <ul class="layui-tab-title">
+    <li class="layui-this">后台设置</li>
+    <li>表格设置</li>
+
+  </ul>
+  <div class="layui-tab-content">
+    <div class="layui-tab-item layui-show">
+
+
+<form class="layui-form"  method="POST" action="/dngadmin/setup_post/">
+  {% csrf_token %}
+<input type="hidden" name="tab" value="1">
+  <div class="layui-form-item">
+    <label class="layui-form-label">系统名称</label>
+    <div class="layui-input-duan">
+      <input type="text" name="{{zd_list.0.1}}" lay-verify="required" lay-reqtext="必须填写系统名称"  value="{{biaodan.setupname_str}}" autocomplete="off" placeholder="请输入系统名称" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">系统域名</label>
+    <div class="layui-input-duan">
+      <input type="text" name="{{zd_list.0.2}}"  value="{{biaodan.domain_str}}" autocomplete="off" placeholder="请输入系统域名" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">备案号</label>
+    <div class="layui-input-duan">
+      <input type="text" name="{{zd_list.0.3}}"  value="{{biaodan.file_str}}" autocomplete="off" placeholder="请输入备案号" class="layui-input">
+    </div>
+  </div>
+
+
+    <div class="layui-form-item">
+    <label class="layui-form-label">版本号</label>
+    <div class="layui-input-duan">
+      <input type="text" name="{{zd_list.0.4}}"   value="{{biaodan.edition_str}}" autocomplete="off" placeholder="请输入版本号" class="layui-input">
+    </div>
+  </div>
+
+
+
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">统计代码</label>
+    <div class="layui-input-duan">
+      <textarea placeholder="请输入统计代码" name="{{zd_list.0.5}}"  class="layui-textarea">{{biaodan.statistics_text}}</textarea>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button type="submit" class="layui-btn" lay-submit="" >确定提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
+    </div>
+  </div>
+</form>
+
+
+    </div>
+    <div class="layui-tab-item">
+
+
+      <form class="layui-form"  method="POST" action="/dngadmin/setup_post/">
+  {% csrf_token %}
+<input type="hidden" name="tab" value="2">
+  <div class="layui-form-item">
+    <label class="layui-form-label">{{zd_list.1.6}}</label>
+    <div class="layui-input-duan">
+      <input type="text" name="{{zd_list.0.6}}" lay-verify="required" lay-reqtext="必须填写{{zd_list.1.6}}"  value="{{biaodan.inwidth_int}}" autocomplete="off" placeholder="请输入{{zd_list.1.6}}" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">{{zd_list.1.7}}</label>
+    <div class="layui-input-duan">
+      <input type="text" name="{{zd_list.0.7}}" lay-verify="required" lay-reqtext="必须填写{{zd_list.1.7}}"  value="{{biaodan.wide_int}}" autocomplete="off" placeholder="请输入{{zd_list.1.7}}" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">{{zd_list.1.8}}</label>
+    <div class="layui-input-duan">
+      <input type="text" name="{{zd_list.0.8}}" lay-verify="required" lay-reqtext="必须填写{{zd_list.1.8}}"  value="{{biaodan.high_int}}" autocomplete="off" placeholder="请输入{{zd_list.1.8}}" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">{{zd_list.1.9}}</label>
+    <div class="layui-input-duan">
+      <input type="text" name="{{zd_list.0.9}}" lay-verify="required" lay-reqtext="必须填写{{zd_list.1.9}}"  value="{{biaodan.limit_int}}" autocomplete="off" placeholder="请输入{{zd_list.1.9}}" class="layui-input">
+    </div>
+  </div>
+
+
+
+
+  {% if biaodan.toolbar_bool %}
+  <div class="layui-form-item">
+    <label class="layui-form-label">{{zd_list.1.10}}</label>
+    <div class="layui-input-block">
+      <input type="checkbox" checked=""  name="{{zd_list.0.10}}" lay-skin="switch" lay-text="开启|关闭">
+    </div>
+  </div>
+{% else %}
+
+
+     <div class="layui-form-item">
+    <label class="layui-form-label">{{zd_list.1.10}}</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="{{zd_list.0.10}}" lay-skin="switch" lay-text="开启|关闭">
+    </div>
+  </div>
+
+
+{% endif %}
+
+                             {% if "nob" in biaodan.skinline_str %}
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2">{{zd_list.1.11}}</label>
+                                <div class="layui-input-block">
+                                    <input checked="" name="{{zd_list.0.11}}" title="无线条" type="radio" value="nob">
+                                    <input name="{{zd_list.0.11}}" title="开启横线" type="radio" value="line">
+                                    <input name="{{zd_list.0.11}}" title="开启竖线" type="radio" value="row">
+                                    <input name="{{zd_list.0.11}}" title="横竖全开" type="radio" value="False">
+
+                                </div>
+                            </div>
+
+                            {% elif  "line" in biaodan.skinline_str %}
+                             <div class="layui-form-item">
+                                <label class="layui-form-label2">{{zd_list.1.11}}</label>
+                                <div class="layui-input-block">
+                                    <input  name="{{zd_list.0.11}}" title="无线条" type="radio" value="nob">
+                                    <input checked="" name="{{zd_list.0.11}}" title="开启横线" type="radio" value="line">
+                                    <input name="{{zd_list.0.11}}" title="开启竖线" type="radio" value="row">
+                                    <input name="{{zd_list.0.11}}" title="横竖全开" type="radio" value="False">
+
+                                </div>
+                            </div>
+                           {% elif  "row" in biaodan.skinline_str %}
+                             <div class="layui-form-item">
+                                <label class="layui-form-label2">{{zd_list.1.11}}</label>
+                                <div class="layui-input-block">
+                                    <input  name="{{zd_list.0.11}}" title="无线条" type="radio" value="nob">
+                                    <input  name="{{zd_list.0.11}}" title="开启横线" type="radio" value="line">
+                                    <input checked="" name="{{zd_list.0.11}}" title="开启竖线" type="radio" value="row">
+                                    <input name="{{zd_list.0.11}}" title="横竖全开" type="radio" value="False">
+
+                                </div>
+                            </div>
+                            {% else %}
+                             <div class="layui-form-item">
+                                <label class="layui-form-label2">{{zd_list.1.11}}</label>
+                                <div class="layui-input-block">
+                                    <input  name="{{zd_list.0.11}}" title="无线条" type="radio" value="nob">
+                                    <input  name="{{zd_list.0.11}}" title="开启横线" type="radio" value="line">
+                                    <input  name="{{zd_list.0.11}}" title="开启竖线" type="radio" value="row">
+                                    <input checked="" name="{{zd_list.0.11}}" title="横竖全开" type="radio" value="False">
+
+                                </div>
+                            </div>
+                            {% endif %}
+
+
+
+                           {% if "sm" in biaodan.skinsize_str %}
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2">{{zd_list.1.12}}</label>
+                                <div class="layui-input-block">
+                                    <input checked="" name="{{zd_list.0.12}}" title="小尺寸" type="radio" value="sm">
+                                    <input name="{{zd_list.0.12}}" title="大尺寸" type="radio" value="lg">
+                                  <input name="{{zd_list.0.12}}" title="默认尺寸" type="radio" value="False">
+
+                                </div>
+                            </div>
+
+                            {% elif  "lg" in biaodan.skinsize_str %}
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2">{{zd_list.1.12}}</label>
+                                <div class="layui-input-block">
+                                     <input name="{{zd_list.0.12}}" title="小尺寸" type="radio" value="sm">
+                                    <input checked="" name="{{zd_list.0.12}}" title="大尺寸" type="radio" value="lg">
+                                  <input name="{{zd_list.0.12}}" title="默认尺寸" type="radio" value="False">
+
+                                </div>
+                            </div>
+                            {% else %}
+                                <div class="layui-form-item">
+                                <label class="layui-form-label2">{{zd_list.1.12}}</label>
+                                <div class="layui-input-block">
+                                  <input checked="" name="{{zd_list.0.12}}" title="小尺寸" type="radio" value="sm">
+                                    <input name="{{zd_list.0.12}}" title="大尺寸" type="radio" value="lg">
+                                  <input checked="" name="{{zd_list.0.12}}" title="默认尺寸" type="radio" value="False">
+
+                                </div>
+                            </div>
+                            {% endif %}
+
+
+  {% if biaodan.page_bool %}
+  <div class="layui-form-item">
+    <label class="layui-form-label">{{zd_list.1.13}}</label>
+    <div class="layui-input-block">
+      <input type="checkbox" checked=""  name="{{zd_list.0.13}}" lay-skin="switch" lay-text="开启|关闭">
+    </div>
+  </div>
+{% else %}
+
+
+     <div class="layui-form-item">
+    <label class="layui-form-label">{{zd_list.1.13}}</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="{{zd_list.0.13}}" lay-skin="switch" lay-text="开启|关闭">
+    </div>
+  </div>
+
+
+{% endif %}
+
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">表格功能</label>
+    <div class="layui-input-block">
+    {% if  "exports" in biaodan.exports_str %}
+      <input type="checkbox" name="{{zd_list.0.14}}" title="{{zd_list.1.14}}" checked="">
+       {% else %}
+      <input type="checkbox" name="{{zd_list.0.14}}" title="{{zd_list.1.14}}" >
+     {% endif %}
+
+      {% if  "print" in biaodan.print_str %}
+      <input type="checkbox" name="{{zd_list.0.15}}" title="{{zd_list.1.15}}" checked="">
+      {% else %}
+       <input type="checkbox" name="{{zd_list.0.15}}" title="{{zd_list.1.15}}" >
+       {% endif %}
+    </div>
+  </div>
+
+
+
+
+  {% if biaodan.search_bool %}
+  <div class="layui-form-item">
+    <label class="layui-form-label">{{zd_list.1.16}}</label>
+    <div class="layui-input-block">
+      <input type="checkbox" checked=""  name="{{zd_list.0.16}}" lay-skin="switch" lay-text="开启|关闭">
+    </div>
+  </div>
+{% else %}
+
+
+     <div class="layui-form-item">
+    <label class="layui-form-label">{{zd_list.1.16}}</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="{{zd_list.0.16}}" lay-skin="switch" lay-text="开启|关闭">
+    </div>
+  </div>
+
+
+{% endif %}
+
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button type="submit" class="layui-btn" lay-submit="" >确定提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
+    </div>
+  </div>
+</form>
+
+
+      </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+<script src="{% static "layui/layui.js"%}" charset="utf-8"></script>
+
+<script>
+layui.use('element', function(){
+  var $ = layui.jquery
+  ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+  //触发事件
+  var active = {
+    tabAdd: function(){
+      //新增一个Tab项
+      element.tabAdd('demo', {
+        title: '新选项'+ (Math.random()*1000|0) //用于演示
+        ,content: '内容'+ (Math.random()*1000|0)
+        ,id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+      })
+    }
+    ,tabDelete: function(othis){
+      //删除指定Tab项
+      element.tabDelete('demo', '44'); //删除：“商品管理”
+
+
+      othis.addClass('layui-btn-disabled');
+    }
+    ,tabChange: function(){
+      //切换到指定Tab项
+      element.tabChange('demo', '22'); //切换到：用户管理
+    }
+  };
+
+  $('.site-demo-active').on('click', function(){
+    var othis = $(this), type = othis.data('type');
+    active[type] ? active[type].call(this, othis) : '';
+  });
+
+  //Hash地址的定位
+  var layid = location.hash.replace(/^#test=/, '');
+  element.tabChange('test', layid);
+
+  element.on('tab(test)', function(elem){
+    location.hash = 'test='+ $(this).attr('lay-id');
+  });
+
+});
+</script>
+<script>
+layui.use(['form', 'layedit', 'laydate'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+
+  //日期
+  laydate.render({
+    elem: '#date'
+  });
+  laydate.render({
+    elem: '#date1'
+  });
+
+  //创建一个编辑器
+  var editIndex = layedit.build('LAY_demo_editor');
+
+  //自定义验证规则
+  form.verify({
+    title: function(value){
+      if(value.length < 5){
+        return '标题至少得5个字符啊';
+      }
+    }
+    ,pass: [
+      /^[\S]{6,12}$/
+      ,'密码必须6到12位，且不能出现空格'
+    ]
+    ,content: function(value){
+      layedit.sync(editIndex);
+    }
+  });
+
+  //监听指定开关
+  form.on('switch(switchTest)', function(data){
+    layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+      offset: '6px'
+    });
+    layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+  });
+
+  //监听提交
+  form.on('submit(demo1)', function(data){
+    layer.alert(JSON.stringify(data.field), {
+      title: '最终的提交信息'
+    })
+    return false;
+  });
+
+  //表单赋值
+  layui.$('#LAY-component-form-setval').on('click', function(){
+    form.val('example', {
+      "username": "贤心" // "name": "value"
+      ,"password": "123456"
+      ,"interest": 1
+      ,"like[write]": true //复选框选中状态
+      ,"close": true //开关状态
+      ,"sex": "女"
+      ,"desc": "我爱 layui"
+    });
+  });
+
+  //表单取值
+  layui.$('#LAY-component-form-getval').on('click', function(){
+    var data = form.val('example');
+    alert(JSON.stringify(data));
+  });
+
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,302 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="{% static "layui/css/layui.css"%}"  media="all">
+
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body class="baise">
+
+
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+  <legend>{{title}}</legend>
+</fieldset>
+
+<script>
+
+{% if tishi %}
+
+window.onload=function(){
+layer.alert('{{tishi}}', {
+  icon: 0,
+  skin: 'layer-ext-moon'    , time: 2000, //20s后自动关闭
+})
+}
+{% endif %}
+
+{% if jinggao %}
+
+window.onload=function(){
+layer.alert('{{jinggao}}', {
+  icon: 2,
+  skin: 'layer-ext-moon'    , time: 2000, //20s后自动关闭
+})
+}
+{% endif %}
+
+
+{% if yes %}
+
+window.onload=function(){
+layer.alert('{{yes}}', {
+  icon: 1,
+  skin: 'layer-ext-moon'    , time: 2000, //20s后自动关闭
+})
+}
+{% endif %}
+
+</script>
+<form class="layui-form"  method="POST" action="/dngadmin/protect_post/">
+  {% csrf_token %}
+
+    <div class="layui-form-item">
+    <label class="layui-form-label">安全策略ID</label>
+    <div class="layui-input-duan">
+
+
+       <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux"> <input type="text" disabled="" placeholder="{{biaodan.uid_int}}" class=layui-input"><br>已被禁用修改，预留后续开发用，根据攻击启动对应安全策略</div></div>
+    </div>
+
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">安全入口码</label>
+    <div class="layui-input-duan">
+      <input type="text" name="{{zd_list.0.2}}"  value="{{biaodan.entrance_str}}" lay-verify="required|title" lay-reqtext="必须填" autocomplete="off" placeholder="输入安全入口码" class="layui-input">
+        <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux"> 每个网站的登录入口不一样，防止被批量提交</div></div>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">Cookie时效</label>
+    <div class="layui-input-duan">
+      <input type="text" name="{{zd_list.0.3}}"  value="{{biaodan.prescription_int}}" lay-verify="required|number" lay-reqtext="必须填" autocomplete="off" placeholder="输入Cookie的有效期" class="layui-input">
+        <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux">单位毫秒,默认86400等于24小时</div></div>
+    </div>
+  </div>
+
+    <div class="layui-form-item">
+    <label class="layui-form-label">加密盐</label>
+    <div class="layui-input-duan">
+      <input type="text" name="{{zd_list.0.4}}"  value="{{biaodan.salt_str}}" lay-verify="required|title" lay-reqtext="必须填" autocomplete="off" placeholder="输入Cookie的加密盐" class="layui-input">
+        <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux">没事不要修改，修改后无法解析Cookie,已经登录的用户，登录前台会报404错误，需要重新才可以恢复</div></div>
+    </div>
+  </div>
+
+    <div class="layui-form-item">
+    <label class="layui-form-label">密错次数</label>
+    <div class="layui-input-duan">
+      <input type="text" name="{{zd_list.0.5}}"  value="{{biaodan.requests_int}}" lay-verify="required|number" lay-reqtext="必须填" autocomplete="off" placeholder="输入密码错误的次数" class="layui-input">
+        <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux">防暴力破解，超过次数限制登录</div></div>
+    </div>
+  </div>
+
+
+      <div class="layui-form-item">
+    <label class="layui-form-label">冻结时间</label>
+    <div class="layui-input-duan">
+      <input type="text" name="{{zd_list.0.6}}"  value="{{biaodan.psdreq_int}}" lay-verify="required|number" lay-reqtext="必须填" autocomplete="off" placeholder="输入密码错误超过次数之后的冻结时间" class="layui-input">
+        <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux">输入密码错误超过次数之后的冻结时间，数字1=等于1小时</div></div>
+    </div>
+  </div>
+
+{% if biaodan.graphic_bool %}
+
+    <div class="layui-form-item">
+    <label class="layui-form-label">图形验证码</label>
+    <div class="layui-input-duan">
+      <input type="checkbox" checked="" name="{{zd_list.0.7}}" lay-skin="switch" lay-text="开启|关闭">
+    </div>
+    <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux">请在图码设置里填写对应参数，在开启</div></div>
+  </div>
+{% else %}
+
+
+    <div class="layui-form-item">
+    <label class="layui-form-label">图形验证码</label>
+    <div class="layui-input-duan">
+      <input type="checkbox" name="{{zd_list.0.7}}" lay-skin="switch" lay-text="开启|关闭">
+    </div>
+    <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux">请在图码设置里填写对应参数，在开启</div></div>
+  </div>
+{% endif %}
+
+  {% if biaodan.station_bool %}
+  <div class="layui-form-item">
+    <label class="layui-form-label">验证感知</label>
+    <div class="layui-input-duan">
+      <input type="checkbox" checked=""  name="{{zd_list.0.8}}" lay-skin="switch" lay-text="开启|关闭">
+    </div>
+    <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux">平衡用户体验与安全，分析登录日志计算平时登录次数，再上浮2-3倍最为阈值，超过会自动开启验证码与短信验证</div></div>
+  </div>
+{% else %}
+    <div class="layui-form-item">
+    <label class="layui-form-label">验证感知</label>
+    <div class="layui-input-duan">
+      <input type="checkbox" name="{{zd_list.0.8}}" lay-skin="switch" lay-text="开启|关闭">
+    </div>
+    <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux">平衡用户体验与安全，分析登录日志计算平时登录次数，再上浮2-3倍最为阈值，超过会自动开启验证码与短信验证</div></div>
+  </div>
+
+  {% endif %}
+    <div class="layui-form-item">
+    <label class="layui-form-label">允许设备</label>
+    <div class="layui-input-duan">
+      <input type="text" name="{{zd_list.0.9}}"  value="{{biaodan.useragent_str}}" autocomplete="off" placeholder="输入设备的userAgent，不懂不要填写，会导致无法登录" class="layui-input">
+        <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux">默认不填写，配合可以修改userAgent的插件，也可以APP内置修改后的userAgent信息，打造双验证的安全的前台</div></div>
+    </div>
+  </div>
+
+    <div class="layui-form-item">
+    <label class="layui-form-label">允许地区</label>
+    <div class="layui-input-duan">
+      <input type="text" name="{{zd_list.0.10}}"  value="{{biaodan.area_str}}" autocomplete="off" placeholder="输入允许的地区，格式：北京|上海|深圳|广州" class="layui-input">
+        <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux">默认不填写,格式：北京|上海|深圳|广州 ，记得填写自己的地区，不然无法登录前台</div></div>
+    </div>
+  </div>
+
+
+  {% if biaodan.tongshi_bool %}
+    <div class="layui-form-item">
+    <label class="layui-form-label">同时在线</label>
+    <div class="layui-input-duan">
+      <input type="checkbox" checked="" name="{{zd_list.0.11}}" lay-skin="switch" lay-text="开启|关闭">
+
+    </div>
+      <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux">如果是收费会员系统，不要开启，避免一个账号被多人共享登录</div></div>
+  </div>
+{% else %}
+      <div class="layui-form-item">
+    <label class="layui-form-label">同时在线</label>
+    <div class="layui-input-duan">
+      <input type="checkbox" name="{{zd_list.0.11}}" lay-skin="switch" lay-text="开启|关闭">
+
+    </div>
+      <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux">如果是收费会员系统，不要开启，避免一个账号被多人共享登录</div></div>
+  </div>
+
+{% endif %}
+
+  {% if biaodan.sms_bool %}
+<div class="layui-form-item">
+    <label class="layui-form-label">短信验证</label>
+    <div class="layui-input-duan">
+      <input type="checkbox"  checked="" name="{{zd_list.0.12}}" lay-skin="switch" lay-text="开启|关闭">
+
+    </div>
+      <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux">请在短信设置里填写对应参数，在开启</div></div>
+  </div>
+{% else %}
+  <div class="layui-form-item">
+    <label class="layui-form-label">短信验证</label>
+    <div class="layui-input-duan">
+      <input type="checkbox" name="{{zd_list.0.12}}" lay-skin="switch" lay-text="开启|关闭">
+
+    </div>
+      <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux">请在短信设置里填写对应参数，在开启</div></div>
+  </div>
+{% endif %}
+
+    <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">禁止IP端</label>
+    <div class="layui-input-duan">
+      <textarea placeholder="请输入禁止登录的IP段,格式：180.213.18.*|140.313.*.*|80.13.*.*" name="{{zd_list.0.13}}"  class="layui-textarea">{{biaodan.iptxt_text}}</textarea>
+      <div class="layui-input-duan"><div class="layui-form-mid layui-word-aux">格式：180.213.18.*|140.313.*.*|80.13.*.*此功能只做简单的ip禁止，如果遭遇大规模攻击或者暴力破解，请在服务器防火墙设置才是最好的解决方案</div></div>
+    </div>
+
+  </div>
+
+
+  <div class="layui-form-item">
+      <div class="layui-input-block">
+      <button type="submit" class="layui-btn" lay-submit="" >立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
+    </div>
+  </div>
+</form>
+
+
+
+<script src="{% static "layui/layui.js"%}" charset="utf-8"></script>
+
+<script>
+layui.use(['form', 'layedit', 'laydate'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+
+  //日期
+  laydate.render({
+    elem: '#date'
+  });
+  laydate.render({
+    elem: '#date1'
+  });
+
+  //创建一个编辑器
+  var editIndex = layedit.build('LAY_demo_editor');
+
+  //自定义验证规则
+  form.verify({
+    title: function(value){
+      if(value.length < 5){
+        return '标题至少得5个字符啊';
+      }
+    }
+    ,pass: [
+      /^[\S]{6,12}$/
+      ,'密码必须6到12位，且不能出现空格'
+    ]
+    ,content: function(value){
+      layedit.sync(editIndex);
+    }
+  });
+
+  //监听指定开关
+  form.on('switch(switchTest)', function(data){
+    layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+      offset: '6px'
+    });
+    layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+  });
+
+  //监听提交
+  form.on('submit(demo1)', function(data){
+    layer.alert(JSON.stringify(data.field), {
+      title: '最终的提交信息'
+    })
+    return false;
+  });
+
+  //表单赋值
+  layui.$('#LAY-component-form-setval').on('click', function(){
+    form.val('example', {
+      "username": "贤心" // "name": "value"
+      ,"password": "123456"
+      ,"interest": 1
+      ,"like[write]": true //复选框选中状态
+      ,"close": true //开关状态
+      ,"sex": "女"
+      ,"desc": "我爱 layui"
+    });
+  });
+
+  //表单取值
+  layui.$('#LAY-component-form-getval').on('click', function(){
+    var data = form.val('example');
+    alert(JSON.stringify(data));
+  });
+
+});
+</script>
+
+</body>
+</html>

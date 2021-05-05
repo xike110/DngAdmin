@@ -1,0 +1,212 @@
+{% load static %}
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>树形组件</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script src="{% static "layui/layui.js"%}" charset="utf-8"></script>
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    <link rel="stylesheet" href="{% static "layui/css/layui.css"%}"  media="all">
+</head>
+<body>
+<script>
+
+/*====================django ajax ======*/
+jQuery(document).ajaxSend(function(event, xhr, settings) {
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    function sameOrigin(url) {
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+    function safeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    }
+});
+/*===============================django ajax end===*/
+
+</script>
+
+
+    <div class="layui-input-block">
+<br>
+        <div class="layui-btn-container">
+
+  <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" lay-demo="setChecked">全部勾选</button>
+              <button type="button" class="layui-btn layui-btn-sm layui-btn-warm" lay-demo="reload">重新选择</button>
+
+</div>
+
+
+
+
+
+<div id="test12" class="demo-tree-more"></div>
+<br>
+
+<div class="layui-btn-container">
+  <button type="button" class="layui-btn " lay-demo="getChecked">提交修改</button>
+
+
+</div>
+
+   </div>
+
+
+
+
+
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['tree', 'util'], function(){
+  var tree = layui.tree
+  ,layer = layui.layer
+  ,util = layui.util
+
+  //模拟数据
+  ,data = [
+
+           {% for seo in caidan1_list%}
+
+      {
+    title: '{{seo.name_str}}'
+    ,id: {{seo.uid_int}}
+    ,spread:true
+    ,children: [
+
+
+        {% for key in caidan2_list%}
+
+{% for list in key %}
+
+ {% if seo.uid_int == list.superior_int %}
+
+        {
+      title: '{{list.name_str}}'
+      ,id: {{list.uid_int}}
+    },
+
+      {% endif %}
+{% endfor %}
+{% endfor %}
+
+
+          ]
+  },
+
+{% endfor %}
+
+
+
+      ]
+
+
+  //基本演示
+  tree.render({
+    elem: '#test12'
+    ,data: data
+    ,showCheckbox: true  //是否显示复选框
+    ,id: 'demo1'
+    ,isJump: false //是否允许点击节点时弹出新窗口跳转
+    ,
+  });
+
+ tree.setChecked('demo1', [
+     {{zuqx}}
+     ]); //勾选指定节点
+  //按钮事件
+  util.event('lay-demo', {
+    getChecked: function(othis){
+      var checkedData = tree.getChecked('demo1'); //获取选中节点的数据
+
+      //layer.alert(JSON.stringify(checkedData));
+                var arr=[];//存储id的数组
+                var ddd=[];//存储id的数组
+
+                        checkedData.forEach(function(checkedData){
+                        arr.push(checkedData.id);
+                        ddd.push(checkedData.children);
+
+                        });
+
+
+
+
+
+      $.ajax({
+                        url:'/{{posturl}}_post/',
+                        type:'post',
+                        data:{
+                            //csrfmiddlewaretoken: '{{ csrf_token }}',
+                            qxid:{{qxid}},
+                            id1:JSON.stringify(arr),
+                             id2:JSON.stringify(ddd),
+                                fenlei:'{{fenlei}}',
+                        },
+                        success:function (msg) {
+                            if(msg=="yes"){
+                                layer.msg("修改权限成功", {icon: 6});
+                               setTimeout(function(){
+                                layer.closeAll();//关闭所有的弹出层
+                                   window.location.reload();//刷新页面
+
+                            }, 1000);
+
+
+                            }else{
+                                layer.msg(msg, {icon: 5});
+                            }
+                        },
+                    })
+
+
+    }
+    ,setChecked: function(){
+      tree.setChecked('demo1', [
+          {% for sk in cdid %}
+          {{sk.uid_int}},
+              {% endfor %}
+      ]); //勾选指定节点
+    }
+    ,reload: function(){
+      //重载实例
+      tree.reload('demo1', {
+
+      });
+
+    }
+  });
+
+
+
+});
+</script>
+</body>
+</html>

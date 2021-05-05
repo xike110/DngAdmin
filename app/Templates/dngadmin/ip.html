@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{title}}</title>
+
+   <link rel="shortcut icon" href="{% static "favicon.ico"%}"> <link href="{% static "css/bootstrap.min.css"%}"rel="stylesheet">
+    <link href="{% static "css/font-awesome.min.css"%}" rel="stylesheet">
+
+    <link href="{% static "css/animate.min.css"%}" rel="stylesheet">
+    <link href="{% static "css/style.min.css"%}" rel="stylesheet"><base target="_blank">
+    <!--[if lt IE 8]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+
+</head>
+
+<body class="gray-bg">
+
+      {% for zd in list %}
+
+		elif post{{zd.2}}:<br>
+            dngred = models.dngroute.objects.filter({{zd.0}}__contains=post{{zd.2}}).order_by('-id')<br>
+
+
+  {% endfor %}
+
+</body>
+
+</html>

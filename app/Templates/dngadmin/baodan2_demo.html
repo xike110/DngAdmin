@@ -1,0 +1,446 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="{% static "layui/css/layui.css"%}"  media="all">
+
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+
+
+
+
+<script src="{% static "layui/layui.js"%}" charset="utf-8"></script>
+
+ <script src="{% static "js/jquery.min.js" %}"></script>
+
+<script>
+
+{% if tishi %}
+
+window.onload=function(){
+layer.alert('{{tishi}}', {
+  icon: 0,
+  skin: 'layer-ext-moon'    , time: 2000, //20s后自动关闭
+})
+}
+{% endif %}
+
+{% if jinggao %}
+
+window.onload=function(){
+layer.alert('{{jinggao}}', {
+  icon: 2,
+  skin: 'layer-ext-moon'    , time: 2000, //20s后自动关闭
+})
+}
+{% endif %}
+
+
+{% if yes %}
+
+window.onload=function(){
+layer.alert('{{yes}}', {
+  icon: 1,
+  skin: 'layer-ext-moon'    , time: 2000, //20s后自动关闭
+})
+}
+{% endif %}
+
+</script>
+
+
+
+
+
+<div class="layui-row" id="EditUser" style="display:none;">
+    <div class="layui-col-md10">
+        <form class="layui-form layui-from-pane" id="updateUser"   style="margin-top:20px" >
+
+
+            <input type="hidden" name="id" id="id">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" id="username"  required  lay-verify="required" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="phone" id="phone" required  lay-verify="required" autocomplete="off" placeholder="请输入年龄" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block">
+                    <input type="text" name="email" id="email" required  lay-verify="required" autocomplete="off" placeholder="请输入邮箱" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-block">
+                    <input type="text" name="password" id="password" required  lay-verify="required" autocomplete="off" placeholder="请输入密码" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">真实姓名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" id="name" required  lay-verify="required" autocomplete="off" placeholder="请输入真实姓名" class="layui-input">
+                </div>
+            </div>
+
+
+
+
+            <div class="layui-form-item" style="margin-top:40px" id="check">
+                <div class="layui-input-block">
+                    <button class="layui-btn  layui-btn-submit " lay-submit="" lay-filter="formDemo" >确认修改</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+<div class="demoTable" style="padding: 15px">
+    搜索手机号：
+    <div class="layui-inline">
+        <input class="layui-input" id="find" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload" id="queryRole" >搜索</button>
+</div>
+
+<table class="layui-hide" id="Users" lay-filter="test"></table>
+
+
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+<!--    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>-->
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<style type="text/css">
+    td div.layui-table-cell{height:60px;
+        line-height: 60px;
+        position: relative;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        box-sizing: border-box;
+        padding: 0px 15px;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    layui.use(['table', 'form', 'layer','upload'], function () {
+        var table = layui.table,
+            layer = layui.layer,
+            upload = layui.upload,
+             // $ = layui.jquery
+            form = layui.form;
+        table.render({
+            elem: '#Users'
+            ,url:'/dngadmin/ip_json'
+            ,type:'post'
+            ,toolbar: '#toolbarDemo'
+            ,title: '用户数据表'
+            ,totalRow: true
+            ,limit:6
+         ,cols: [[
+      {type: 'checkbox', fixed: 'left'}
+      ,{field:'id', title:'ID', fixed: 'left', width:100, unresize: true, sort: true, totalRowText: '统计求和'}
+      ,{field:'username', title:'用户名' ,sort: true}
+      ,{field:'email', title:'邮箱', sort: true}
+      ,{field:'sex', title:'性别', sort: true}
+      ,{field:'city', title:'城市', sort: true}
+      ,{field:'sign', title:'签名', sort: true}
+      ,{field:'experience', title:'积分', width:80, sort: true,}
+      ,{field:'ip', title:'IP'}
+      ,{field:'logins', title:'登入次数', sort: true}
+      ,{field:'joinTime', title:'加入时间', sort: true}
+      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
+    ]]
+    ,page: true
+
+        });
+
+
+        // 修改头像
+        upload.render({
+            elem: '#img'
+            ,url: '/dngadmin/ip_post'
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                $("[name=headimg]").val(res.data);
+                style:'display:inline-block;max-width:50%;height:auto'
+                //如果上传失败
+                if(res.code > 0){
+                    return layer.msg('上传失败');
+                }else {
+                    layer.msg("上传成功");
+                }
+                //上传成功
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
+
+
+
+        //根据phone关键字查询
+        $('#queryRole').on('click', function(){
+            var find=document.getElementById("find").value;
+            table.reload('Users', {
+                page:{ curr:1 },
+                url:'/Share/selectUserByPhone.action',
+                where:{'phone':find}
+
+           })
+        });
+
+
+        form.on('submit(formDemo)', function(data) {
+            $.ajax({
+                url:'/dngadmin/ip_post',
+                type:'post',
+                contentType:'application/json',
+                data:JSON.stringify(data.field),
+                success:function (msg) {
+                    if(msg!=null){
+                        layer.closeAll('loading');
+                        layer.load(2);
+                        layer.msg("修改成功", {icon: 6});
+                        setTimeout(function(){
+                            layer.closeAll();//关闭所有的弹出层
+                            table.reload("Users");
+                        }, 1000);
+                        加载层-风格
+                    }else{
+                        layer.msg("修改失败", {icon: 5});
+                    }
+                }
+            })
+            return false;
+        })
+
+
+
+        //工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选')
+                    break;
+            };
+        });
+
+
+        //监听工具条
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //查看
+            if(obj.event === 'detail'){
+                $("#check").hide();
+                $("#showImg").show();
+                $("#updateImg").hide();
+                $("#isadmin").val(data.isadmin);
+                $("#id").val(data.id);
+                $("#isforbid").val(data.isforbid);
+                $("#isable").val(data.isable);
+                $("#rtime").val(data.rtime);
+                $("#fname").val(data.fname);
+                $("#phone").val(data.phone);
+                $("#email").val(data.email);
+                $("#password").val(data.password);
+                $("#name").val(data.name);
+                $("#idcard").val(data.idcard);
+                $('#imgshow').attr('src', "/file/"+data.headimg);
+                $('#demo1').attr('src', "/file/"+data.headimg);
+                $("#introduce").val(data.introduce);
+                layer.open({
+                    type:1,
+                    offset: '10px',
+                    title:"查看信息",
+                    area: ['800px', '600px'],
+                    content: $("#EditUser")
+                });
+                // layer.msg('ID：'+ data.id + ' 的查看操作');
+            } else if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    $.ajax({
+                        url:'/Share/deleteUser.action',
+                        type:'GET',
+                        data:{
+                            id:data.id
+                        },
+                        success:function (msg) {
+                            if(msg=="1"){
+                                layer.msg("删除成功", {icon: 6});
+                                setTimeout(function(){
+                                    layer.closeAll();//关闭所有的弹出层
+                                }, 1000);
+
+                            }else{
+                                layer.msg("删除失败", {icon: 5});
+                            }
+                        }
+                    })
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                $("#check").show();
+                $("#showImg").hide();
+                $("#updateImg").show();
+                // layer.alert('编辑行：<br>'+ JSON.stringify(obj.data.address))
+                // alert(data.fname);
+                $("#id").val(data.id);
+                $("#username").val(data.username);
+                $("#phone").val(data.phone);
+                $("#email").val(data.email);
+                $("#password").val(data.password);
+                $("#name").val(data.name);
+                $("#idcard").val(data.idcard);
+                $('#imgshow').attr('src', "/file/"+data.headimg);
+                $('#demo1').attr('src', "/file/"+data.headimg);
+                $("#introduce").val(data.introduce);
+                layer.open({
+                    type:1,
+                    offset: '10px',
+                    title:"修改信息",
+                    area: ['800px', '600px'],
+                    content: $("#EditUser")
+                });
+            }
+        });
+
+
+
+
+    });
+
+</script>
+
+
+
+
+
+
+
+
+<script>
+layui.use(['form', 'layedit', 'laydate'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+
+  //日期
+  laydate.render({
+    elem: '#date'
+  });
+  laydate.render({
+    elem: '#date1'
+  });
+
+  //创建一个编辑器
+  var editIndex = layedit.build('LAY_demo_editor');
+
+  //自定义验证规则
+  form.verify({
+    title: function(value){
+      if(value.length < 5){
+        return '标题至少得5个字符啊';
+      }
+    }
+    ,pass: [
+      /^[\S]{6,12}$/
+      ,'密码必须6到12位，且不能出现空格'
+    ]
+    ,content: function(value){
+      layedit.sync(editIndex);
+    }
+  });
+
+  //监听指定开关
+  form.on('switch(switchTest)', function(data){
+    layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+      offset: '6px'
+    });
+    layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+  });
+
+  //监听提交
+  form.on('submit(demo1)', function(data){
+    layer.alert(JSON.stringify(data.field), {
+      title: '最终的提交信息'
+    })
+    return false;
+  });
+
+  //表单赋值
+  layui.$('#LAY-component-form-setval').on('click', function(){
+    form.val('example', {
+      "username": "贤心" // "name": "value"
+      ,"password": "123456"
+      ,"interest": 1
+      ,"like[write]": true //复选框选中状态
+      ,"close": true //开关状态
+      ,"sex": "女"
+      ,"desc": "我爱 layui"
+    });
+  });
+
+  //表单取值
+  layui.$('#LAY-component-form-getval').on('click', function(){
+    var data = form.val('example');
+    alert(JSON.stringify(data));
+  });
+
+});
+</script>
+
+</body>
+</html>
