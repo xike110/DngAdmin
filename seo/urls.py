@@ -20,8 +20,8 @@ from django.conf.urls import url , include#导入了include函数,注意加,号
 urlpatterns = [
 
     url(r'^', include("app.html_urls")),#引入APP项目的首页子配置文件
-    url(r'^mulu/', include("app.html_urls")),
-    url(r'^list', include("app.html_urls")),
-    url(r'^mew', include("app.html_urls")),
+    # url(r'^mulu/', include("app.html_urls")),
+    # url(r'^list', include("app.html_urls")),
+    # url(r'^mew', include("app.html_urls")),
     url(r'^dngadmin/', include("app.dngadmin_urls")),  # 引入了对应的应用名称和目录下的URLS子配置文件地址，app/是根目录名称，'app.urls'是app应用目录下urls.py子配置URL文件
 ]

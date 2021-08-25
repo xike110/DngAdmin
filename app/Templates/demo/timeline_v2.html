@@ -16,7 +16,7 @@
     <link rel="shortcut icon" href="{% static "favicon.ico"%}"> <link href="{% static "css/bootstrap.min.css"%}"rel="stylesheet">
     <link href="{% static "css/font-awesome.min.css"%}" rel="stylesheet">
     <link href="{% static "css/animate.min.css"%}" rel="stylesheet">
-    <link href="{% static "css/style.min.css"%}" rel="stylesheet"><base target="_blank">
+    <link href="{% static "css/style.min.css"%}" rel="stylesheet">
 
 </head>
 
@@ -117,7 +117,7 @@
     </div>
     <script src="{% static "js/jquery.min.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
-    <script src="{% static "js/content.min.js" %}"></script>
+    <script src="{% static "js/content.js" %}"></script>
     <script>
         $(document).ready(function(){$("#lightVersion").click(function(event){event.preventDefault();$("#ibox-content").removeClass("ibox-content");$("#vertical-timeline").removeClass("dark-timeline");$("#vertical-timeline").addClass("light-timeline")});$("#darkVersion").click(function(event){event.preventDefault();$("#ibox-content").addClass("ibox-content");$("#vertical-timeline").removeClass("light-timeline");$("#vertical-timeline").addClass("dark-timeline")});$("#leftVersion").click(function(event){event.preventDefault();$("#vertical-timeline").toggleClass("center-orientation")})});
     </script>

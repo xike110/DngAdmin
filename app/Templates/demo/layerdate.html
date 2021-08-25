@@ -16,7 +16,7 @@
     <link href="{% static "css/font-awesome.min.css"%}" rel="stylesheet">
     <link href="{% static "css/animate.min.css"%}" rel="stylesheet">
     <link href="{% static "css/animate.min.css"%}" rel="stylesheet">
-    <link href="{% static "css/style.min.css"%}" rel="stylesheet"><base target="_blank">
+    <link href="{% static "css/style.min.css"%}" rel="stylesheet">
 </head>
 
 <body class="gray-bg">
@@ -197,7 +197,7 @@ laydate.reset();    //重设日历控件坐标，一般用于页面dom结构改�
     </div>
     <script src="{% static "js/jquery.min.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
-    <script src="{% static "js/content.min.js" %}"></script>
+    <script src="{% static "js/content.js" %}"></script>
     <script src="{% static "js/plugins/layer/laydate/laydate.js" %}"></script>
     <script>
         laydate({elem:"#hello",event:"focus"});var start={elem:"#start",format:"YYYY/MM/DD hh:mm:ss",min:laydate.now(),max:"2099-06-16 23:59:59",istime:true,istoday:false,choose:function(datas){end.min=datas;end.start=datas}};var end={elem:"#end",format:"YYYY/MM/DD hh:mm:ss",min:laydate.now(),max:"2099-06-16 23:59:59",istime:true,istoday:false,choose:function(datas){start.max=datas}};laydate(start);laydate(end);

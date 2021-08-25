@@ -484,9 +484,9 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
             ,limit:{{xitong.limit_int}}
          ,cols:[[
       {type: 'checkbox', fixed: 'left'}
-      ,{field:'{{zd_list.0.0}}', title:'{{zd_list.1.0}}', width:60, fixed: 'left', unresize: true, sort: true , align:'center' },
+      ,{field:'{{zd_list.0.0}}', title:'{{zd_list.1.0}}', width:60,  unresize: true, sort: true , align:'center' },
             {% if zd_list.0.1 %}
-            {field:'{{zd_list.0.1}}', width:80, title:'{{zd_list.1.1}}', sort: true , align:'center' },
+            {field:'{{zd_list.0.1}}', title:'{{zd_list.1.1}}', sort: true , align:'center' },
             {% endif %}
             {% if zd_list.0.2 %}
             {field:'{{zd_list.0.2}}', title:'{{zd_list.1.2}}' , sort: true , align:'center' },
@@ -576,7 +576,15 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
             {field:'{{zd_list.0.30}}', title:'{{zd_list.1.30}}', sort: true , align:'center' },
             {% endif %}
 
-                 {fixed: 'right', title:'操作',width:180, toolbar: '#barDemo',}
+                 {% if "安卓" in shebei %}
+                { title:'操作',width:165, toolbar: '#barDemo',}
+                {% elif "苹果" in shebei %}
+                { title:'操作',width:165, toolbar: '#barDemo',}
+                {% else %}
+                {fixed: 'right', title:'操作',width:165, toolbar: '#barDemo',}
+                {% endif %}
+
+
     ]]
 
 
@@ -741,7 +749,14 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
                     type:1,
                     offset: '10px',
                     title:"{{title}}-添加信息",
-                    area: ['{{xitong.wide_int}}px', '{{xitong.high_int}}px'],
+                    {% if "安卓" in shebei %}
+ area: ['100%', '100%'],
+{% elif "苹果" in shebei %}
+ area: ['100%', '100%'],
+{% else %}
+ area: ['{{xitong.wide_int}}px', '{{xitong.high_int}}px'],
+{% endif %}
+
 
                     btn: ['关闭退出'] ,
                            yes: function(){
@@ -755,7 +770,13 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
                     type: 1,
                     offset: '10px',
                     title: "{{title}}-搜索表格",
-                    area: ['500px', '600px'],
+                    {% if "安卓" in shebei %}
+ area: ['100%', '100%'],
+{% elif "苹果" in shebei %}
+ area: ['100%', '100%'],
+{% else %}
+area: ['500px', '600px'],
+{% endif %}
 
                     btn: ['关闭退出'],
                     yes: function () {
@@ -910,7 +931,14 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
                     type:1,
                     offset: '10px',
                     title:"{{title}}-修改信息",
-                    area: ['{{xitong.wide_int}}px', '{{xitong.high_int}}px'],
+                    {% if "安卓" in shebei %}
+ area: ['100%', '100%'],
+{% elif "苹果" in shebei %}
+ area: ['100%', '100%'],
+{% else %}
+ area: ['{{xitong.wide_int}}px', '{{xitong.high_int}}px'],
+{% endif %}
+
 
                     btn: ['关闭退出'] ,
                            yes: function(){

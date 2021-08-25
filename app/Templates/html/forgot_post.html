@@ -1,0 +1,65 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title }}</title>
+
+
+    <meta name="keywords" content=" {{ keywords }} "/>
+    <meta name="description" content="{{ description }} "/>
+
+
+</head>
+
+<body class="top-navigation">
+
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+
+        {% include 'html/head.html' %}  <!--公共头部导航-->
+
+        <div class="passwordBox animated fadeInDown">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox-content"><h2 class="font-bold">密码重置成功！</h2>
+                        <p>登陆账户后！在修改密码</p>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="alert alert-success">
+                                    <br>
+                                    您的密码重置为：<code>{{ chongzhi_psd }}</code><i class="fa fa-arrow-left animated shake"></i>复制密码！<br><br>
+                                    去登陆账户后，在用户中心修改成自己心仪的密码！<br><br>
+                               <a href="/login/" target="_blank"><button href="/login/" target="_blank" type="submit" class="btn btn-primary block full-width m-b">去登陆账号修改密码</button></a>
+                                 </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6"><a title="DngAdmin">技术支持</a>DngAdmin
+                </div>
+                <div class="col-md-6 text-right"><small>© 2021-2030</small></div>
+            </div>
+        </div>
+
+        {% include 'html/footer.html' %}  <!--公共尾部-->
+    </div>
+</div>
+
+
+</body>
+
+</html>
+

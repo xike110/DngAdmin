@@ -1,0 +1,196 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title }}</title>
+
+
+    <meta name="keywords" content=" {{ keywords }} "/>
+    <meta name="description" content="{{ description }} "/>
+
+
+</head>
+
+<body class="top-navigation">
+<script>
+
+    {% if tishi %}
+
+        window.onload = function () {
+            layer.alert('{{tishi}}', {
+                icon: 0,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+
+            })
+        }
+         setTimeout(function () {
+             window.location.href="/forgot/"
+        }, 3000);
+
+    {% endif %}
+
+    {% if jinggao %}
+
+        window.onload = function () {
+            layer.alert('{{jinggao}}', {
+                icon: 2,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+
+                    })
+        }
+
+        setTimeout(function () {
+             window.location.href="/forgot/"
+        }, 3000);
+
+
+
+    {% endif %}
+
+
+    {% if yes %}
+
+        window.onload = function () {
+            layer.alert('{{yes}}', {
+                icon: 1,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+            })
+        }
+         setTimeout(function () {
+             window.location.href="/forgot/"
+        }, 3000);
+    {% endif %}
+
+</script>
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+
+        {% include 'html/head.html' %}  <!--公共头部导航-->
+
+        <div class="passwordBox animated fadeInDown">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox-content"><h2 class="font-bold">找回密码</h2>
+                        <p>输入您的{% if anquan.sms_bool %}注册手机号{% elif anquan.station_bool %}注册邮箱地址{% else %}
+                            注册邮箱地址{% endif %}!<br>发送验证码给你!</p>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form class="m-t" role="form" class="layui-form" method="POST" action="/forgot_post/">
+                                    {% csrf_token %}
+                                    <div class="form-group"><input type="text" name="user" value="" ID="user"
+                                                                   class="form-control"
+                                                                   placeholder="输入找回账号" required="" minlength="6" maxlength="18"></div>
+
+                                    {% if anquan.sms_bool %}
+                                        <div class="form-group"><input type="text" name="phone" value="" ID="phone"
+                                                                       data-mask="99999999999" class="form-control"
+                                                                       placeholder="输入注册手机号" required="" ></div>
+                                    {% elif anquan.station_bool %}
+                                        <div class="form-group"><input type="email" name="email" value="" ID="email"
+                                                                       class="form-control"
+                                                                       placeholder="输入注册邮箱" required="" minlength="6" maxlength="30"></div>
+                                    {% else %}
+                                        <div class="form-group"><input type="email" name="email" value="" ID="email"
+                                                                       class="form-control"
+                                                                       placeholder="输入注册邮箱" required="" minlength="6" maxlength="30"></div>
+                                    {% endif %}
+
+
+
+
+
+                                    {% if anquan.sms_bool %}
+                                        <!-- 手机验证码开始 -->
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label-huadong">获取验证码
+                                                <i>&nbsp;</i>
+                                                <i class="fa fa-arrow-right animated shake"></i></label>
+                                            <div class="layui-input-block">
+                                                <div id="slider"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group"><input type="text" name="Verification"
+                                                                       lay-verify="required" data-mask="999999"
+                                                                       class="form-control"
+                                                                       placeholder="输入验证码" required=""></div>
+                                        <!-- 手机验证码结束 -->
+                                    {% elif anquan.station_bool %}
+                                        <!-- 邮件验证码开始 -->
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label-huadong">获取验证码
+                                                <i>&nbsp;</i>
+                                                <i class="fa fa-arrow-right animated shake"></i></label>
+                                            <div class="layui-input-block">
+                                                <div id="slider"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group"><input type="text" name="Verification"
+                                                                       class="form-control" lay-verify="required"
+                                                                       data-mask="999999" placeholder="输入验证码"
+                                                                       required=""></div>
+                                        <!-- 邮件验证码结束 -->
+                                    {% elif anquan.graphic_bool %}
+                                        <!-- 滑动验证开始 -->
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label-huadong">滑动验证
+                                                <i>&nbsp;</i>
+                                                <i class="fa fa-arrow-right"></i></label>
+                                            <div class="layui-input-block">
+                                                <div id="slider"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 滑动验证结束 -->
+                                    {% else %}
+                                        <!-- 无验证方式 -->
+                                    {% endif %}
+                                    <button type="submit" class="btn btn-primary block full-width m-b" lay-submit=""
+                                            lay-filter="formDemo">提交重置密码
+                                    </button>
+                                    <h3><p class="text-muted text-center">
+                                 {% if anquan.sms_bool %}
+                                     <a class="text-muted text-center" href="/register/"><small>【注册帐号】</small></a>|<a
+                                    class="text-muted text-center" href="/forgot/"><small>【忘记密码】</small></a>|<a
+                                    class="text-muted text-center" href="/unlock/"><small>【解锁帐号】</small></a>
+                                 {% elif anquan.station_bool %}
+                                     <a class="text-muted text-center" href="/register/"><small>【注册帐号】</small></a>|<a
+                                    class="text-muted text-center" href="/forgot/"><small>【忘记密码】</small></a>|<a
+                                    class="text-muted text-center" href="/unlock/"><small>【解锁帐号】</small></a>
+                                 {% elif anquan.graphic_bool %}
+                                     <a class="text-muted text-center" href="/register/"><small>【注册帐号】</small></a>
+                                 {% endif %}
+
+                            </p></h3>
+                                    <a class="btn btn-sm btn-white btn-block" href="/login/">返回登录</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6"><a title="DngAdmin">技术支持</a>DngAdmin
+                </div>
+                <div class="col-md-6 text-right"><small>© 2021-2030</small></div>
+            </div>
+        </div>
+
+        {% include 'html/footer.html' %}  <!--公共尾部-->
+    </div>
+</div>
+
+
+</body>
+
+</html>
+

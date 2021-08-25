@@ -8,11 +8,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-     <link rel="stylesheet" href="{% static "layui/css/layui.css"%}"  media="all">
+    <link href="{% static "css/bootstrap.min.css"%}"rel="stylesheet">
+    <link href="{% static "css/font-awesome.min.css"%}" rel="stylesheet">
+    <link href="{% static "css/animate.min.css"%}" rel="stylesheet">
+    <link href="{% static "css/style.min.css"%}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "layui/css/layui.css"%}"  media="all">
+
+
 
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body class="baise">
+<div class="wrapper wrapper-content ">
+        <div class="row">
+            <div class="col-sm-12">
 
 
 <script>
@@ -78,7 +87,7 @@ layer.alert('{{yes}}', {
   </div>
 
   <div class="layui-form-item">
-    <label class="layui-form-label">备案号</label>
+    <label class="layui-form-label">备案号&emsp; </label>
     <div class="layui-input-duan">
       <input type="text" name="{{zd_list.0.3}}"  value="{{biaodan.file_str}}" autocomplete="off" placeholder="请输入备案号" class="layui-input">
     </div>
@@ -86,7 +95,7 @@ layer.alert('{{yes}}', {
 
 
     <div class="layui-form-item">
-    <label class="layui-form-label">版本号</label>
+    <label class="layui-form-label">版本号&emsp; </label>
     <div class="layui-input-duan">
       <input type="text" name="{{zd_list.0.4}}"   value="{{biaodan.edition_str}}" autocomplete="off" placeholder="请输入版本号" class="layui-input">
     </div>
@@ -448,6 +457,10 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 
 });
 </script>
+
+        </div>
+        </div>
+    </div>
 
 </body>
 </html>

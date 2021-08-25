@@ -1,0 +1,1148 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>{{ title }}</title>
+    <meta name="keywords" content="{{ title }}">
+    <meta name="description" content="{{ title }}">
+
+    <link rel="shortcut icon" href="{% static "favicon.ico" %}">
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/font-awesome.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/plugins/iCheck/custom.css" %}" rel="stylesheet">
+    <link href="{% static "css/animate.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/style.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/plugins/codemirror/codemirror.css" %}" rel="stylesheet">
+    <link href="{% static "css/plugins/codemirror/ambiance.css" %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "layui/css/layui.css" %}" media="all">
+
+</head>
+<script>
+
+    {% if tishi %}
+
+        window.onload = function () {
+            layer.alert('{{tishi}}', {
+                icon: 0,
+                skin: 'layer-ext-moon', time: 2000, //20s后自动关闭
+            })
+        }
+        setTimeout(function () {
+             window.location.href="/dngadmin/htmlcrud/"
+        }, 2000);
+    {% endif %}
+
+    {% if jinggao %}
+
+        window.onload = function () {
+            layer.alert('{{jinggao}}', {
+                icon: 2,
+                skin: 'layer-ext-moon', time: 2000, //20s后自动关闭
+            })
+        }
+        setTimeout(function () {
+             window.location.href="/dngadmin/htmlcrud/"
+        }, 2000);
+    {% endif %}
+
+
+    {% if yes %}
+
+        window.onload = function () {
+            layer.alert('{{yes}}', {
+                icon: 1,
+                skin: 'layer-ext-moon', time: 200000, //20s后自动关闭
+            })
+        }
+        setTimeout(function () {
+             window.location.href="/dngadmin/htmlcrud/"
+        }, 2000);
+    {% endif %}
+
+</script>
+<body class="gray-bg">
+
+<br>
+{% if api_json %}
+
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>第一步：获取API的token口令</h5>
+                <div class="ibox-tools">
+
+                </div>
+
+            </div>
+            <div class="ibox-content" style="display: block;">
+                <div class="alert alert-success">
+                    <b class="alert-link">获取口令地址：http://{{ yuming_url }}/dngadmin/longin_post/</b><br><br>
+
+                    请求方式：post<br><br>
+                    dngurl：{{ anquan.entrance_str }}（安全入口码,可以在安全设置查看）<br><br>
+                    api_password：{{ anquan.apipsd_str }}（API密码,可以在安全设置查看）<br><br>
+                    api：True（或数字1）<br><br>
+                    invalid：365 （授权天数）<br><br>
+                    username：（授权帐号=同时继承权对应用户组权限）<br><br>
+                    password：（密码）<br><br>
+
+
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <i class="fa fa-info-circle"></i>正确返回格式：
+                    </div>
+                    <div class="panel-body">
+                                            <textarea id="code1">
+
+ {
+	"code": "0",
+	'msg': "成功",
+	"data": {
+		"uid": 1,
+		"username": "admin",
+		"cookie": "a668ea667a09868717a22071a9b3eabb52f7995a45uh234uigh2347234g2347",
+		"token": "962d4681db308cd1691fca668ea667a09868717a22071a9b3eabb52f7995a45u"
+	}
+}
+
+                    </textarea>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>第二步：Header头部携带Token口令请求查询</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="notifications.html#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="">选项1</a>
+                        </li>
+                        <li><a href="">选项2</a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+
+            </div>
+            <div class="ibox-content" style="display: block;">
+
+                <div class="alert alert-info">
+                    <b class="alert-link"
+                       href="notifications.html#">JSON查询地址：http://{{ yuming_url }}/dngadmin/{{ api_json }}_api_json/</b><br><br>
+
+                    请求方式：get<br><br>
+                    uid：（用户ID）<br><br>
+                    username：（用户帐号）<br><br>
+                    cookie：（获取到的cookie口令）<br><br>
+                    token：（获取到的token口令）<br><br>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="col-sm-12">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>可能遇到的问题说明： </h5>
+            </div>
+            <div class="ibox-content">
+
+                <div class="row">
+
+
+                    <div class="col-sm-12">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <i class="fa fa-warning"></i> 时间期间格式未转换：如果查询的结果包含日期字段，会显示：(2099, 12, 28, 23, 59,
+                                59)这样的结果
+                            </div>
+                            <div class="panel-body">
+
+                                解决方法：需要到对应的一键生成的dngadmin_{{ api_json }}.py文件下，def {{ api_json }}_api_json(request):
+                                #api查询函数里，查找for obj in list_arry:<br>
+                                &emsp;&emsp;&emsp;&emsp;&emsp;下面加入obj.字段名 =obj.字段名.strftime("%Y-%m-%d
+                                %H:%M:%S")#转换日期<br>
+                            </div>
+                        </div>
+                    </div>
+
+                    {#                             <div class="col-sm-12">#}
+                    {#                                <div class="panel panel-warning">#}
+                    {#                                    <div class="panel-heading">#}
+                    {#                                        <i class="fa fa-warning"></i> 问题二：#}
+                    {#                                    </div>#}
+                    {#                                    <div class="panel-body">#}
+                    {##}
+                    {#                                        解决方法：XXXXXXXXXXXXX<br>#}
+                    {#                                    </div>#}
+                    {#                                </div>#}
+                    {#                            </div>#}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% elif api_post %}
+
+
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>第一步：获取API的token口令</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="notifications.html#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="">选项1</a>
+                        </li>
+                        <li><a href="">选项2</a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+
+            </div>
+            <div class="ibox-content" style="display: block;">
+                <div class="alert alert-success">
+                    <b class="alert-link">获取口令地址：http://{{ yuming_url }}/dngadmin/longin_post/</b><br><br>
+
+                    请求方式：post<br><br>
+                    dngurl：{{ anquan.entrance_str }}（安全入口码,可以在安全设置查看）<br><br>
+                    api_password：{{ anquan.apipsd_str }}（API密码,可以在安全设置查看）<br><br>
+                    api：True（或数字1）<br><br>
+                    invalid：365 （授权天数）<br><br>
+                    username：（授权帐号=同时继承权对应用户组权限）<br><br>
+                    password：（密码）<br><br>
+
+
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <i class="fa fa-info-circle"></i>正确返回格式：
+                    </div>
+                    <div class="panel-body">
+                                            <textarea id="code1">
+
+
+ {
+	"code": "0",
+	'msg': "成功",
+	"data": {
+		"uid": 1,
+		"username": "admin",
+		"cookie": "a668ea667a09868717a22071a9b3eabb52f7995a45uh234uigh2347234g2347",
+		"token": "962d4681db308cd1691fca668ea667a09868717a22071a9b3eabb52f7995a45u"
+	}
+}
+
+                    </textarea>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>第二步：Header头部携带Token口令发送post</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="notifications.html#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="">选项1</a>
+                        </li>
+                        <li><a href="">选项2</a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+
+            </div>
+            <div class="ibox-content" style="display: block;">
+
+                <div class="alert alert-info">
+                    <b class="alert-link"
+                       href="notifications.html#">POST接收地址：http://{{ yuming_url }}/dngadmin/{{ api_post }}_api_post/</b><br><br>
+
+                    请求方式：post<br><br>
+                    uid：（用户ID）<br><br>
+                    username：（用户帐号）<br><br>
+                    cookie：（获取到的cookie口令）<br><br>
+                    token：（获取到的token口令）<br><br>
+
+
+                </div>
+
+
+
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <i class="fa fa-info-circle"></i>发送新增：
+                    </div>
+                    <div class="panel-body">
+
+
+                        发送方法：post时候不带ID这个参数，会默认是新增，如果某个字段需要数值递增，可以先查询或者最后一个结果，在+1，发送+1的数值<br>
+
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <i class="fa fa-info-circle"></i>发送更新：
+                    </div>
+                    <div class="panel-body">
+
+                        发送方法：post时候，带对应ID对应值，会更新修改这个ID值的数据，<br>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+    <div class="col-sm-12">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>第三步：创建提交代码</h5>
+            </div>
+            <div class="ibox-content">
+
+                <div class="row">
+
+                    <div class="col-sm-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                 Python代码form-data提交代码
+                            </div>
+                            <div class="panel-body">
+                                                <textarea id="code2">
+import re #正则模块
+import urllib.request #请求模块
+import urllib.parse #post请求所需的模块
+
+headers = {'uid': '用户ID',
+   'username': '用户帐号',
+   'cookie': '获取到的cookie口令',
+   'token': '获取到的token口令'}# headers中添加上Token口令
+
+posturl = "http://{{ yuming_url }}/dngadmin/{{ api_post }}_api_post/" # 需要提交POST的网址
+postdata = urllib.parse.urlencode({
+            {% for aa in aa_list %}
+            "{{ aa.0}}": {{ aa.0}}_post, # {{ aa.1}}{% endfor %}
+
+}).encode("utf-8")
+post_re = urllib.request.Request(headers=headers, url=posturl, data=postdata, method="POST")  # 模拟post请求
+post_usf8 = urllib.request.urlopen(post_re).read()  # 请求打开
+post_echo = post_usf8.decode("utf-8")  # 转为UTF8
+#print(post_echo)  # 输出预览结果
+            </textarea> </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                Python代码Json提交代码（注意！DngAdmin需要手动修改代码，才能接受application/json提交的数据）
+                            </div>
+                            <div class="panel-body">
+<textarea id="code3">
+import requests
+import json
+
+post_url = 'http://{{ yuming_url }}/dngadmin/{{ api_post }}_api_post/'
+post_data = {
+            {% for bb in bb_list %}
+            '{{ bb.0}}': {{ bb.0}}_post, # {{ bb.1}}{% endfor %}
+
+     }
+headers = {'Content-Type': 'application/json',
+   'uid': '用户ID',
+   'username': '用户帐号',
+   'cookie': '获取到的cookie口令',
+   'token': '获取到的token口令'}# headers中添加上content-type这个参数，指定为json格式
+response = requests.post(url=post_url, headers = headers, data= json.dumps(post_data))# post的时候，将data字典形式的参数用json包转换成json格式
+            </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                PHP提交代码
+                            </div>
+                            <div class="panel-body">
+<textarea id="code4">
+//初始化
+$curl = curl_init();
+//设置抓取的url
+curl_setopt($curl,CURLOPT_URL,'http://{{ yuming_url }}/dngadmin/{{ api_post }}_api_post/');
+
+$headers = [
+        'Content-Type: multipart/form-data',
+        'uid:'.$uid,# $uid变量=用户ID
+        'username:'. $username,# $username变量=用户帐号
+        'cookie:'. $cookie,# $cookie变量=获取到的cookie口令
+        'token:'. $token,# $token变量=获取到的token口令
+    ];
+
+//设置头文件的信息作为数据流输出
+curl_setopt($curl, CURLOPT_HEADER,0);
+//设置获取的信息以文件流的形式返回，而不是直接输出。
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+//设置post方式提交
+curl_setopt($curl, CURLOPT_POST, 1);
+curl_setopt($curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.9.114.99 Safari/537.36');
+//设置post数据
+$post_data = array(
+                {% for cc in cc_list %}
+                "{{ cc.0}}" => ${{ cc.0}}_post, # {{ cc.1}}{% endfor %}
+
+);
+curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
+//执行命令
+$data = curl_exec($curl);
+//关闭URL请求
+curl_close($curl);
+//显示获得的数据
+print_r($data);
+</textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                               AJAX提交代码
+                            </div>
+                            <div class="panel-body">
+<textarea id="code5">
+<script type="text/javascript">
+function login() {
+$.ajax({
+    type: "POST",//方法类型
+    dataType: "json",//预期服务器返回的数据类型
+    cache:false,//不存缓存
+    contentType: false,//格式默认
+    url: "http://{{ yuming_url }}/dngadmin/{{ api_post }}_api_post/" ,//提交url
+    data: { {% for dd in dd_list %}{{ dd.0}}: "{{ dd.1}}", {% endfor %} },//提交参数
+    beforeSend: function(xhr) {xhr.setRequestHeader("Content-Type","multipart/form-data");
+                        xhr.setRequestHeader("uid","用户ID");
+                        xhr.setRequestHeader("username","用户帐号");
+                        xhr.setRequestHeader("cookie","获取到的cookie口令");
+                        xhr.setRequestHeader("token","获取到的token口令");
+                },
+    success: function (result) {
+        console.log(result);//打印服务端返回的数据(调试用)
+        if (result.resultCode == 200) {
+            alert("SUCCESS");
+        }
+        ;
+    },
+    error : function() {
+        alert("异常！");
+    }
+});
+}
+</script>
+
+</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-12">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>可能遇到的问题说明： </h5>
+            </div>
+            <div class="ibox-content">
+
+                <div class="row">
+
+
+                    <div class="col-sm-12">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <i class="fa fa-info-circle"></i>
+                                发送字段值验证与转换：一般文本格式都能正确入库，但是个别发送的数值个别需要验证格式类型，或者转换格式后才能正确入库，DngAdmin系统没办法做到全面类型转换，个别还是需要根据自建的需要转换一下
+                            </div>
+                            <div class="panel-body">
+
+                                解决方法：需要到dngadmin_formcommon.py文件下，def form_add(zd_list,post_arry): 里 插入，elif "字段值" in
+                                key[1]: 编写验证和数据格式转换<br>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    {#                             <div class="col-sm-12">#}
+                    {#                                <div class="panel panel-warning">#}
+                    {#                                    <div class="panel-heading">#}
+                    {#                                        <i class="fa fa-info-circle"></i>列表发送更新：#}
+                    {#                                    </div>#}
+                    {#                                    <div class="panel-body">#}
+                    {##}
+                    {#                                        解决方法：post时候，带对应ID对应值，会更新修改这个ID值的数据，<br>#}
+                    {##}
+                    {#                                    </div>#}
+                    {#                                </div>#}
+                    {#                            </div>#}
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% else %}
+
+
+    <div class="animated fadeInDown">
+
+
+        <div class="col-sm-12">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">一键列表页</a>
+                    </li>
+                    <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">一键表单页</a>
+                    </li>
+                    <li class=""><a data-toggle="tab" href="#tab-3" aria-expanded="false">一键API页</a>
+                    </li>
+                    <li class=""><a data-toggle="tab" href="#tab-4" aria-expanded="false">一键空白页</a>
+                    </li>
+
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+
+
+                            <form class="layui-form" method="POST" action="/dngadmin/htmlcrud_post/">
+                                {% csrf_token %}
+
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">1:数据库映射</label>
+                                    <div class="layui-input-inline">
+                                        <input name="list_common" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input" lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">请填映射路径名(写入公共文件dngadmin_common.py)</div>
+
+
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="layui-btn layui-btn-danger" lay-submit="">写入公共文件
+                                        </button>
+                                        {# <button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                    <div class="layui-input-block"><br>
+                                        写入公共文件后，一定记得重启gunicorn线程重载！在执行下面的！
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form class="layui-form" method="POST" action="/dngadmin/htmlcrud_post/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">2:列表模型</label>
+                                    <div class="layui-input-inline">
+                                        <input name="list_py" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input"
+                                               lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">请填映射路径名(确定已经建立对应模型的表数据)</div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="layui-btn" lay-submit="">生成列表模型</button>
+                                        {# <button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                </div>
+                            </form>
+
+
+                            <form class="layui-form" method="POST" action="/dngadmin/htmlcrud_post/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">3:列表模板</label>
+                                    <div class="layui-input-inline">
+                                        <input name="list_html" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input"
+                                               lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">请填映射路径名</div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="btn btn-w-m btn-warning" lay-submit="">生成模板
+                                        </button>
+                                        {#<button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form class="layui-form" method="POST" action="/dngadmin/htmlcrud_post/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">4:列表映射</label>
+                                    <div class="layui-input-inline">
+                                        <input name="list_url" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input"
+                                               lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">请填映射路径名</div>
+
+                                    <div class="layui-input-inline">
+                                        <input name="list_url_zhushi" placeholder="请填写中文注释" autocomplete="off"
+                                               class="layui-input" lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">填写#中文注释</div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="btn btn-w-m btn-success" lay-submit="">写入映射
+                                        </button>
+                                        {# <button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                </div>
+                                <div class="layui-input-block">
+                                    映射完毕后，记得重启gunicorn线程重载！才可以正常使用！
+                                </div>
+                            </form>
+                            <br><br><br><br><br><br><br><br>
+
+                        </div>
+                    </div>
+                    <div id="tab-2" class="tab-pane">
+                        <div class="panel-body">
+
+                            <form class="layui-form" method="POST" action="/dngadmin/htmlcrud_post/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">1:数据库映射</label>
+                                    <div class="layui-input-inline">
+                                        <input name="list_common" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input" lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">请填映射路径名(写入公共文件dngadmin_common.py)</div>
+
+
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="layui-btn layui-btn-danger" lay-submit="">写入公共文件
+                                        </button>
+                                        {# <button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                    <div class="layui-input-block"><br>
+                                        写入公共文件后，一定记得重启gunicorn线程重载！在执行下面的！
+                                    </div>
+                                </div>
+                            </form>
+
+
+                            <form class="layui-form" method="POST" action="/dngadmin/htmlcrud_post/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">2:表单模型</label>
+                                    <div class="layui-input-inline">
+                                        <input name="post_py" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input"
+                                               lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">请填映射路径名(确定已经建立对应模型的表数据)</div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="layui-btn layui-btn-normal" lay-submit="">生成表单模型
+                                        </button>
+                                        {# <button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                </div>
+                            </form>
+
+
+                            <form class="layui-form" method="POST" action="/dngadmin/htmlcrud_post/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">3:表单模板</label>
+                                    <div class="layui-input-inline">
+                                        <input name="post_html" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input"
+                                               lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">请填映射路径名</div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="btn btn-w-m btn-warning" lay-submit="">生成模板
+                                        </button>
+                                        {#<button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form class="layui-form" method="POST" action="/dngadmin/htmlcrud_post/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">4:表单映射</label>
+                                    <div class="layui-input-inline">
+                                        <input name="post_url" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input"
+                                               lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">请填映射路径名</div>
+                                    <div class="layui-input-inline">
+                                        <input name="post_url_zhushi" placeholder="请填写中文注释" autocomplete="off"
+                                               class="layui-input" lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">填写#中文注释</div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="btn btn-w-m btn-success" lay-submit="">写入映射
+                                        </button>
+                                        {# <button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                </div>
+                                <div class="layui-input-block">
+                                    映射完毕后，记得重启gunicorn线程重载！才可以正常使用！
+                                </div>
+                            </form>
+                            <br><br><br><br><br><br><br><br>
+                        </div>
+
+                    </div>
+                    <div id="tab-3" class="tab-pane">
+                        <div class="panel-body">
+                            <br> <br>
+                            <form class="layui-form" method="get" action="/dngadmin/htmlcrud/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">一键API接收</label>
+                                    <div class="layui-input-inline">
+                                        <input name="api_post" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input" lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">可以重复一键生成，不影响数据</div>
+
+
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="btn btn-w-m btn-primary" lay-submit="">生成API接收
+                                        </button>
+                                        {# <button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                </div>
+                            </form>
+                            <br> <br> <br><br> <br>
+                            <form class="layui-form" method="get" action="/dngadmin/htmlcrud/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">一键API查询</label>
+                                    <div class="layui-input-inline">
+                                        <input name="api_json" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input" lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">可以重复一键生成，不影响数据</div>
+
+
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="btn btn-w-m btn-success" lay-submit="">生成API查询
+                                        </button>
+                                        {# <button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                </div>
+                            </form>
+                             <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+                        </div>
+                    </div>
+                    <div id="tab-4" class="tab-pane">
+                        <div class="panel-body">
+{#                             <form class="layui-form" method="POST" action="/dngadmin/htmlcrud_post/">#}
+{#                                {% csrf_token %}#}
+{##}
+{##}
+{#                                <div class="layui-form-item">#}
+{#                                    <label class="layui-form-label">1:数据库映射</label>#}
+{#                                    <div class="layui-input-inline">#}
+{#                                        <input name="list_common" placeholder="请填映射路径名" autocomplete="off"#}
+{#                                               class="layui-input" lay-verify="required">#}
+{#                                    </div>#}
+{#                                    <div class="layui-form-mid layui-word-aux">请填映射路径名(写入公共文件dngadmin_common.py)</div>#}
+{##}
+{##}
+{#                                </div>#}
+{##}
+{#                                <div class="layui-form-item">#}
+{#                                    <div class="layui-input-block">#}
+{#                                        <button type="submit" class="layui-btn layui-btn-danger" lay-submit="">写入公共文件#}
+{#                                        </button>#}
+                                        {# <button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+{#                                    </div>#}
+{#                                    <div class="layui-input-block"><br>#}
+{#                                        写入公共文件后，一定记得重启gunicorn线程重载！在执行下面的！#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </form>#}
+
+                            <form class="layui-form" method="POST" action="/dngadmin/htmlcrud_post/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">1:空白模型</label>
+                                    <div class="layui-input-inline">
+                                        <input name="none_py" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input"
+                                               lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">请填映射路径名(确定已经建立对应模型的表数据)</div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="layui-btn" lay-submit="">生成空白模型</button>
+                                        {# <button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                </div>
+                            </form>
+
+
+                            <form class="layui-form" method="POST" action="/dngadmin/htmlcrud_post/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">2:空白模板</label>
+                                    <div class="layui-input-inline">
+                                        <input name="none_html" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input"
+                                               lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">请填映射路径名</div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="btn btn-w-m btn-success" lay-submit="">生成空白模板
+                                        </button>
+                                        {# <button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form class="layui-form" method="POST" action="/dngadmin/htmlcrud_post/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">3:列表映射</label>
+                                    <div class="layui-input-inline">
+                                        <input name="nonepost_url" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input"
+                                               lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">请填映射路径名</div>
+
+                                    <div class="layui-input-inline">
+                                        <input name="nonepost_url_zhushi" placeholder="请填写中文注释" autocomplete="off"
+                                               class="layui-input" lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">填写#中文注释</div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="btn btn-w-m btn-warning" lay-submit="">写入映射
+                                        </button>
+                                        {# <button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                </div>
+                                <div class="layui-input-block">
+                                    映射完毕后，记得重启gunicorn线程重载！才可以正常使用！
+                                </div>
+                            </form>
+                            <br><br><br><br><br><br><br><br>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<!-- 全局js -->
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+
+<!-- layui的js -->
+<script src="{% static "layui/layui.js" %}" charset="utf-8"></script>
+<!-- 自定义js -->
+<script src="{% static "js/content.js" %}"></script>
+{#<script src="{% static "js/jquery-ui-1.10.4.min.js" %}"></script>#}
+{#<script src="{% static "js/plugins/beautifyhtml/beautifyhtml.js" %}"></script>#}
+{##}
+   <!-- CodeMirror -->
+    <script src="{% static "js/plugins/codemirror/codemirror.js" %}"></script>
+     <script src="{% static "js/plugins/codemirror/mode/javascript/javascript.js" %}"></script>
+<script>
+    layui.use('element', function () {
+        var $ = layui.jquery
+            , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        //触发事件
+        var active = {
+            tabAdd: function () {
+                //新增一个Tab项
+                element.tabAdd('demo', {
+                    title: '新选项' + (Math.random() * 1000 | 0) //用于演示
+                    , content: '内容' + (Math.random() * 1000 | 0)
+                    , id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+                })
+            }
+            , tabDelete: function (othis) {
+                //删除指定Tab项
+                element.tabDelete('demo', '44'); //删除：“商品管理”
+
+
+                othis.addClass('layui-btn-disabled');
+            }
+            , tabChange: function () {
+                //切换到指定Tab项
+                element.tabChange('demo', '22'); //切换到：用户管理
+            }
+        };
+
+        $('.site-demo-active').on('click', function () {
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+
+        //Hash地址的定位
+        var layid = location.hash.replace(/^#test=/, '');
+        element.tabChange('test', layid);
+
+        element.on('tab(test)', function (elem) {
+            location.hash = 'test=' + $(this).attr('lay-id');
+        });
+
+    });
+</script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function (value) {
+                if (value.length < 5) {
+                    return '标题至少得5个字符啊';
+                }
+            }
+            , pass: [
+                /^[\S]{6,12}$/
+                , '密码必须6到12位，且不能出现空格'
+            ]
+            , content: function (value) {
+                layedit.sync(editIndex);
+            }
+        });
+
+        //监听指定开关
+        form.on('switch(switchTest)', function (data) {
+            layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+                offset: '6px'
+            });
+            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+        });
+
+        //监听提交
+        form.on('submit(demo1)', function (data) {
+            layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            })
+            return false;
+        });
+
+        //表单赋值
+        layui.$('#LAY-component-form-setval').on('click', function () {
+            form.val('example', {
+                "username": "贤心" // "name": "value"
+                , "password": "123456"
+                , "interest": 1
+                , "like[write]": true //复选框选中状态
+                , "close": true //开关状态
+                , "sex": "女"
+                , "desc": "我爱 layui"
+            });
+        });
+
+        //表单取值
+        layui.$('#LAY-component-form-getval').on('click', function () {
+            var data = form.val('example');
+            alert(JSON.stringify(data));
+        });
+
+    });
+</script>
+    <script>
+        $(document).ready(function () {
+
+            var editor_one = CodeMirror.fromTextArea(document.getElementById("code1"), {
+                lineNumbers: true,
+                matchBrackets: true,
+                styleActiveLine: true,
+                theme: "ambiance"
+            });
+
+            var editor_two = CodeMirror.fromTextArea(document.getElementById("code2"), {
+                lineNumbers: true,
+                matchBrackets: true,
+                styleActiveLine: true,
+                theme: "ambiance"
+            });
+            var editor_two = CodeMirror.fromTextArea(document.getElementById("code3"), {
+                lineNumbers: true,
+                matchBrackets: true,
+                styleActiveLine: true,
+                theme: "ambiance"
+            });
+            var editor_two = CodeMirror.fromTextArea(document.getElementById("code4"), {
+                lineNumbers: true,
+                matchBrackets: true,
+                styleActiveLine: true,
+                theme: "ambiance"
+            });
+            var editor_two = CodeMirror.fromTextArea(document.getElementById("code5"), {
+                lineNumbers: true,
+                matchBrackets: true,
+                styleActiveLine: true,
+                theme: "ambiance"
+            });
+            var editor_two = CodeMirror.fromTextArea(document.getElementById("code6"), {
+                lineNumbers: true,
+                matchBrackets: true,
+                styleActiveLine: true,
+                theme: "ambiance"
+            });
+
+        });
+    </script>
+</body>
+
+</html>

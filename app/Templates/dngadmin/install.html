@@ -7,78 +7,90 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{title}}</title>
+    <title>{{ title }}</title>
 
-    <link rel="shortcut icon" href="{% static "favicon.ico"%}">
-    <link href="{% static "css/bootstrap.min.css"%}"rel="stylesheet">
-    <link href="{% static "css/font-awesome.min.css"%}" rel="stylesheet">
-    <link href="{% static "css/plugins/iCheck/custom.css"%}" rel="stylesheet">
-    <link href="{% static "css/animate.min.css"%}" rel="stylesheet">
-    <link href="{% static "css/style.min.css"%}" rel="stylesheet"><base target="_blank">
-    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+    <link rel="shortcut icon" href="{% static "favicon.ico" %}">
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/font-awesome.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/plugins/iCheck/custom.css" %}" rel="stylesheet">
+    <link href="{% static "css/animate.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/style.min.css" %}" rel="stylesheet">
+
+    <script>if (window.top !== window.self) {
+        window.top.location = window.location;
+    }</script>
 
 </head>
 
 <body class="gray-bg">
 
 
-
-    <div class="middle-box text-center loginscreen   animated fadeInDown">
+<div class="middle-box text-center loginscreen   animated fadeInDown">
+    <div>
         <div>
-            <div>
 
-                <h2>创建管理员账号</h2>
+            <h2>创建管理员账号</h2>
 
-            </div>
-            <h3>欢迎使用DngAdmin后台开发框架</h3>
-            <p>为极速开发而生</p>
-
-
-
-
-            <form class="m-t" role="form"  method="POST" action="/dngadmin/install_post/">
-                {% csrf_token %}
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="管理员账号" name="username" required="" minlength="6" maxlength="18">
-                </div>
-
-                <div class="form-group">
-                    <input type="password" class="form-control" placeholder="管理员密码"   name="password" required="" minlength="6" maxlength="18" >
-                </div>
-                                <div class="form-group">
-                    <input type="password" class="form-control" placeholder="重复管理员密码" name="repassword" required="" minlength="6" maxlength="18" >
-                </div>
-                <!--                <div class="form-group">-->
-<!--                    <input type="email" class="form-control" placeholder="管理员邮箱" required="">-->
-<!--                </div>-->
-                <div class="form-group">
-                        <div class="checkbox i-checks"><label> <input type="checkbox" required=""><i></i> 我同意DngAdmin框架使用免责协议</label></div>
-                </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">创建管理员</button>
-
-<!--                <p class="text-muted text-center"><small>安装4</small></p>-->
-                <a href="http://www.dngadmin.com" target="_blank" class="btn btn-sm btn-white btn-block" href="login.html">访问官网</a>
-
-            </form>
-
-            <p class="m-t"> <small>技术支持：</strong> Dngadmin开发框架 &copy; 2020-2030</small> </p>
         </div>
+        <h3>欢迎使用DngAdmin后台系统</h3>
+        <p>为极速开发而生</p>
+         <div class="alert alert-success">
+        <p>邮箱和手机号认证填写！会登录验证！</p>
+        <p>创建报错！检查db.sqlite3写入权限！</p>
+         </div>
+
+        <form class="m-t" role="form" method="POST" action="/dngadmin/install_post/">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="管理员账号" name="username" required="" minlength="6"
+                       maxlength="18">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="管理员手机号" name="phone" required="" minlength="11"
+                       maxlength="11">
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" placeholder="管理员邮箱"  name="mail" required="" minlength="3"
+                       maxlength="30">
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="管理员密码" name="password" required=""
+                       minlength="6" maxlength="18">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="重复管理员密码" name="repassword" required=""
+                       minlength="6" maxlength="18">
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox i-checks"><label> <input type="checkbox" required=""><i></i> 我同意DngAdmin后台系统使用免责协议</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary block full-width m-b">创建管理员</button>
+
+            <!--                <p class="text-muted text-center"><small>安装4</small></p>-->
+            <a href="http://www.dngadmin.com" target="_blank" class="btn btn-sm btn-white btn-block" href="login.html">访问官网</a>
+
+        </form>
+
+        <p class="m-t"><small>技术支持：</strong> Dngadmin开发后台系统 &copy; 2020-2030</small></p>
     </div>
+</div>
 
 
+<!-- Mainly scripts -->
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+<script src="{% static "js/plugins/iCheck/icheck.min.js" %}"></script>
 
+<script>
 
+    $(document).ready(function () {
+        $(".i-checks").iCheck({checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green",})
+    });
 
-    <!-- Mainly scripts -->
-    <script src="{% static "js/jquery.min.js" %}"></script>
-    <script src="{% static "js/bootstrap.min.js" %}"></script>
-    <script src="{% static "js/plugins/iCheck/icheck.min.js" %}"></script>
-
-    <script>
-
-        $(document).ready(function(){$(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",})});
-
-    </script>
+</script>
 
 </body>
 

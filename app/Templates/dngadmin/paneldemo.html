@@ -1,0 +1,767 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <title>面板排版</title>
+    <meta name="keywords" content="inspinia后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="inspinia是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="{% static "favicon.ico"%}"> <link href="{% static "css/bootstrap.min.css"%}"rel="stylesheet">
+    <link href="{% static "css/font-awesome.min.css"%}" rel="stylesheet">
+    <link href="{% static "css/animate.min.css"%}" rel="stylesheet">
+    <link href="{% static "css/style.min.css"%}" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>拖动面板</h5>
+                        <div class="ibox-tools">
+                            <label class="label label-primary">可拖动</label>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <h2>
+                                版本 1.2.1 中的新功能
+                            </h2>
+                        <p>
+                            攻城狮们夜以继日的疯狂加班，毛都快掉光了，解决了下列问题，赶快升级吧！
+                            <br>1.新版智慧公交，增加定位、地图、预估到达时间等功能。
+                            <br>2.丰富幼儿故事资源，宝宝爱学，妈妈放心。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins no-drop">
+                    <div class="ibox-title">
+                        <h5>拖动面板</h5>
+                        <div class="ibox-tools">
+                            <label class="label label-danger">不可拖动</label>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <h2>
+                                版本 1.2.1 中的新功能
+                            </h2>
+                        <p>
+                            攻城狮们夜以继日的疯狂加班，毛都快掉光了，解决了下列问题，赶快升级吧！
+                            <br>1.新版智慧公交，增加定位、地图、预估到达时间等功能。
+                            <br>2.丰富幼儿故事资源，宝宝爱学，妈妈放心。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>拖动面板</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="draggable_panels.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="draggable_panels.html#">选项1</a>
+                                </li>
+                                <li><a href="draggable_panels.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <h2>
+                                版本 1.2.1 中的新功能
+                            </h2>
+                        <p>
+                            攻城狮们夜以继日的疯狂加班，毛都快掉光了，解决了下列问题，赶快升级吧！
+                            <br>1.新版智慧公交，增加定位、地图、预估到达时间等功能。
+                            <br>2.丰富幼儿故事资源，宝宝爱学，妈妈放心。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>标题</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="typography.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="typography.html#">选项1</a>
+                                </li>
+                                <li><a href="typography.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <h1>标题 1
+                            <small>二级标题</small>
+                        </h1>
+                        <h2>标题 2
+                            <small>二级标题</small>
+                        </h2>
+                        <h3>标题 3
+                            <small>二级标题</small>
+                        </h3>
+                        <h4>标题 4
+                            <small>二级标题</small>
+                        </h4>
+                        <h5>标题 5
+                            <small>二级标题</small>
+                        </h5>
+                        <h6>标题 6
+                            <small>二级标题</small>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>段落文本</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="typography.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="typography.html#">选项1</a>
+                                </li>
+                                <li><a href="typography.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <p>Bootstrap中文网携手猎聘网共同为码农打造的高薪工作直达频道。好工作都在这里啦！</p>
+
+                        <p>Bootstrap中文网联合又拍云存储共同推出了开放CDN服务，我们对广泛的前端开源库提供了稳定的存储和带宽的支持，例如Bootstrap、jQuery等。</p>
+
+                        <p>
+                            Bootstrap优站精选频道收集了众多基于 Bootstrap 构建、设计精美的、有创意的网站。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>无样式列表</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="typography.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="typography.html#">选项1</a>
+                                </li>
+                                <li><a href="typography.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <ul class="unstyled">
+                            <li>每个人都有一个死角， 自己走不出来，别人也闯不进去。</li>
+                            <li>我把最深沉的秘密放在那里。</li>
+                            <li>你不懂我，我不怪你。</li>
+                            <li>每个人都有一道伤口， 或深或浅，盖上布，以为不存在。</li>
+                            <li>每个人都有一个死角， 自己走不出来，别人也闯不进去。
+                                <ul>
+                                    <li>每个人都有一个死角， 自己走不出来，别人也闯不进去。</li>
+                                    <li>我把最深沉的秘密放在那里。</li>
+                                    <li>你不懂我，我不怪你。</li>
+                                    <li>每个人都有一道伤口， 或深或浅，盖上布，以为不存在。</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>无序列表</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="typography.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="typography.html#">选项1</a>
+                                </li>
+                                <li><a href="typography.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <ul>
+                            <li>每个人都有一个死角， 自己走不出来，别人也闯不进去。</li>
+                            <li>我把最深沉的秘密放在那里。</li>
+                            <li>你不懂我，我不怪你。</li>
+                            <li>每个人都有一道伤口， 或深或浅，盖上布，以为不存在。</li>
+                            <li>每个人都有一个死角， 自己走不出来，别人也闯不进去。
+                                <ul>
+                                    <li>每个人都有一个死角， 自己走不出来，别人也闯不进去。</li>
+                                    <li>我把最深沉的秘密放在那里。</li>
+                                    <li>你不懂我，我不怪你。</li>
+                                    <li>每个人都有一道伤口， 或深或浅，盖上布，以为不存在。</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>有序列表</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="typography.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="typography.html#">选项1</a>
+                                </li>
+                                <li><a href="typography.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <ol>
+                            <li>每个人都有一个死角， 自己走不出来，别人也闯不进去。</li>
+                            <li>我把最深沉的秘密放在那里。</li>
+                            <li>你不懂我，我不怪你。</li>
+                            <li>每个人都有一道伤口， 或深或浅，盖上布，以为不存在。</li>
+                            <li>每个人都有一个死角， 自己走不出来，别人也闯不进去。
+                                <ul>
+                                    <li>每个人都有一个死角， 自己走不出来，别人也闯不进去。</li>
+                                    <li>我把最深沉的秘密放在那里。</li>
+                                    <li>你不懂我，我不怪你。</li>
+                                    <li>每个人都有一道伤口， 或深或浅，盖上布，以为不存在。</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>强调</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="typography.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="typography.html#">选项1</a>
+                                </li>
+                                <li><a href="typography.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <p class="text-muted">每个人都有一个死角， 自己走不出来，别人也闯不进去。</p>
+                        <p class="text-primary">每个人都有一个死角， 自己走不出来，别人也闯不进去。</p>
+                        <p class="text-success">每个人都有一个死角， 自己走不出来，别人也闯不进去。</p>
+                        <p class="text-info">每个人都有一个死角， 自己走不出来，别人也闯不进去。</p>
+                        <p class="text-warning">每个人都有一个死角， 自己走不出来，别人也闯不进去。</p>
+                        <p class="text-danger">每个人都有一个死角， 自己走不出来，别人也闯不进去。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>引用</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="typography.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="typography.html#">选项1</a>
+                                </li>
+                                <li><a href="typography.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <blockquote>
+                            <p>大弦嘈嘈如急雨，小弦切切如私雨。二十四桥明月夜，玉人何处教吹箫。</p>
+                            <small><strong>杜牧</strong>-<cite title="" data-original-title="">《寄扬州韩绰判官》</cite></small>
+                        </blockquote>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>对齐</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="typography.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="typography.html#">选项1</a>
+                                </li>
+                                <li><a href="typography.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <p class="text-left">左对齐文本</p>
+                        <p class="text-center">居中文本</p>
+                        <p class="text-right">右对齐文本</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>地址</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="typography.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="typography.html#">选项1</a>
+                                </li>
+                                <li><a href="typography.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <address>
+                            <strong>阿里巴巴集团.</strong><br>
+                            上海市闵行区绿地科技岛广场A座2606室<br>
+                            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+                        </address>
+
+                        <address>
+                            <strong>官网</strong>
+                            <a >www.dngadmin.com</a>
+                        </address>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>分组列表</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="typography.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="typography.html#">选项1</a>
+                                </li>
+                                <li><a href="typography.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content no-padding">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <span class="badge badge-primary">16</span> 每个人都有一个死角， 自己走不出来，别人也闯不进去。
+                            </li>
+                            <li class="list-group-item ">
+                                <span class="badge badge-info">12</span> 我把最深沉的秘密放在那里。
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-danger">10</span> 你不懂我，我不怪你。
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-success">10</span> 每个人都有一道伤口， 或深或浅，盖上布，以为不存在。
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>分组列表</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="typography.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="typography.html#">选项1</a>
+                                </li>
+                                <li><a href="typography.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="list-group">
+                            <a class="list-group-item active" href="typography.html#">
+                                <h3 class="list-group-item-heading">广西白龙洞题壁诗</h3>
+
+                                <p class="list-group-item-text">挺身登峻岭，举目照遥空。毁佛崇天帝，移民复古风。临军称将勇，玩洞羡诗雄。剑气冲星斗，文光射日虹。</p>
+                            </a>
+
+                            <a class="list-group-item" href="typography.html#">
+                                <h3 class="list-group-item-heading">丑奴儿</h3>
+
+                                <p class="list-group-item-text">沉思十五年中事，才也纵横，泪也纵横，双负箫心与剑名。春来没个关心梦，自忏飘零，不信飘零，请看床头金字经。</p>
+                            </a>
+
+                            <a class="list-group-item" href="typography.html#">
+                                <h3 class="list-group-item-heading">夜登金山</h3>
+
+                                <p class="list-group-item-text">楼台两岸水相连，江北江南镜里天。芦管玉箫齐送夜，一声飞断月如烟。</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Wells</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="typography.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="typography.html#">选项1</a>
+                                </li>
+                                <li><a href="typography.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="well">
+                            <h3>
+                                    默认效果
+                                </h3> 把 Well 用在元素上，能有嵌入（inset）的的简单效果。
+                        </div>
+                        <div class="well well-lg">
+                            <h3>
+                                    可选类
+                                </h3> 通过.well-lg，.well-sm可选修饰类，可以控制此组件的内补（padding）和圆角的设置。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <h3>任务列表</h3>
+                        <p class="small"><i class="fa fa-hand-o-up"></i> 在列表之间拖动任务面板</p>
+
+                        <div class="input-group">
+                            <input type="text" placeholder="添加新任务" class="input input-sm form-control">
+                            <span class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-white"> <i class="fa fa-plus"></i> 添加</button>
+                                </span>
+                        </div>
+
+                        <ul class="sortable-list connectList agile-list">
+                            <li class="warning-element">
+                                加强过程管理，及时统计教育经费使用情况，做到底码清楚，
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标签</a>
+                                    <i class="fa fa-clock-o"></i> 2015.09.01
+                                </div>
+                            </li>
+                            <li class="success-element">
+                                支持财会人员的继续培训工作。
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标记</a>
+                                    <i class="fa fa-clock-o"></i> 2015.05.12
+                                </div>
+                            </li>
+                            <li class="info-element">
+                                协同教导处搞好助学金、减免教科书费的工作。
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标记</a>
+                                    <i class="fa fa-clock-o"></i> 2015.09.10
+                                </div>
+                            </li>
+                            <li class="danger-element">
+                                要求会计、出纳人员严格执行财务制度，遵守岗位职责，按时上报各种资料。
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-primary">确定</a>
+                                    <i class="fa fa-clock-o"></i> 2015.06.10
+                                </div>
+                            </li>
+                            <li class="warning-element">
+                                做好职工公费医疗工作，按时发放门诊费。
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标签</a>
+                                    <i class="fa fa-clock-o"></i> 2015.09.09
+                                </div>
+                            </li>
+                            <li class="warning-element">
+                                有计划地把课本复习三至五遍。
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-primary">确定</a>
+                                    <i class="fa fa-clock-o"></i> 2015.08.04
+                                </div>
+                            </li>
+                            <li class="success-element">
+                                看一本高质量的高中语法书
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标记</a>
+                                    <i class="fa fa-clock-o"></i> 2015.05.12
+                                </div>
+                            </li>
+                            <li class="info-element">
+                                选择一份较好的英语报纸，通过阅读提高英语学习效果。
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标记</a>
+                                    <i class="fa fa-clock-o"></i> 2015.09.10
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <h3>进行中</h3>
+                        <p class="small"><i class="fa fa-hand-o-up"></i> 在列表之间拖动任务面板</p>
+                        <ul class="sortable-list connectList agile-list">
+                            <li class="success-element">
+                                全面、较深入地掌握我们“产品”的功能、特色和优势并做到应用自如。
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标签</a>
+                                    <i class="fa fa-clock-o"></i> 2015.09.01
+                                </div>
+                            </li>
+                            <li class="success-element">
+                                根据自己以前所了解的和从其他途径搜索到的信息，录入客户资料150家。
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标记</a>
+                                    <i class="fa fa-clock-o"></i> 2015.05.12
+                                </div>
+                            </li>
+                            <li class="warning-element">
+                                锁定有意向客户20家。
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标记</a>
+                                    <i class="fa fa-clock-o"></i> 2015.09.10
+                                </div>
+                            </li>
+                            <li class="warning-element">
+                                力争完成销售指标。
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标签</a>
+                                    <i class="fa fa-clock-o"></i> 2015.09.09
+                                </div>
+                            </li>
+                            <li class="info-element">
+                                在总结和摸索中前进。
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-primary">确定</a>
+                                    <i class="fa fa-clock-o"></i> 2015.08.04
+                                </div>
+                            </li>
+                            <li class="success-element">
+                                不断学习行业知识、产品知识，为客户带来实用介绍内容
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标记</a>
+                                    <i class="fa fa-clock-o"></i> 2015.05.12
+                                </div>
+                            </li>
+                            <li class="danger-element">
+                                先友后单：与客户发展良好友谊，转换销售员角色，处处为客户着想
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标记</a>
+                                    <i class="fa fa-clock-o"></i> 2015.11.04
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <h3>已完成</h3>
+                        <p class="small"><i class="fa fa-hand-o-up"></i> 在列表之间拖动任务面板</p>
+                        <ul class="sortable-list connectList agile-list">
+                            <li class="info-element">
+                                制定工作日程表
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标记</a>
+                                    <i class="fa fa-clock-o"></i> 2015.09.10
+                                </div>
+                            </li>
+                            <li class="warning-element">
+                                每天坚持打40个有效电话，挖掘潜在客户
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标签</a>
+                                    <i class="fa fa-clock-o"></i> 2015.09.09
+                                </div>
+                            </li>
+                            <li class="warning-element">
+                                拜访客户之前要对该客户做全面的了解(客户的潜在需求、职位、权限以及个人性格和爱好)
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标签</a>
+                                    <i class="fa fa-clock-o"></i> 2015.09.09
+                                </div>
+                            </li>
+                            <li class="warning-element">
+                                提高自己电话营销技巧，灵活专业地与客户进行电话交流
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-primary">确定</a>
+                                    <i class="fa fa-clock-o"></i> 2015.08.04
+                                </div>
+                            </li>
+                            <li class="success-element">
+                                通过电话销售过程中了解各盛市的设备仪器使用、采购情况及相关重要追踪人
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标记</a>
+                                    <i class="fa fa-clock-o"></i> 2015.05.12
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+        <script src="{% static "js/jquery.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/plugins/peity/jquery.peity.min.js" %}"></script>
+    <script src="{% static "js/content.js" %}"></script>
+    <script src="{% static "js/plugins/jquery-ui/jquery-ui.min.js" %}"></script>
+    <script src="{% static "js/plugins/iCheck/icheck.min.js" %}"></script>
+    <script src="{% static "js/demo/peity-demo.min.js" %}"></script>
+    <script>
+        $(document).ready(function(){WinMove()});
+    </script>
+
+</body>
+
+</html>

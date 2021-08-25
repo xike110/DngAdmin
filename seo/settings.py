@@ -11,6 +11,34 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import sqlite3
+
+
+#-------------------------------------------------------------------
+#                   读取DngAdmin配置文件-开始
+#-------------------------------------------------------------------
+
+# 连接数据库(如果不存在则创建)
+conn = sqlite3.connect('app/ssh/config.db')
+# 创建游标
+cursor = conn.cursor()
+# 查询数据单个查询ID
+sql = "select * from emil where id=?"
+values = cursor.execute(sql, (1,))  # 查询ID
+seoss=None
+for emil in values:
+
+    seoss={"id": emil[0], "host_str": emil[1], "port_str": emil[2], "pass_str": emil[3],"from_str": emil[4]}
+
+# 提交事物
+conn.commit()
+# 关闭游标
+cursor.close()
+# 关闭连接
+conn.close()
+
+#-----------------读取DngAdmin配置文件-结束------------------------------
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -46,7 +74,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -103,6 +131,56 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CACHES = {
+    # -------------------------------------------------------------------
+    #  硬盘本地目录缓存-优点：小型网站使用
+    # -------------------------------------------------------------------
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': 'dng_cache/cache',#这个是文件夹的路径,如果是windows写'LOCATION': 'c:\foo\bar',
+        'OPTIONS':{
+           'MAX_ENTRIES': 10000,           # 最大缓存记录的数量（默认300）
+           'CULL_FREQUENCY': 3,          # 缓存到达最大个数之后，剔除缓存个数的比例，即：1/CULL_FREQUENCY（默认3）
+          }
+
+    }
+}
+
+# CACHES = {
+#     # -------------------------------------------------------------------
+#     #  内存缓存-：适合开发高频API项目，极端追求速度的情况
+#     # -------------------------------------------------------------------
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+#         'LOCATION': 'unique-snowflake' # 存储器名称
+#         }
+# }
+
+
+# CACHES = {
+#     # -------------------------------------------------------------------
+#     #  数据库缓存-：适合中大型网站,适合负载均衡+云数据库，如果缓存在硬盘，开启负载均衡会出现缓存不一致情况
+#     # -------------------------------------------------------------------
+#     'default':{
+#         'BACKEND':'django.core.cache.backends.db.DatabaseCache',
+#         'LOCATION':'dng_cache_table',
+#         'OPTIONS':{
+#            'MAX_ENTRIES': 10000,           # 最大缓存记录的数量（默认300）
+#            'CULL_FREQUENCY': 3,          # 缓存到达最大个数之后，剔除缓存个数的比例，即：1/CULL_FREQUENCY（默认3）
+#           }
+#     }
+# }
+
+# 固定写法设置Email引擎
+
+
+EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = seoss["host_str"] # 腾讯QQ邮箱 SMTP 服务器地址
+EMAIL_PORT =  int(seoss["port_str"]) # SMTP服务的端口号
+EMAIL_HOST_USER = seoss["from_str"] #你的qq邮箱，
+EMAIL_HOST_PASSWORD = seoss["pass_str"] #你申请的授权码（略）
+EMAIL_USE_TLS= True # 这里必须是 True，否则发送不成功
+EMAIL_FROM = seoss["from_str"] # 邮件发送者的邮箱
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

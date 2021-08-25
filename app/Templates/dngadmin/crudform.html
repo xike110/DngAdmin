@@ -1,0 +1,376 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>{{ title }}</title>
+    <meta name="keywords" content="{{ title }}">
+    <meta name="description" content="{{ title }}">
+
+    <link rel="shortcut icon" href="{% static "favicon.ico" %}">
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/font-awesome.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/plugins/iCheck/custom.css" %}" rel="stylesheet">
+    <link href="{% static "css/animate.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/style.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/plugins/codemirror/codemirror.css" %}" rel="stylesheet">
+    <link href="{% static "css/plugins/codemirror/ambiance.css" %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "layui/css/layui.css" %}" media="all">
+
+</head>
+<script>
+
+    {% if tishi %}
+
+        window.onload = function () {
+            layer.alert('{{tishi}}', {
+                icon: 0,
+                skin: 'layer-ext-moon', time: 2000, //20s后自动关闭
+            })
+        }
+        setTimeout(function () {
+             window.location.href="/dngadmin/crudform/"
+        }, 2000);
+    {% endif %}
+
+    {% if jinggao %}
+
+        window.onload = function () {
+            layer.alert('{{jinggao}}', {
+                icon: 2,
+                skin: 'layer-ext-moon', time: 2000, //20s后自动关闭
+            })
+        }
+        setTimeout(function () {
+             window.location.href="/dngadmin/crudform/"
+        }, 2000);
+    {% endif %}
+
+
+    {% if yes %}
+
+        window.onload = function () {
+            layer.alert('{{yes}}', {
+                icon: 1,
+                skin: 'layer-ext-moon', time: 200000, //20s后自动关闭
+            })
+        }
+        setTimeout(function () {
+             window.location.href="/dngadmin/crudform/"
+        }, 2000);
+    {% endif %}
+
+</script>
+<body class="gray-bg">
+
+<br>
+
+
+    <div class="animated fadeInDown">
+
+
+        <div class="col-sm-12">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">一键表单页</a>
+                    </li>
+
+
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+
+                            <form class="layui-form" method="POST" action="/dngadmin/crudform_post/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">1:数据库映射</label>
+                                    <div class="layui-input-inline">
+                                        <input name="list_common" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input" lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">请填映射路径名(写入公共文件dngadmin_common.py)</div>
+
+
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="layui-btn layui-btn-danger" lay-submit="">写入公共文件
+                                        </button>
+                                        {# <button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                    <div class="layui-input-block"><br>
+                                        写入公共文件后，一定记得重启gunicorn线程重载！在执行下面的！
+                                    </div>
+                                </div>
+                            </form>
+
+
+                            <form class="layui-form" method="POST" action="/dngadmin/crudform_post/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">2:表单模型</label>
+                                    <div class="layui-input-inline">
+                                        <input name="post_py" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input"
+                                               lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">请填映射路径名(确定已经建立对应模型的表数据)</div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="layui-btn layui-btn-normal" lay-submit="">生成表单模型
+                                        </button>
+                                        {# <button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                </div>
+                            </form>
+
+
+                            <form class="layui-form" method="POST" action="/dngadmin/crudform_post/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">3:表单模板</label>
+                                    <div class="layui-input-inline">
+                                        <input name="post_html" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input"
+                                               lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">请填映射路径名</div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="btn btn-w-m btn-warning" lay-submit="">生成模板
+                                        </button>
+                                        {#<button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form class="layui-form" method="POST" action="/dngadmin/crudform_post/">
+                                {% csrf_token %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">4:表单映射</label>
+                                    <div class="layui-input-inline">
+                                        <input name="post_url" placeholder="请填映射路径名" autocomplete="off"
+                                               class="layui-input"
+                                               lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">请填映射路径名</div>
+                                    <div class="layui-input-inline">
+                                        <input name="post_url_zhushi" placeholder="请填写中文注释" autocomplete="off"
+                                               class="layui-input" lay-verify="required">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">填写#中文注释</div>
+                                </div>
+
+                                 <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="btn btn-w-m btn-success" lay-submit="">写入映射
+                                        </button>
+                                        {# <button type="reset" class="btn btn-w-m btn-white">重新填写</button>#}
+                                    </div>
+                                </div>
+                                <div class="layui-input-block">
+                                    映射完毕后，记得重启gunicorn线程重载！才可以正常使用！
+                                </div>
+                            </form>
+                            <br><br><br><br><br><br><br><br>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+<!-- 全局js -->
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+
+<!-- layui的js -->
+<script src="{% static "layui/layui.js" %}" charset="utf-8"></script>
+<!-- 自定义js -->
+<script src="{% static "js/content.js" %}"></script>
+{#<script src="{% static "js/jquery-ui-1.10.4.min.js" %}"></script>#}
+{#<script src="{% static "js/plugins/beautifyhtml/beautifyhtml.js" %}"></script>#}
+{##}
+   <!-- CodeMirror -->
+    <script src="{% static "js/plugins/codemirror/codemirror.js" %}"></script>
+     <script src="{% static "js/plugins/codemirror/mode/javascript/javascript.js" %}"></script>
+<script>
+    layui.use('element', function () {
+        var $ = layui.jquery
+            , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        //触发事件
+        var active = {
+            tabAdd: function () {
+                //新增一个Tab项
+                element.tabAdd('demo', {
+                    title: '新选项' + (Math.random() * 1000 | 0) //用于演示
+                    , content: '内容' + (Math.random() * 1000 | 0)
+                    , id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+                })
+            }
+            , tabDelete: function (othis) {
+                //删除指定Tab项
+                element.tabDelete('demo', '44'); //删除：“商品管理”
+
+
+                othis.addClass('layui-btn-disabled');
+            }
+            , tabChange: function () {
+                //切换到指定Tab项
+                element.tabChange('demo', '22'); //切换到：用户管理
+            }
+        };
+
+        $('.site-demo-active').on('click', function () {
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+
+        //Hash地址的定位
+        var layid = location.hash.replace(/^#test=/, '');
+        element.tabChange('test', layid);
+
+        element.on('tab(test)', function (elem) {
+            location.hash = 'test=' + $(this).attr('lay-id');
+        });
+
+    });
+</script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function (value) {
+                if (value.length < 5) {
+                    return '标题至少得5个字符啊';
+                }
+            }
+            , pass: [
+                /^[\S]{6,12}$/
+                , '密码必须6到12位，且不能出现空格'
+            ]
+            , content: function (value) {
+                layedit.sync(editIndex);
+            }
+        });
+
+        //监听指定开关
+        form.on('switch(switchTest)', function (data) {
+            layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+                offset: '6px'
+            });
+            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+        });
+
+        //监听提交
+        form.on('submit(demo1)', function (data) {
+            layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            })
+            return false;
+        });
+
+        //表单赋值
+        layui.$('#LAY-component-form-setval').on('click', function () {
+            form.val('example', {
+                "username": "贤心" // "name": "value"
+                , "password": "123456"
+                , "interest": 1
+                , "like[write]": true //复选框选中状态
+                , "close": true //开关状态
+                , "sex": "女"
+                , "desc": "我爱 layui"
+            });
+        });
+
+        //表单取值
+        layui.$('#LAY-component-form-getval').on('click', function () {
+            var data = form.val('example');
+            alert(JSON.stringify(data));
+        });
+
+    });
+</script>
+    <script>
+        $(document).ready(function () {
+
+            var editor_one = CodeMirror.fromTextArea(document.getElementById("code1"), {
+                lineNumbers: true,
+                matchBrackets: true,
+                styleActiveLine: true,
+                theme: "ambiance"
+            });
+
+            var editor_two = CodeMirror.fromTextArea(document.getElementById("code2"), {
+                lineNumbers: true,
+                matchBrackets: true,
+                styleActiveLine: true,
+                theme: "ambiance"
+            });
+            var editor_two = CodeMirror.fromTextArea(document.getElementById("code3"), {
+                lineNumbers: true,
+                matchBrackets: true,
+                styleActiveLine: true,
+                theme: "ambiance"
+            });
+            var editor_two = CodeMirror.fromTextArea(document.getElementById("code4"), {
+                lineNumbers: true,
+                matchBrackets: true,
+                styleActiveLine: true,
+                theme: "ambiance"
+            });
+            var editor_two = CodeMirror.fromTextArea(document.getElementById("code5"), {
+                lineNumbers: true,
+                matchBrackets: true,
+                styleActiveLine: true,
+                theme: "ambiance"
+            });
+            var editor_two = CodeMirror.fromTextArea(document.getElementById("code6"), {
+                lineNumbers: true,
+                matchBrackets: true,
+                styleActiveLine: true,
+                theme: "ambiance"
+            });
+
+        });
+    </script>
+</body>
+
+</html>

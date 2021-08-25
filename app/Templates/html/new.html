@@ -1,0 +1,401 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title }}</title>
+
+
+    <meta name="keywords" content=" {{ keywords }} "/>
+    <meta name="description" content="{{ description }} "/>
+
+
+</head>
+
+<body class="top-navigation">
+
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+
+        {% include 'html/head.html' %}  <!--公共头部导航-->
+
+        <div class="wrapper wrapper-content">
+            <div class="container">
+
+
+
+                 <div class="row">
+            <div class="col-sm-12">
+                <div class="widget label-success no-padding">
+                    <div class="p-m">
+                        <h1 class="m-xs">横幅广告:内容页预留地址，根据自己开发需求修改</h1>
+
+                                URL路径变更路由地址：根目录/app/html_urls.py<br>
+
+                                内容展示控制地址：根目录/app/html_views.py<br>
+
+                                公共头部模板地址：根目录/app/Templates/html/head.html<br>
+
+                                主体模板地址：根目录/app/Templates/html/new.html<br>
+
+                                公共尾部模板地址：根目录/app/Templates/html/footer.html<br>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+                <div class="row wrapper border-bottom  page-heading">
+                    <div class="col-lg-10">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="" _msthash="966589"
+                                                           _msttexthash="2136498">网站导航</a></li>
+                            <li class="breadcrumb-item"><a _msthash="966590" _msttexthash="4752878">目录一</a></li>
+                            <li class="breadcrumb-item active"><strong _msthash="966591"
+                                                                       _msttexthash="12350910">子目录二</strong></li>
+                        </ol>
+                    </div>
+                    <div class="col-lg-2"></div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-9 animated fadeInRight">
+                        <div class="mail-box-header">
+
+                            <h2>
+                                网站内容标题
+                            </h2>
+                            <div class="mail-tools tooltip-demo m-t-md">
+
+
+                                <h5>
+                                    <span class="font-noraml">关键字： </span>网站优化
+                                </h5>
+                                <h5>
+                                    <span class="pull-right font-noraml">2014年10月28日(星期二) 晚上8:20</span>
+                                    <span class="font-noraml">作者： </span>XXXXXX
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="mail-box">
+
+
+                            <div class="mail-body">
+                                <h4>网站内容标题：</h4>
+                                <p>
+                                    专注Python极速Web开发
+
+                                    基于python和Django原生后台系统！
+                                    <br><br><br><br>
+                                    官网：http://www.dngadmin.com
+                                    <br><br><br><br>
+                                    1.1 编写目的
+                                    目前Python已经成为市场第二大开发语言，但是web开发目前还是很少，主要是Python的环境搭建复杂不适合新手，还有目前没有一款适合的后台系统来管理WEB信息的原因，导致WEB优秀项目很少，由此开发了DngAdmin后台系统填补目前的空白。
+                                    <br><br><br><br>
+                                    1.2系统优势
+                                    DngAdmin后台系统,采用Python原生语言开发，没有安装多余的三方模块，方便新手环境搭建，采用前后端分离开发思维，通用的RBAC权限管理功能，实现多用户组管理，实现多用户管理，实现一键生成数据列表管理，实现一键生成表单提交，方便开发人员快速上手，减少开发人员工作量。
+                                    <br><br><br><br>
+
+                                    (一)DngAdmin后台系统，基于python和Django的后台系统框架介绍
+                                    <br><br><br><br>
+                                    2.1 数据仪表
+                                    提供后台数据的统计展示，方便用户快速了解后台运行情况和及时运维数据。
+
+                                    <br><br><br><br>
+
+
+                                    2.2 帐号设置
+                                    提供帐号个人资料修改，密码修改，和查看登录日志的功能，方便用户维护个人帐号信息
+
+
+                                    <br><br><br><br>
+
+
+                                </p>
+
+                                <p class="text-right">
+                                    XXXXXX
+                                </p>
+                            </div>
+
+                            <div class="mail-body text-right tooltip-demo">
+
+                                 <a class="btn btn-sm btn-white" href=""><i class="fa fa-arrow-left"></i> 上一页</a>
+                                <a class="btn btn-sm btn-white" href=""><i class="fa fa-arrow-right"></i> 下一页</a>
+                                <a class="btn btn-sm btn-white" href=""><i class="fa fa-reply"></i> 推荐</a>
+                                <button title="" data-placement="top" data-toggle="tooltip" type="button"
+                                        data-original-title="打印这页内容" class="btn btn-sm btn-white"><i
+                                        class="fa fa-print"></i> 打印
+                                </button>
+                                <button title="" data-placement="top" data-toggle="tooltip" data-original-title="举报"
+                                        class="btn btn-sm btn-white"><i class="fa fa-trash-o"></i> 举报
+                                </button>
+                            </div>
+                            <div class="clearfix"></div>
+
+
+                        </div>
+                    </div>
+                     <div class="col-sm-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-content mailbox-content">
+                                <div class="file-manager">
+                                 <i >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </i>
+                                        <a class="btn btn-default btn-rounded" href="/login/"><i class="fa fa-weixin"> </i>微信登录帐号</a>
+                                     <i >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </i>
+                                    <a class="btn btn-default btn-rounded" href="/login/"> <i class="fa fa-qq"> </i>QQ登录帐号</a>
+                                    <div class="space-25"></div>
+
+                                    <h5 class="tag-title">网站目录</h5>
+                                    <div id="external-events">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <button type="button" class="btn btn-primary btn-sm btn-block"> 网站栏目一
+                                                </button>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                 <button type="button" class="btn btn-primary btn-sm btn-block"> 网站栏目二
+                                                </button>
+                                            </div>
+                                             <div class="col-sm-6">
+                                                <button type="button" class="btn btn-primary btn-sm btn-block"> 网站栏目三
+                                                </button>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                 <button type="button" class="btn btn-primary btn-sm btn-block"> 网站栏目四
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                    <h5 class="tag-title">SEO标签</h5>
+                                    <ul class="tag-list" style="padding: 0">
+                                        <li><a href=""><i class="fa fa-tag"></i> 网站标签</a>
+                                        </li>
+                                        <li><a href=""><i class="fa fa-tag"></i> Python</a>
+                                        </li>
+                                        <li><a href=""><i class="fa fa-tag"></i> django</a>
+                                        </li>
+                                        <li><a href=""><i class="fa fa-tag"></i> 网站优化</a>
+                                        </li>
+                                        <li><a href=""><i class="fa fa-tag"></i> SEO优化</a>
+                                        </li>
+                                        <li><a href=""><i class="fa fa-tag"></i> 网站建设</a>
+                                        </li>
+                                        <li><a href=""><i class="fa fa-tag"></i> 网站排名</a>
+                                        </li>
+                                        <li><a href=""><i class="fa fa-tag"></i> DNG系统</a>
+                                        </li>
+                                         <li><a href=""><i class="fa fa-tag"></i> 网站标签</a>
+                                        </li>
+                                        <li><a href=""><i class="fa fa-tag"></i> Python</a>
+                                        </li>
+                                        <li><a href=""><i class="fa fa-tag"></i> django</a>
+                                        </li>
+                                        <li><a href=""><i class="fa fa-tag"></i> 网站优化</a>
+                                        </li>
+                                        <li><a href=""><i class="fa fa-tag"></i> SEO优化</a>
+                                        </li>
+                                        <li><a href=""><i class="fa fa-tag"></i> 网站建设</a>
+                                        </li>
+                                        <li><a href=""><i class="fa fa-tag"></i> 网站排名</a>
+                                        </li>
+                                        <li><a href=""><i class="fa fa-tag"></i> DNG系统</a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                     <h5 class="tag-title">最新信息列表</h5>
+                                    <ul class="category-list" style="padding: 0">
+                                        <li>
+                                            <a href=""> <span class="badge text-navy">1</span><i>&nbsp;</i>目前Python已经成为市场第二大开发语言</a>
+                                        </li>
+                                        <li>
+                                            <a href=""> <span class="badge text-danger">2</span><i>&nbsp;</i>主要是Python的环境搭建复杂不适合新手！</a>
+                                        </li>
+                                        <li>
+                                            <a href=""> <span class="badge text-primary">3</span><i>&nbsp;</i>通用的RBAC权限管理功能！</a>
+                                        </li>
+                                        <li>
+                                            <a href=""> <span class="badge text-info">4</span><i>&nbsp;</i>方便用户快速了解后台运行情况和及时运维数据！</a>
+                                        </li>
+                                        <li>
+                                            <a href=""> <span class="badge text-warning">5</span><i>&nbsp;</i>亲，双11来啦！帮你挑货，还送你4999元红包！</a>
+                                        </li>
+                                        <li>
+                                            <a href=""> <span class="badge text-navy">6</span><i>&nbsp;</i>亲，dndadmin系统最终发布版本1.0 ！</a>
+                                        </li>
+                                        <li>
+                                            <a href=""> <span class="badge text-danger">7</span><i>&nbsp;</i>和查看登录日志的功能，方便用户维护帐号信息！</a>
+                                        </li>
+                                        <li>
+                                            <a href=""> <span class="badge text-primary">8</span><i>&nbsp;</i>基于python和Django原生后台系统！</a>
+                                        </li>
+                                        <li>
+                                            <a href=""> <span class="badge text-info">9</span><i>&nbsp;</i>一键生成数据列表管理，实现一键生成表单提交！</a>
+                                        </li>
+                                        <li>
+                                            <a href=""> <span class="badge text-warning">10</span><i>&nbsp;</i>方便开发人员快速上手，减少开发人员工作量。</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 ui-sortable">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>推荐资讯</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link ui-sortable">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+
+
+                                    <i>&nbsp;&nbsp;</i><a href="">更多</a><i></i>
+
+                                </div>
+                            </div>
+                            <div class="ibox-content no-padding">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <span class="badge badge-primary">1</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0.0版本发布！
+                                    </li>
+                                    <li class="list-group-item ">
+                                        <span class="badge badge-info">2</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0.0版本发布！
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-danger">3</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0.0版本发布！
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-success">4</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0.0版本发布！
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-warning">5</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0.0版本发布！
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 ui-sortable">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>最新资讯</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link ui-sortable">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+
+
+                                    <i>&nbsp;&nbsp;</i><a href="">更多</a><i></i>
+
+                                </div>
+                            </div>
+                            <div class="ibox-content no-padding">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <span class="badge badge-primary">1</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0.0版本发布！
+                                    </li>
+                                    <li class="list-group-item ">
+                                        <span class="badge badge-info">2</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0.0版本发布！
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-danger">3</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0.0版本发布！
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-success">4</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0.0版本发布！
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-warning">5</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0.0版本发布！
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 ui-sortable">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>最新资讯</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link ui-sortable">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+
+
+                                    <i>&nbsp;&nbsp;</i><a href="">更多</a><i></i>
+
+                                </div>
+                            </div>
+                            <div class="ibox-content no-padding">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <span class="badge badge-primary">1</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0.0版本发布！
+                                    </li>
+                                    <li class="list-group-item ">
+                                        <span class="badge badge-info">2</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0.0版本发布！
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-danger">3</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0.0版本发布！
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-success">4</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0.0版本发布！
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-warning">5</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0.0版本发布！
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3 ui-sortable">
+
+                    </div>
+
+                </div>
+
+                <div class="p-m"></div>
+            </div>
+
+        </div>
+
+
+        {% include 'html/footer.html' %}  <!--公共尾部-->
+    </div>
+</div>
+
+
+</body>
+
+</html>

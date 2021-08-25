@@ -16,7 +16,7 @@
     <link href="{% static "css/font-awesome.min.css"%}" rel="stylesheet">
 
     <link href="{% static "css/animate.min.css"%}" rel="stylesheet">
-    <link href="{% static "css/style.min.css"%}" rel="stylesheet"><base target="_blank">
+    <link href="{% static "css/style.min.css"%}" rel="stylesheet">
 
 </head>
 
@@ -328,7 +328,7 @@
     </div>
     <script src="{% static "js/jquery.min.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
-    <script src="{% static "js/content.min.js" %}"></script>
+    <script src="{% static "js/content.js" %}"></script>
     <script>
         $(document).ready(function(){$("#loading-example-btn").click(function(){btn=$(this);simpleLoad(btn,true);simpleLoad(btn,false)})});function simpleLoad(btn,state){if(state){btn.children().addClass("fa-spin");btn.contents().last().replaceWith(" Loading")}else{setTimeout(function(){btn.children().removeClass("fa-spin");btn.contents().last().replaceWith(" Refresh")},2000)}};
     </script>

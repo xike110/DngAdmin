@@ -1703,7 +1703,15 @@ a cite {
 	float:left;
 	display:block;
 	padding:9px 15px;
-	width:80px;
+	/*width:12%;*/
+	font-weight:400;
+	line-height:20px;
+	text-align:right
+}
+.layui-form-label-huadong {
+	float:left;
+	display:block;
+	padding:9px 15px;
 	font-weight:400;
 	line-height:20px;
 	text-align:right
@@ -2441,8 +2449,8 @@ a cite {
 	padding:5px 10px
 }
 .layui-table-view .layui-table[lay-size=sm] .layui-table-cell {
-	height:20px;
-	line-height:20px
+	height:23px;
+	line-height:23px
 }
 .layui-table[lay-data] {
 	display:none

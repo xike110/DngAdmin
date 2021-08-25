@@ -1,0 +1,318 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>{{ title }}</title>
+    <meta name="keywords" content="{{ title }}">
+    <meta name="description" content="{{ title }}">
+
+    <link rel="shortcut icon" href="{% static "favicon.ico" %}">
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/font-awesome.min.css" %}" rel="stylesheet">
+
+    <link href="{% static "css/animate.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/style.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/plugins/iCheck/custom.css" %}" rel="stylesheet">
+
+    {#    <link href="{% static "css/plugins/colorpicker/css/bootstrap-colorpicker.min.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/cropper/cropper.min.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/switchery/switchery.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/jasny/jasny-bootstrap.min.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/nouslider/jquery.nouislider.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/datapicker/datepicker3.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/ionRangeSlider/ion.rangeSlider.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/clockpicker/clockpicker.css" %}" rel="stylesheet">#}
+
+
+    {#    <link rel="stylesheet" href="{% static "layui/css/layui.css" %}" media="all">#}
+
+</head>
+<script>
+
+    {% if tishi %}
+
+    window.onload = function () {
+        layer.alert('{{tishi}}', {
+            icon: 0,
+            skin: 'layer-ext-moon', time: 2000, //20s后自动关闭
+        })
+    }
+    {% endif %}
+
+    {% if jinggao %}
+
+    window.onload = function () {
+        layer.alert('{{jinggao}}', {
+            icon: 2,
+            skin: 'layer-ext-moon', time: 2000, //20s后自动关闭
+        })
+    }
+    {% endif %}
+
+
+    {% if yes %}
+
+    window.onload = function () {
+        layer.alert('{{yes}}', {
+            icon: 1,
+            skin: 'layer-ext-moon', time: 200000, //20s后自动关闭
+        })
+    }
+    {% endif %}
+
+</script>
+<body class="gray-bg">
+
+
+<div class="wrapper wrapper-content animated fadeInDown">
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>{{ title }}</h5>
+
+                </div>
+
+
+
+                <div class="ibox-content">
+
+
+
+
+
+
+
+
+                    <form class="form-horizontal" method="POST" action="/dngadmin/pluguser_post/">
+                        {% csrf_token %}
+
+
+
+
+
+                        {% for key in html_form %}
+                        {{ key|safe }}
+                        {% endfor %}
+
+
+
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button class="btn btn-primary" lay-submit="" type="submit">退出登录</button>
+
+                            </div>
+                        </div>
+
+                    </form>
+                        <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+
+                                <a href="http://www.dngadmin.com/?zhuce=1" ><button class="btn btn-white" >官网注册</button></a>
+                            </div>
+                        </div>
+                            </div>
+
+
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+    <!-- 全局js -->
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/content.js" %}"></script>
+
+    <!-- layui的js -->
+    <script src="{% static "layui/layui.js" %}" charset="utf-8"></script>
+    <!-- 自定义js -->
+    <script src="{% static "js/plugins/chosen/chosen.jquery.js" %}"></script>
+    <script src="{% static "js/plugins/iCheck/icheck.min.js" %}"></script>
+    <script src="{% static "js/plugins/validate/jquery.validate.min.js" %}"></script>
+    <script src="{% static "js/plugins/validate/messages_zh.min.js" %}"></script>
+    <script src="{% static "js/plugins/jasny/jasny-bootstrap.min.js" %}"></script>
+    <script src="{% static "js/plugins/clockpicker/clockpicker.js" %}"></script>
+
+    <!-- layerDate plugin javascript -->
+    <script src="{% static "js/plugins/layer/laydate/laydate.js" %}"></script>
+    <script>
+    //外部js调用
+    laydate({
+        elem: '#hello', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+        event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+    });
+
+    //日期范围限制
+    var start = {
+        elem: '#start',
+        format: 'YYYY/MM/DD hh:mm:ss',
+        min: laydate.now(), //设定最小日期为当前日期
+        max: '2099-06-16 23:59:59', //最大日期
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            end.min = datas; //开始日选好后，重置结束日的最小日期
+            end.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    var end = {
+        elem: '#end',
+        format: 'YYYY/MM/DD hh:mm:ss',
+        min: laydate.now(),
+        max: '2099-06-16 23:59:59',
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            start.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    laydate(start);
+    laydate(end);
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+    <script>
+        layui.use('element', function () {
+            var $ = layui.jquery
+                , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+            //触发事件
+            var active = {
+                tabAdd: function () {
+                    //新增一个Tab项
+                    element.tabAdd('demo', {
+                        title: '新选项' + (Math.random() * 1000 | 0) //用于演示
+                        , content: '内容' + (Math.random() * 1000 | 0)
+                        , id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+                    })
+                }
+                , tabDelete: function (othis) {
+                    //删除指定Tab项
+                    element.tabDelete('demo', '44'); //删除：“商品管理”
+
+
+                    othis.addClass('layui-btn-disabled');
+                }
+                , tabChange: function () {
+                    //切换到指定Tab项
+                    element.tabChange('demo', '22'); //切换到：用户管理
+                }
+            };
+
+            $('.site-demo-active').on('click', function () {
+                var othis = $(this), type = othis.data('type');
+                active[type] ? active[type].call(this, othis) : '';
+            });
+
+            //Hash地址的定位
+            var layid = location.hash.replace(/^#test=/, '');
+            element.tabChange('test', layid);
+
+            element.on('tab(test)', function (elem) {
+                location.hash = 'test=' + $(this).attr('lay-id');
+            });
+
+        });
+    </script>
+    <script>
+        layui.use(['form', 'layedit', 'laydate'], function () {
+            var form = layui.formo
+                , layer = layui.layer
+                , layedit = layui.layedit
+                , laydate = layui.laydate;
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+            laydate.render({
+                elem: '#date1'
+            });
+
+            //创建一个编辑器
+            var editIndex = layedit.build('LAY_demo_editor');
+
+            //自定义验证规则
+            form.verify({
+                title: function (value) {
+                    if (value.length < 5) {
+                        return '标题至少得5个字符啊';
+                    }
+                }
+                , pass: [
+                    /^[\S]{6,12}$/
+                    , '密码必须6到12位，且不能出现空格'
+                ]
+                , content: function (value) {
+                    layedit.sync(editIndex);
+                }
+            });
+
+            //监听指定开关
+            form.on('switch(switchTest)', function (data) {
+                layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+                    offset: '6px'
+                });
+                layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+            });
+
+            //监听提交
+            form.on('submit(demo1)', function (data) {
+                layer.alert(JSON.stringify(data.field), {
+                    title: '最终的提交信息'
+                })
+                return false;
+            });
+
+            //表单赋值
+            layui.$('#LAY-component-form-setval').on('click', function () {
+                form.val('example', {
+                    "username": "贤心" // "name": "value"
+                    , "password": "123456"
+                    , "interest": 1
+                    , "like[write]": true //复选框选中状态
+                    , "close": true //开关状态
+                    , "sex": "女"
+                    , "desc": "我爱 layui"
+                });
+            });
+
+            //表单取值
+            layui.$('#LAY-component-form-getval').on('click', function () {
+                var data = form.val('example');
+                alert(JSON.stringify(data));
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>

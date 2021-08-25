@@ -1,0 +1,607 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title }}</title>
+
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <meta name="keywords" content="{{ keywords }}"/>
+    <meta name="description" content="{{ description }}"/>
+
+
+</head>
+
+<body class="top-navigation">
+ <script>
+
+    {% if tishi %}
+
+        window.onload = function () {
+            layer.alert('{{tishi}}', {
+                icon: 0,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+
+            })
+        }
+         setTimeout(function () {
+             window.location.href="/"
+        }, 3000);
+
+    {% endif %}
+
+    {% if jinggao %}
+
+        window.onload = function () {
+            layer.alert('{{jinggao}}', {
+                icon: 2,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+
+                    })
+        }
+
+        setTimeout(function () {
+             window.location.href="/"
+        }, 3000);
+
+
+
+    {% endif %}
+
+
+    {% if yes %}
+
+        window.onload = function () {
+            layer.alert('{{yes}}', {
+                icon: 1,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+            })
+        }
+         setTimeout(function () {
+             window.location.href="/"
+        }, 3000);
+    {% endif %}
+
+</script>
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+
+        {% include 'html/head.html' %}  <!--公共头部导航-->
+
+
+        {% if htmlsetup.http_bool %}
+            <div class="wrapper wrapper-content">
+            <div class="container">
+
+
+
+                <div class="row animated fadeInRight">
+                    <div class="col-sm-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>幻灯片</h5>
+                            </div>
+                            <div>
+
+                                <div class="ibox-content no-padding border-left-right">
+                                    <img alt="image" width="100%" height="100%" class="img-responsive"
+                                         src="{% static "img/profile_big.jpg" %}">
+                                </div>
+
+
+{#                                <div class="ibox-content profile-content">#}
+{##}
+{#                                    <div class="user-button">#}
+{#                                        <div class="row">#}
+{#                                            <div class="col-sm-6">#}
+{#                                                <button type="button" class="btn btn-primary btn-sm btn-block"> 网站栏目一#}
+{#                                                </button>#}
+{#                                            </div>#}
+{#                                            <div class="col-sm-6">#}
+{#                                                <button type="button" class="btn btn-primary btn-sm btn-block"> 网站栏目二#}
+{#                                                </button>#}
+{#                                            </div>#}
+{#                                            <div class="col-sm-6">#}
+{#                                                <button type="button" class="btn btn-primary btn-sm btn-block"> 网站栏目三#}
+{#                                                </button>#}
+{#                                            </div>#}
+{#                                            <div class="col-sm-6">#}
+{#                                                <button type="button" class="btn btn-primary btn-sm btn-block"> 网站栏目四#}
+{#                                                </button>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="jumbotron">
+                            <h2>DngAdmin系统,为极速开发而生！</h2><small>编写目的
+                            目前Python已经成为市场第二大开发语言，但是web开发目前还是很少，主要是Python的环境搭建复杂不适合新手。</small>
+                            <ul class="list-group clear-list m-t">
+                                <li class="list-group-item fist-item"><span class="float-right">2014年10月28日</span><span
+                                        class="label label-success">1</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>DngAdmin后台
+                                </li>
+                                <li class="list-group-item"><span class="float-right">                                    2014年10月28日</span><span
+                                        class="label label-info">2</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>DngAdmin后台
+                                </li>
+                                <li class="list-group-item"><span class="float-right">                                    2014年10月28日</span><span
+                                        class="label label-primary">3</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>DngAdmin后台
+                                </li>
+                                <li class="list-group-item"><span class="float-right">                                    2014年10月28日</span><span
+                                        class="label label-default">4</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>DngAdmin后台
+                                </li>
+
+
+
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-4 ui-sortable">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <h3>最新资讯</h3>
+
+
+                                <ul class="sortable-list connectList agile-list">
+                                    <li class="warning-element">
+                                        加强过程管理，及时统计教育经费
+
+                                    </li>
+                                    <li class="success-element">
+                                        支持财会人员的继续培训工作。
+
+                                    </li>
+                                    <li class="info-element">
+                                        协同教导处搞好助学金、减免教科书费。
+
+                                    </li>
+                                    <li class="danger-element">
+                                        要求会计、出纳人员严格执行财务
+
+                                    </li>
+                                    <li class="danger-element">
+                                        要求会计、出纳人员严格执行
+
+                                    </li>
+
+
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="widget navy-bg no-padding">
+                            <div class="p-m">
+                                <h1 class="m-xs">横幅广告-AD1</h1>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-3 ui-sortable">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>资讯列表</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link ui-sortable">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+
+
+                                    <i>&nbsp;&nbsp;</i><a href="">更多</a><i></i>
+
+                                </div>
+                            </div>
+                            <div class="ibox-content no-padding">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <span class="badge badge-primary">1</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item ">
+                                        <span class="badge badge-info">2</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-danger">3</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-success">4</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-warning">5</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 ui-sortable">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>资讯列表</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link ui-sortable">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+
+
+                                    <i>&nbsp;&nbsp;</i><a href="">更多</a><i></i>
+
+                                </div>
+                            </div>
+                            <div class="ibox-content no-padding">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <span class="badge badge-primary">1</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item ">
+                                        <span class="badge badge-info">2</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-danger">3</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-success">4</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-warning">5</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 ui-sortable">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>资讯列表</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link ui-sortable">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+
+
+                                    <i>&nbsp;&nbsp;</i><a href="">更多</a><i></i>
+
+                                </div>
+                            </div>
+                            <div class="ibox-content no-padding">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <span class="badge badge-primary">1</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item ">
+                                        <span class="badge badge-info">2</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-danger">3</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-success">4</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-warning">5</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 ui-sortable">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>资讯列表</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link ui-sortable">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+
+
+                                    <i>&nbsp;&nbsp;</i><a href="">更多</a><i></i>
+
+                                </div>
+                            </div>
+                            <div class="ibox-content no-padding">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <span class="badge badge-primary">1</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item ">
+                                        <span class="badge badge-info">2</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-danger">3</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-success">4</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-warning">5</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-6">
+                        <div class="widget lazur-bg no-padding">
+                            <div class="p-m">
+                                <h1 class="m-xs">横幅广告-AD2</h1>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="widget lazur-bg no-padding">
+                            <div class="p-m">
+                                <h1 class="m-xs">横幅广告-AD3</h1>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-3 ui-sortable">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>资讯列表</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link ui-sortable">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+
+
+                                    <i>&nbsp;&nbsp;</i><a href="">更多</a><i></i>
+
+                                </div>
+                            </div>
+                            <div class="ibox-content no-padding">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <span class="badge badge-primary">1</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item ">
+                                        <span class="badge badge-info">2</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-danger">3</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-success">4</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-warning">5</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 ui-sortable">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>资讯列表</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link ui-sortable">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+
+
+                                    <i>&nbsp;&nbsp;</i><a href="">更多</a><i></i>
+
+                                </div>
+                            </div>
+                            <div class="ibox-content no-padding">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <span class="badge badge-primary">1</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item ">
+                                        <span class="badge badge-info">2</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-danger">3</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-success">4</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-warning">5</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 ui-sortable">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>资讯列表</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link ui-sortable">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+
+
+                                    <i>&nbsp;&nbsp;</i><a href="">更多</a><i></i>
+
+                                </div>
+                            </div>
+                            <div class="ibox-content no-padding">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <span class="badge badge-primary">1</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item ">
+                                        <span class="badge badge-info">2</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-danger">3</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-success">4</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-warning">5</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 ui-sortable">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>资讯列表</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link ui-sortable">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+
+
+                                    <i>&nbsp;&nbsp;</i><a href="">更多</a><i></i>
+
+                                </div>
+                            </div>
+                            <div class="ibox-content no-padding">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <span class="badge badge-primary">1</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item ">
+                                        <span class="badge badge-info">2</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-danger">3</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-success">4</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="badge badge-warning">5</span><i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                        DngAdmin后台系统 V 1.0版本
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="widget yellow-bg no-padding">
+                            <div class="p-m">
+                                <h1 class="m-xs">底部横幅广告-AD4</h1>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="widget  no-padding">
+                            <div class="p-m">
+                                <h4 class="m-xs">友情链接：DngAdmin系统</h4>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+
+            <div class="middle-box2 text-center loginscreen   animated fadeInDown">
+
+            <div>
+                <h1>{{ logotitle }}</h1>
+
+                <div class="alert alert-success">
+                    <br>
+                   <h3> 网站建设中或者不对外开放！</h3>
+                    <br>
+
+                </div>
+
+                 <h3><p class="m-t"><small>网站关闭备案中！等待备案结束开放！</small></p></h3>
+            </div>
+        </div>
+        {% endif %}
+
+
+
+        {% include 'html/footer.html' %}  <!--公共尾部-->
+    </div>
+</div>
+
+</body>
+
+</html>

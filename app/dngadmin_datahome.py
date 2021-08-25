@@ -24,63 +24,88 @@ from . import dngadmin_common #公共函数
 
 def datahome(request):
 	# ----------------------------------------------------------
-	#   判断页面权限》》》 开始
+	#    通过路径获得栏目ID 》》》开始
 	# ----------------------------------------------------------
-
-	dngroute_uid = dngadmin_common.dng_ckurl(request)[0]
-	get_url = dngadmin_common.dng_ckurl(request)[1]
-
+	get_url = request.path
+	get_url = get_url.split("/")  # 分割
+	get_url = get_url[1] + "/" + get_url[2]
+	if "_" in get_url:
+		url = get_url.split("_")  # 分割
+		get_url = url[0]
+	uid = models.dngroute.objects.filter(url_str__contains=get_url).first()
+	dngroute_uid = uid.uid_int
+	# ----------------------------------------------------------
+	#    日记记录与COOKIE验证与权限 》》》开始
+	# ----------------------------------------------------------
 	ip = request.META.get('HTTP_X_FORWARDED_FOR')  # 获取ip信息
 	liulanqi = request.META.get('HTTP_USER_AGENT')  # 获取浏览器信息
 	yuming_url = request.META.get('HTTP_HOST')  # 当前访问的域名
 	geturl = request.META.get('QUERY_STRING')  # 获取域名后缀的URL
 	mulu_url = request.path  # 获取不包含？号之前的映射路径
-	tishi = request.GET.get('tishi')  # 提示信息
-	jinggao = request.GET.get('jinggao')  # 警告信息
-	yes = request.GET.get('yes')  # 成功信息
-	xitong = dngadmin_common.dng_setup()  # 系统设置
+	tishi = request.GET.get('tishi')  # 提示
+	jinggao = request.GET.get('jinggao')  # 警告
+	yes = request.GET.get('yes')  # 警告
 
 	if "dnguser_uid" in request.COOKIES:  # 判断cookies有无，跳转
-		dnguser_uid = request.get_signed_cookie(key="dnguser_uid", default=None,
-												salt=dngadmin_common.dng_anquan().salt_str, max_age=None)
-		dnguser_name = request.get_signed_cookie(key="dnguser_name", default=None,
-												 salt=dngadmin_common.dng_anquan().salt_str, max_age=None)
-		dnguser_cookie = request.get_signed_cookie(key="dnguser_cookie", default=None,
-												   salt=dngadmin_common.dng_anquan().salt_str, max_age=None)
+		cookie_user_uid = request.get_signed_cookie(key="dnguser_uid", default=None,
+													salt=dngadmin_common.dng_anquan().salt_str, max_age=None)
+		cookie_user_name = request.get_signed_cookie(key="dnguser_name", default=None,
+													 salt=dngadmin_common.dng_anquan().salt_str, max_age=None)
+		cookie_user_cookie_echo = request.get_signed_cookie(key="dnguser_cookie_echo", default=None,
+															salt=dngadmin_common.dng_anquan().salt_str, max_age=None)
+		cookie_user_cookie = request.get_signed_cookie(key="dnguser_cookie", default=None,
+													   salt=dngadmin_common.dng_anquan().salt_str, max_age=None)
+
+		cookie_pr = dngadmin_common.dng_yanzheng(cookie_user_uid, cookie_user_name, cookie_user_cookie,
+												 cookie_user_cookie_echo)
+		if cookie_pr:
+			dnguser_uid = cookie_pr.uid_int  # 赋值ID
+			dnguser_name = cookie_pr.username_str  # 赋值用户名
+			dnguser_cookie = cookie_pr.cookie_str  # 赋值COOKIE记录
+		else:
+			return HttpResponseRedirect('/dngadmin/tips/?jinggao=' + parse.quote('检测到非法登录'))
 
 		if dngadmin_common.dng_anquan().tongshi_bool == False:  # 验证是否同时登录
 			if dngadmin_common.dng_tongshi(uid=dnguser_uid, cookie=dnguser_cookie) == False:
-				urlstr = parse.quote('不允许同时登录账号')
-				response = HttpResponseRedirect('/dngadmin/tips/?jinggao=' + urlstr)
-				return response
+				return HttpResponseRedirect('/dngadmin/tips/?jinggao=' + parse.quote('不允许同时登录账号'))
 	else:
-		urlstr = parse.quote('您需要重新登录')
-		response = HttpResponseRedirect('/dngadmin/tips/?jinggao=' + urlstr)
-		return response
+		return HttpResponseRedirect('/dngadmin/tips/?jinggao=' + parse.quote('您需要重新登录'))
 
-	group = dngadmin_common.dng_usergroup(gid=dngadmin_common.dng_dnguser(dnguser_uid).group_int)  # 获取会员组名称
+	# ----------------------------------------------------------
+	#    日记记录与COOKIE验证与权限《《《 结束
+	# ----------------------------------------------------------
+	# ----------------------------------------------------------
+	#    判断页面权限开始》》》开始
+	# ----------------------------------------------------------
+	dnguser =dngadmin_common.dng_dnguser(dnguser_uid)
+	group = dngadmin_common.dng_usergroup(gid=dnguser.group_int)  # 获取会员组名称
 	dngroute = models.dngroute.objects.filter(uid_int=dngroute_uid).first()  # 查询路径取回本页面菜单信息
 	dngadmin_common.dng_dngred(uid=dnguser_uid, title=dngroute.name_str, url=mulu_url, user=liulanqi, ip=ip)  # 日记记录函数
 
 	if not dngroute.url_str in mulu_url:  # 判断URL统一
-		urlstr = parse.quote('您的访问与菜单映射不匹配')
-		response = HttpResponseRedirect('/dngadmin/tips/?jinggao=' + urlstr)
-		return response
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您的访问与菜单映射不匹配</h1></center><div>""")
 
-	# elif not '|' + str(dngroute_uid) + '|' in group.menu_text:  # 判断菜单权限
-	# 	urlstr = parse.quote('您没有访问这个菜单的权限')
-	# 	response = HttpResponseRedirect('/dngadmin/tips/?jinggao=' + urlstr)
-	# 	return response
+	elif not '|' + str(dngroute_uid) + '|' in group.menu_text:  # 判断菜单权限
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您没有访问这个栏目的权限</h1></center><div>""")
 
-	added = dngadmin_common.dng_zsgc(dngroute_uid, group.added_text)  # 增
-	delete = dngadmin_common.dng_zsgc(dngroute_uid, group.delete_text)  # 删
-	update = dngadmin_common.dng_zsgc(dngroute_uid, group.update_text)  # 改
-	see = dngadmin_common.dng_zsgc(dngroute_uid, group.see_text)  # 查
+	added = False  # 增
+	delete = False  # 删
+	update = False  # 改
+	see = False  # 查
 
-	zd_list = dngadmin_common.dng_ziduan("adminuser")  # 获取对应表下所有字段值
+	if '|' + str(dngroute_uid) + '|' in group.added_text:  # 判断增加权限
+		added = True
+	if '|' + str(dngroute_uid) + '|' in group.delete_text:  # 判断删除权限
+		delete = True
+	if '|' + str(dngroute_uid) + '|' in group.update_text:  # 判断修改权限
+		update = True
+	if '|' + str(dngroute_uid) + '|' in group.see_text:  # 判断查看权限
+		see = True
+
 	# ----------------------------------------------------------
 	#   判断页面权限开始《《《 结束
 	# ----------------------------------------------------------
+
 
 	return render(request,"dngadmin/datahome.html",{
 		"title":dngroute.name_str,
@@ -90,7 +115,8 @@ def datahome(request):
 		"added": added,#增
 		"delete": delete,#删
 		"update": update, #改
-		"see": see, #查
+		"see": see, #开发者权限
+
 
 
 

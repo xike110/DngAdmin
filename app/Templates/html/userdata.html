@@ -1,0 +1,402 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title }}</title>
+
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <meta name="keywords" content="{{ keywords }}"/>
+    <meta name="description" content="{{ description }}"/>
+
+
+</head>
+ <script>
+
+    {% if tishi %}
+
+        window.onload = function () {
+            layer.alert('{{tishi}}', {
+                icon: 0,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+
+            })
+        }
+         setTimeout(function () {
+             window.location.href="{{ route.url_str }}"
+        }, 3000);
+
+    {% endif %}
+
+    {% if jinggao %}
+
+        window.onload = function () {
+            layer.alert('{{jinggao}}', {
+                icon: 2,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+
+                    })
+        }
+
+        setTimeout(function () {
+             window.location.href="{{ route.url_str }}"
+        }, 3000);
+
+
+
+    {% endif %}
+
+
+    {% if yes %}
+
+        window.onload = function () {
+            layer.alert('{{yes}}', {
+                icon: 1,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+            })
+        }
+         setTimeout(function () {
+             window.location.href="{{ route.url_str }}"
+        }, 3000);
+    {% endif %}
+
+</script>
+
+<body class="top-navigation">
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+ {% include 'html/head.html' %}  <!--公共头部导航-->
+
+
+<div class="wrapper wrapper-content">
+ <div class="row wrapper border-bottom  page-heading">
+                    <div class="col-lg-10">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/" >网站首页</a></li>
+                            <li class="breadcrumb-item"><a >会员中心</a></li>
+                            <li class="breadcrumb-item active"><strong >{{ route.name_str }}</strong></li>
+                        </ol>
+                    </div>
+                    <div class="col-lg-2"></div>
+
+                </div>
+    <div class="row animated fadeInRight">
+
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>{{ route.name_str }}-修改</h5>
+                </div>
+                <div>
+
+
+
+
+                    <form action="/userdata_post/" class="layui-form" method="POST">
+                        <div class="ibox-content profile-content">
+
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2">头像</label>
+                                <div class="layui-input-block">
+                                    <img alt="image" class="img-responsive" src="{% static "img/profile_small.jpg"%}" >
+
+                                </div>
+                            </div>
+
+                            {% csrf_token %}
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2" >用户ID</label>
+                                <div class="layui-input-block">
+
+                                    <p  class="layui-form-mid layui-word-aux" name="{{zd_list.0.1}}" >{{biaodan.uid_int}}</p>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2" >我的账号</label>
+                                <div class="layui-input-block">
+
+                                    <p  class="layui-form-mid layui-word-aux" name="{{zd_list.0.2}}" >{{biaodan.username_str}}</p>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2">昵称</label>
+                                <div class="layui-input-block">
+                                    <input autocomplete="off" class="layui-input" lay-reqtext="必须填写"  lay-verify="required" name="{{zd_list.0.4}}"  placeholder="请输入昵称" type="text" value="{{biaodan.name_str}}">
+                                </div>
+                            </div>
+
+
+
+                              {% if "男" in biaodan.gender_str %}
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2">性别</label>
+                                <div class="layui-input-block">
+                                    <input checked="" name="{{zd_list.0.5}}" title="男" type="radio" value="男">
+                                    <input name="{{zd_list.0.5}}" title="女" type="radio" value="女">
+
+                                </div>
+                            </div>
+
+                            {% elif  "女" in biaodan.gender_str %}
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2">性别</label>
+                                <div class="layui-input-block">
+                                    <input  name="{{zd_list.0.5}}" title="男" type="radio" value="男">
+                                    <input checked="" name="{{zd_list.0.5}}" title="女" type="radio" value="女">
+
+                                </div>
+                            </div>
+                            {% else %}
+                                <div class="layui-form-item">
+                                <label class="layui-form-label2">性别</label>
+                                <div class="layui-input-block">
+                                    <input checked="" name="{{zd_list.0.5}}" title="男" type="radio" value="男">
+                                    <input name="{{zd_list.0.5}}" title="女" type="radio" value="女">
+
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2">个人简介</label>
+                                <div class="layui-input-block">
+                                    <input autocomplete="off" class="layui-input" name="{{zd_list.0.6}}"  lay-verify= "required" placeholder="请输个人简介" type="text" value="{{biaodan.introduce_str}}">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2">我的邮箱</label>
+                                <div class="layui-input-block">
+                                    <input autocomplete="off" class="layui-input" lay-verify="email"  lay-verify= "required" name="{{zd_list.0.7}}"   placeholder="请输入邮箱" type="text" value="{{biaodan.emall_str}}">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2">手机号码</label>
+                                <div class="layui-input-block">
+                                    <input autocomplete="off" class="layui-input" lay-verify="phone" lay-verify= "required"  name="{{zd_list.0.8}}"   placeholder="请输入手机号" type="text" value="{{biaodan.mobile_str}}">
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit="" type="submit">提交修改</button>
+                                    <button class="layui-btn layui-btn-primary" type="reset">重新填写</button>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </form>
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+         <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>{{ route.name_str }}-信息</h5>
+                </div>
+                <div>
+
+                             <div class="ibox-content profile-content">
+
+
+
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2" >用户组</label>
+                                <div class="layui-input-block">
+
+                                    <p  class="layui-form-mid layui-word-aux" name="{{zd_list.0.9}}" >{{group_gname}}</p>
+                                </div>
+                            </div>
+                            {% if biaodan.rank_str %}
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2" >我的等级</label>
+                                <div class="layui-input-block">
+
+                                    <p  class="layui-form-mid layui-word-aux" name="{{zd_list.0.10}}" >{{biaodan.rank_str}}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2" >我的余额</label>
+                                <div class="layui-input-block">
+
+                                    <p  class="layui-form-mid layui-word-aux" name="{{zd_list.0.12}}" >{{biaodan.money_int}}</p>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2" >累计充值</label>
+                                <div class="layui-input-block">
+
+                                    <p  class="layui-form-mid layui-word-aux" name="{{zd_list.0.13}}" >{{biaodan.totalmoney_int}}</p>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2" >累计消费</label>
+                                <div class="layui-input-block">
+
+                                    <p  class="layui-form-mid layui-word-aux" name="{{zd_list.0.14}}" >{{biaodan.totalspend_int}}</p>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2" >我的积分</label>
+                                <div class="layui-input-block">
+
+                                    <p  class="layui-form-mid layui-word-aux" name="{{zd_list.0.15}}" >{{biaodan.integral_int}}</p>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2" >我的推广</label>
+                                <div class="layui-input-block">
+
+                                    <p  class="layui-form-mid layui-word-aux" name="{{zd_list.0.16}}" >{{biaodan.spread_int}}</p>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2" >登录IP</label>
+                                <div class="layui-input-block">
+
+                                    <p  class="layui-form-mid layui-word-aux" name="{{zd_list.0.17}}" >{{biaodan.ip_str}}</p>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2" >登录设备</label>
+                                <div class="layui-input-block">
+
+                                    <p  class="layui-form-mid layui-word-aux" name="{{zd_list.0.18}}" >{{biaodan.shebei_str}}</p>
+                                </div>
+                            </div>
+                             <div class="layui-form-item">
+                                <label class="layui-form-label2" >登录期限</label>
+                                <div class="layui-input-block">
+
+                                    <p  class="layui-form-mid layui-word-aux" name="{{zd_list.0.25}}" >{{biaodan.vipime_time|date:"Y年-m月-d日 H:i:s"}}</p>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label2" >注册时间</label>
+                                <div class="layui-input-block">
+
+                                    <p  class="layui-form-mid layui-word-aux" name="{{zd_list.0.26}}" >{{biaodan.create_time|date:"Y年-m月-d日 H:i:s"}}</p>
+                                </div>
+                            </div>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+  {% include 'html/footer.html' %}  <!--公共尾部-->
+
+</body>
+{#<script src="/static/layui/layui.js" charset="utf-8"></script>#}
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            }
+            ,pass: [
+                /^[\S]{6,12}$/
+                ,'密码必须6到12位，且不能出现空格'
+            ]
+            ,content: function(value){
+                layedit.sync(editIndex);
+            }
+        });
+
+        //监听指定开关
+        form.on('switch(switchTest)', function(data){
+            layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+                offset: '6px'
+            });
+            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+        });
+
+        //监听提交
+        form.on('submit(demo1)', function(data){
+            layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            })
+            return false;
+        });
+
+        //表单赋值
+        layui.$('#LAY-component-form-setval').on('click', function(){
+            form.val('example', {
+                "username": "贤心" // "name": "value"
+                ,"password": "123456"
+                ,"interest": 1
+                ,"like[write]": true //复选框选中状态
+                ,"close": true //开关状态
+                ,"sex": "女"
+                ,"desc": "我爱 layui"
+            });
+        });
+
+        //表单取值
+        layui.$('#LAY-component-form-getval').on('click', function(){
+            var data = form.val('example');
+            alert(JSON.stringify(data));
+        });
+
+    });
+</script>
+
+</html>

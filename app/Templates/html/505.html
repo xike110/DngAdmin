@@ -1,0 +1,48 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title }}</title>
+
+
+    <meta name="keywords" content=" {{ keywords }} "/>
+    <meta name="description" content="{{ description }} "/>
+    <link href="{% static "css/bootstrap.html.css" %}" rel="stylesheet">
+<link href="{% static "/css/font-awesome.html.css" %}" rel="stylesheet">
+<link href="{% static "css/animate.html.css" %}" rel="stylesheet">
+<link href="{% static "css/style.html.css" %}" rel="stylesheet">
+
+</head>
+
+<body class="top-navigation">
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+<div class="middle-box text-center animated fadeInDown">
+        <h1>505</h1>
+        <h3 class="font-bold">{{ logotitle }}发送异常程序错误！</h3>
+{{ seoss }}
+
+<h4 class="font-bold">备案号：<a href="https://beian.miit.gov.cn" TARGET="_blank">{{ file }} </a></h4>
+   {% autoescape off %}统计：{{ statistics }}{% endautoescape %}
+
+
+
+
+
+    </div>
+</div>
+
+
+</body>
+
+</html>
+

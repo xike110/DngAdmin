@@ -26,14 +26,8 @@ def crud(request):
 	# ----------------------------------------------------------
 	#    通过路径获得栏目ID 》》》开始
 	# ----------------------------------------------------------
-	get_url = request.path
-	get_url = get_url.split("/")  # 分割
-	get_url = get_url[1] + "/" + get_url[2]
-	if "_" in get_url:
-		url = get_url.split("_")  # 分割
-		get_url = url[0]
-	uid=models.dngroute.objects.filter(url_str__contains=get_url).first()
-	dngroute_uid = uid.uid_int
+	dngroute_uid = dngadmin_common.dng_ckurl(request)[0]
+	get_url = dngadmin_common.dng_ckurl(request)[1]
 	# ----------------------------------------------------------
 	#    日记记录与COOKIE验证与权限 》》》开始
 	# ----------------------------------------------------------
@@ -45,25 +39,37 @@ def crud(request):
 	tishi = request.GET.get('tishi') #提示
 	jinggao = request.GET.get('jinggao')  # 警告
 	yes = request.GET.get('yes')  # 警告
+	api_post = request.GET.get('api_post')
+	api_json = request.GET.get('api_json')
+	#anquan = models.security.objects.filter().order_by('id').first() #最开始的第一条  # 查询安全后缀
+	anquan =dngadmin_common.dng_anquan()#最开始的第一条  # 查询安全后缀
+
 
 
 	if "dnguser_uid" in request.COOKIES:  # 判断cookies有无，跳转
-		dnguser_uid = request.get_signed_cookie(key="dnguser_uid", default=None,
+		cookie_user_uid = request.get_signed_cookie(key="dnguser_uid", default=None,
 												salt=dngadmin_common.dng_anquan().salt_str, max_age=None)
-		dnguser_name = request.get_signed_cookie(key="dnguser_name", default=None,
+		cookie_user_name = request.get_signed_cookie(key="dnguser_name", default=None,
 												 salt=dngadmin_common.dng_anquan().salt_str, max_age=None)
-		dnguser_cookie = request.get_signed_cookie(key="dnguser_cookie", default=None,
+		cookie_user_cookie_echo = request.get_signed_cookie(key="dnguser_cookie_echo", default=None,
 												   salt=dngadmin_common.dng_anquan().salt_str, max_age=None)
+		cookie_user_cookie = request.get_signed_cookie(key="dnguser_cookie", default=None,
+												   salt=dngadmin_common.dng_anquan().salt_str, max_age=None)
+
+		cookie_pr = dngadmin_common.dng_yanzheng(cookie_user_uid, cookie_user_name, cookie_user_cookie,
+												 cookie_user_cookie_echo)
+		if cookie_pr:
+			dnguser_uid =cookie_pr.uid_int #赋值ID
+			dnguser_name = cookie_pr.username_str#赋值用户名
+			dnguser_cookie=cookie_pr.cookie_str#赋值COOKIE记录
+		else:
+			return HttpResponseRedirect('/dngadmin/tips/?jinggao=' + parse.quote('检测到非法登录'))
 
 		if dngadmin_common.dng_anquan().tongshi_bool == False:  # 验证是否同时登录
 			if dngadmin_common.dng_tongshi(uid=dnguser_uid, cookie=dnguser_cookie) == False:
-				urlstr = parse.quote('不允许同时登录账号')
-				response = HttpResponseRedirect('/dngadmin/tips/?jinggao=' + urlstr)
-				return response
+				return HttpResponseRedirect('/dngadmin/tips/?jinggao=' + parse.quote('不允许同时登录账号'))
 	else:
-		urlstr = parse.quote('您需要重新登录')
-		response = HttpResponseRedirect('/dngadmin/tips/?jinggao=' + urlstr)
-		return response
+		return HttpResponseRedirect('/dngadmin/tips/?jinggao=' + parse.quote('您需要重新登录'))
 
 
 	# ----------------------------------------------------------
@@ -72,19 +78,31 @@ def crud(request):
 	# ----------------------------------------------------------
 	#    判断页面权限开始》》》开始
 	# ----------------------------------------------------------
-	group = dngadmin_common.dng_usergroup(gid=dngadmin_common.dng_dnguser(dnguser_uid).group_int)  # 获取会员组名称
+	dnguser =dngadmin_common.dng_dnguser(dnguser_uid)
+	group = dngadmin_common.dng_usergroup(gid=dnguser.group_int)  # 获取会员组名称
 	dngroute = models.dngroute.objects.filter(uid_int=dngroute_uid).first()#查询路径取回本页面菜单信息
 	dngadmin_common.dng_dngred(uid=dnguser_uid, title=dngroute.name_str, url=mulu_url, user=liulanqi, ip=ip)  # 日记记录函数
 
 	if not dngroute.url_str in mulu_url: #判断URL统一
-		urlstr = parse.quote('您的访问与菜单映射不匹配')
-		response = HttpResponseRedirect('/dngadmin/tips/?jinggao=' + urlstr)
-		return response
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您的访问与菜单映射不匹配</h1></center><div>""")
 
 	elif not '|'+str(dngroute_uid)+'|'in group.menu_text: #判断菜单权限
-		urlstr = parse.quote('您没有访问这个菜单的权限')
-		response = HttpResponseRedirect('/dngadmin/tips/?jinggao=' + urlstr)
-		return response
+
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您没有访问这个栏目的权限</h1></center><div>""")
+
+	elif not dnguser.integral_int >= dngroute.integral_int:
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您积分"""+str(dnguser.integral_int)+""",访问需要达到"""+str(dngroute.integral_int)+"""积分！</h1></center><div>""")
+
+	elif not dnguser.money_int >= dngroute.money_int:
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您余额"""+str(dnguser.money_int)+""",访问需要达到"""+str(dngroute.money_int)+"""余额！</h1></center><div>""")
+
+	elif not dnguser.totalmoney_int >= dngroute.totalmoney_int:
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您累计充值""" + str(dnguser.totalmoney_int) + """,访问需要累计充值达到""" + str(dngroute.totalmoney_int) + """！</h1></center><div>""")
+
+	elif not dnguser.totalspend_int >= dngroute.totalspend_int:
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您累计消费""" + str(dnguser.totalspend_int) + """,访问需要累计消费达到""" + str(dngroute.totalspend_int) + """！</h1></center><div>""")
+	elif not dnguser.spread_int >= dngroute.spread_int:
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您推广""" + str(dnguser.spread_int) + """人,访问需要推广""" + str(dngroute.spread_int) + """人！</h1></center><div>""")
 
 	added =False #增
 	delete = False #删
@@ -107,20 +125,47 @@ def crud(request):
 	#zd_list = dngadmin_common.dng_ziduan("crud") #获取对应表下所有字段值
 
 	#biaodan = dngadmin_common.dng_dnguser(uid=dnguser_uid)
+	aa_list = None
+	bb_list = None
+	cc_list = None
+	dd_list = None
 
+	if api_post:
+		if not dngadmin_common.dng_ziduan(api_post) :
+			urlstr = parse.quote('没有这个数据库表')
+			response = HttpResponseRedirect('/dngadmin/crud/?jinggao=' + urlstr)
+			return response
+
+		zd_list = dngadmin_common.dng_ziduan(api_post)  # 获取对应表下所有字段值
+
+
+		aa_list = zip(zd_list[0], zd_list[1], zd_list[2])
+		bb_list = zip(zd_list[0], zd_list[1], zd_list[2])
+		cc_list = zip(zd_list[0], zd_list[1], zd_list[2])
+		dd_list = zip(zd_list[0], zd_list[1], zd_list[2])
 
 	return render(request,"dngadmin/crud.html",{
 		"title":dngroute.name_str,
 		"edition": dngadmin_common.dng_setup().edition_str,  # 版本号
 		"file": dngadmin_common.dng_setup().file_str,  # 备案号
 		"tongue": dngadmin_common.dng_setup().statistics_text,  # 统计
+		"anquan": anquan,
 		"added": added,#增
 		"delete": delete,#删
 		"update": update, #改
-		"see": see, #查
+		"see": see, #开发者权限
 		"tishi": tishi,
 		"jinggao": jinggao,
 		"yes": yes,
+		"api_json": api_json,
+		"api_post": api_post,
+		"aa_list": aa_list,
+		"bb_list": bb_list,
+		"cc_list": cc_list,
+		"dd_list": dd_list,
+
+
+
 
 
 		"yuming_url": yuming_url,
@@ -139,14 +184,8 @@ def crud_post(request):
 	# ----------------------------------------------------------
 	#    通过路径获得栏目ID 》》》开始
 	# ----------------------------------------------------------
-	get_url = request.path
-	get_url = get_url.split("/")  # 分割
-	get_url = get_url[1] + "/" + get_url[2]
-	if "_" in get_url:
-		url = get_url.split("_")  # 分割
-		get_url = url[0]
-	uid=models.dngroute.objects.filter(url_str__contains=get_url).first()
-	dngroute_uid = uid.uid_int
+	dngroute_uid = dngadmin_common.dng_ckurl(request)[0]
+	get_url = dngadmin_common.dng_ckurl(request)[1]
 	# ----------------------------------------------------------
 	#    日记记录与COOKIE验证与权限 》》》开始
 	# ----------------------------------------------------------
@@ -158,22 +197,29 @@ def crud_post(request):
 
 
 	if "dnguser_uid" in request.COOKIES:  # 判断cookies有无，跳转
-		dnguser_uid = request.get_signed_cookie(key="dnguser_uid", default=None,
+		cookie_user_uid = request.get_signed_cookie(key="dnguser_uid", default=None,
 												salt=dngadmin_common.dng_anquan().salt_str, max_age=None)
-		dnguser_name = request.get_signed_cookie(key="dnguser_name", default=None,
+		cookie_user_name = request.get_signed_cookie(key="dnguser_name", default=None,
 												 salt=dngadmin_common.dng_anquan().salt_str, max_age=None)
-		dnguser_cookie = request.get_signed_cookie(key="dnguser_cookie", default=None,
+		cookie_user_cookie_echo = request.get_signed_cookie(key="dnguser_cookie_echo", default=None,
 												   salt=dngadmin_common.dng_anquan().salt_str, max_age=None)
+		cookie_user_cookie = request.get_signed_cookie(key="dnguser_cookie", default=None,
+												   salt=dngadmin_common.dng_anquan().salt_str, max_age=None)
+
+		cookie_pr = dngadmin_common.dng_yanzheng(cookie_user_uid, cookie_user_name, cookie_user_cookie,
+												 cookie_user_cookie_echo)
+		if cookie_pr:
+			dnguser_uid =cookie_pr.uid_int #赋值ID
+			dnguser_name = cookie_pr.username_str#赋值用户名
+			dnguser_cookie=cookie_pr.cookie_str#赋值COOKIE记录
+		else:
+			return HttpResponseRedirect('/dngadmin/tips/?jinggao=' + parse.quote('检测到非法登录'))
 
 		if dngadmin_common.dng_anquan().tongshi_bool == False:  # 验证是否同时登录
 			if dngadmin_common.dng_tongshi(uid=dnguser_uid, cookie=dnguser_cookie) == False:
-				urlstr = parse.quote('不允许同时登录账号')
-				response = HttpResponseRedirect('/dngadmin/tips/?jinggao=' + urlstr)
-				return response
+				return HttpResponseRedirect('/dngadmin/tips/?jinggao=' + parse.quote('不允许同时登录账号'))
 	else:
-		urlstr = parse.quote('您需要重新登录')
-		response = HttpResponseRedirect('/dngadmin/tips/?jinggao=' + urlstr)
-		return response
+		return HttpResponseRedirect('/dngadmin/tips/?jinggao=' + parse.quote('您需要重新登录'))
 
 
 	# ----------------------------------------------------------
@@ -182,19 +228,31 @@ def crud_post(request):
 	# ----------------------------------------------------------
 	#    判断页面权限开始》》》开始
 	# ----------------------------------------------------------
-	group = dngadmin_common.dng_usergroup(gid=dngadmin_common.dng_dnguser(dnguser_uid).group_int)  # 获取会员组名称
+	dnguser =dngadmin_common.dng_dnguser(dnguser_uid)
+	group = dngadmin_common.dng_usergroup(gid=dnguser.group_int)  # 获取会员组名称
 	dngroute = models.dngroute.objects.filter(uid_int=dngroute_uid).first()#查询路径取回本页面菜单信息
 	dngadmin_common.dng_dngred(uid=dnguser_uid, title=dngroute.name_str, url=mulu_url, user=liulanqi, ip=ip)  # 日记记录函数
 
 	if not dngroute.url_str in mulu_url: #判断URL统一
-		urlstr = parse.quote('您的访问与菜单映射不匹配')
-		response = HttpResponseRedirect('/dngadmin/tips/?jinggao=' + urlstr)
-		return response
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您的访问与菜单映射不匹配</h1></center><div>""")
 
 	elif not '|'+str(dngroute_uid)+'|'in group.menu_text: #判断菜单权限
-		urlstr = parse.quote('您没有访问这个菜单的权限')
-		response = HttpResponseRedirect('/dngadmin/tips/?jinggao=' + urlstr)
-		return response
+
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您没有访问这个栏目的权限</h1></center><div>""")
+
+	elif not dnguser.integral_int >= dngroute.integral_int:
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您积分"""+str(dnguser.integral_int)+""",访问需要达到"""+str(dngroute.integral_int)+"""积分！</h1></center><div>""")
+
+	elif not dnguser.money_int >= dngroute.money_int:
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您余额"""+str(dnguser.money_int)+""",访问需要达到"""+str(dngroute.money_int)+"""余额！</h1></center><div>""")
+
+	elif not dnguser.totalmoney_int >= dngroute.totalmoney_int:
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您累计充值""" + str(dnguser.totalmoney_int) + """,访问需要累计充值达到""" + str(dngroute.totalmoney_int) + """！</h1></center><div>""")
+
+	elif not dnguser.totalspend_int >= dngroute.totalspend_int:
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您累计消费""" + str(dnguser.totalspend_int) + """,访问需要累计消费达到""" + str(dngroute.totalspend_int) + """！</h1></center><div>""")
+	elif not dnguser.spread_int >= dngroute.spread_int:
+		return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您推广""" + str(dnguser.spread_int) + """人,访问需要推广""" + str(dngroute.spread_int) + """人！</h1></center><div>""")
 
 	added =False #增
 	delete = False #删
@@ -222,6 +280,10 @@ def crud_post(request):
 	post5_zhushi = request.POST.get('list_url_zhushi', '')
 	post6 = request.POST.get('post_url', '')
 	post6_zhushi = request.POST.get('post_url_zhushi', '')
+	post7 = request.POST.get('none_py', '')
+	post8 = request.POST.get('none_html', '')
+	post9 = request.POST.get('nonepost_url', '')
+	post9_zhushi = request.POST.get('nonepost_url_zhushi', '')
 
 	if update:
 		if post0:
@@ -240,6 +302,9 @@ def crud_post(request):
 			strinfo = re.compile('# ⊙2数据库模型替换2⊙')  # 正则替换前
 			tihuan_post0 = '''if name == "''' + post0 + '''":
             params = models.''' + post0 + '''._meta.get_field(key).verbose_name
+            choices = models.''' + post0 + '''._meta.get_field(key).choices
+            default = models.''' + post0 + '''._meta.get_field(key).default
+
         # ⊙2数据库模型替换2⊙'''
 			keyseo = strinfo.sub(tihuan_post0, keyseo)  # 正则替换后
 
@@ -267,7 +332,7 @@ def crud_post(request):
 			####开始构造⊙⊙⊙JSON函数-查⊙⊙⊙文本代码###
 
 
-			json_list = zip(db_list[0], db_list[1], ida)  # [0]=例子：uid_int（字段值）  [1]=例子：会员id（字段备注） [2]=例子（数字列）
+			json_list = zip(db_list[0], db_list[1], db_list[2])  # [0]=例子：uid_int（字段值）  [1]=例子：会员id（字段备注） [2]=例子（数字列）
 			json = []
 			for json_arr in json_list:  # 遍历字符串，遍历输出
 
@@ -280,7 +345,7 @@ def crud_post(request):
 			####开始构造⊙⊙⊙added函数-增⊙⊙⊙文本代码###
 
 
-			added_list = zip(db_list[0], db_list[1], ida)  # [0]=例子：uid_int（字段值）  [1]=例子：会员id（字段备注） [2]=例子（数字列）
+			added_list = zip(db_list[0], db_list[1], db_list[2])  # [0]=例子：uid_int（字段值）  [1]=例子：会员id（字段备注） [2]=例子（数字列）
 			added_a = []
 			added_b = []
 			for added_arr in added_list:  # 遍历字符串，遍历输出
@@ -301,7 +366,7 @@ def crud_post(request):
 			####开始构造⊙⊙⊙update函数-改⊙⊙⊙文本代码###
 
 
-			update_list = zip(db_list[0], db_list[1], ida)  # [0]=例子：uid_int（字段值）  [1]=例子：会员id（字段备注） [2]=例子（数字列）
+			update_list = zip(db_list[0], db_list[1], db_list[2])  # [0]=例子：uid_int（字段值）  [1]=例子：会员id（字段备注） [2]=例子（数字列）
 			update_a = []
 			update_b = []
 			for update_arr in update_list:  # 遍历字符串，遍历输出
@@ -323,7 +388,7 @@ def crud_post(request):
 
 
 			####开始构造⊙⊙⊙search函数-搜⊙⊙⊙文本代码###
-			search_list = zip(db_list[0], db_list[1], ida)  # [0]=例子：uid_int（字段值）  [1]=例子：会员id（字段备注） [2]=例子（数字列）
+			search_list = zip(db_list[0], db_list[1], db_list[2])  # [0]=例子：uid_int（字段值）  [1]=例子：会员id（字段备注） [2]=例子（数字列）
 			search_a = []
 			search_b = []
 			search_c = []
@@ -351,6 +416,43 @@ def crud_post(request):
 			search_c = ''.join(search_c)
 			####替换代码开始###
 
+			db_list = dngadmin_common.dng_ziduan(post1)  # 获取对应表下所有字段值
+			update_list = zip(db_list[0], db_list[1], db_list[2])
+			#####开始构造代码》》》》》
+			bdth_a1 = []
+			bdth_b2 = []
+			bdth_c3 = []
+			bdth_d4 = []
+
+			for update_arr in update_list:  # 遍历字符串，遍历输出
+
+				if str(update_arr[0]) == "create_time":
+					continue  # 跳过本次循环
+				if str(update_arr[0]) == "update_time":
+					continue  # 跳过本次循环
+
+				bdth_a1.append("""
+	post""" + str(update_arr[2]) + """ = request.POST.get('""" + str(update_arr[0]) + """', '')#""" + str(
+					update_arr[1]) + """
+				""")  # 循环写入空数组
+
+				bdth_b2.append('''
+			models.''' + str(post1) + '''.objects.filter(id=post0).update(''' + str(
+					update_arr[0]) + '''=form[''' + str(update_arr[2]) + '''])#''' + str(update_arr[1]) + '''
+				''')  # 循环写入空数组
+				bdth_d4.append("post" + str(update_arr[2]) + ",")  # 循
+				if str(update_arr[0]) == "id":
+					continue  # 跳过本次循环
+				bdth_c3.append(str(update_arr[0]) + "=form[" + str(update_arr[2]) + "], ")  # 循环写入空数组
+
+			bdth_a = ''.join(bdth_a1)
+			bdth_b = ''.join(bdth_b2)
+			bdth_c = ''.join(bdth_c3)
+			bdth_d = "models." + str(post1) + ".objects.create(" + bdth_c + ")  #新增数据库"
+			bdth_z = ''.join(bdth_d4)
+			bdth_y = "post_arry =[" + bdth_z + "]"
+
+			#####构造代码结束《《《《《
 
 			root_py = os.path.abspath('app/dngadmin_demo_list.py')  # 跟目录+py文件所在路径
 
@@ -381,9 +483,21 @@ def crud_post(request):
 
 			strinfo = re.compile('# 3⊙search搜索替换⊙3 #')  # 正则替换前
 			keyseo8= strinfo.sub(search_c, keyseo7)  # 正则替换后
+
+			strinfo = re.compile('# 1⊙表单替换⊙1 #')  # 正则替换前
+			keyseo9 = strinfo.sub(bdth_a, keyseo8)  # 正则替换后
+
+			strinfo = re.compile('# 2⊙表单替换⊙2 #')  # 正则替换前
+			keyseo10 = strinfo.sub(bdth_y, keyseo9)  # 正则替换后
+
+			strinfo = re.compile('# 3⊙表单替换⊙3 #')  # 正则替换前
+			keyseo11 = strinfo.sub(bdth_b, keyseo10)  # 正则替换后
+
+			strinfo = re.compile('# 4⊙表单替换⊙4 #')  # 正则替换前
+			keyseo12 = strinfo.sub(bdth_d, keyseo11)  # 正则替换后
 			###模型替换
 			strinfo = re.compile('映射的路径名替换')  # 正则替换前
-			keyseo9 = strinfo.sub(post1, keyseo8)  # 正则替换后
+			keyseo9 = strinfo.sub(post1, keyseo12)  # 正则替换后
 
 			root_py2 = os.path.abspath('app/dngadmin_' + post1 + '.py')  # 跟目录+py文件所在路径
 			kaobei2 = open(root_py2, "w")  # 写入
@@ -403,7 +517,7 @@ def crud_post(request):
 				   28, 29, 30]
 			db_list = dngadmin_common.dng_ziduan(post2)  # 获取对应表下所有字段值
 
-			html_list = zip(db_list[0], db_list[1], ida)  # [0]=例子：uid_int（字段值）  [1]=例子：会员id（字段备注） [2]=例子（数字列）
+			html_list = zip(db_list[0], db_list[1], db_list[2])  # [0]=例子：uid_int（字段值）  [1]=例子：会员id（字段备注） [2]=例子（数字列）
 			####开始构造⊙⊙⊙JSON函数-查⊙⊙⊙文本代码###
 			list_html_a = []
 			list_html_b = []
@@ -411,7 +525,7 @@ def crud_post(request):
 			list_html_d = []
 			for html_arr in html_list:  # 遍历字符串，遍历输出
 
-				if str(html_arr[0]) == "id":
+				if str(html_arr[0]) == "id" or str(html_arr[0]) == "create_time" or str(html_arr[0]) == "update_time":
 					continue  # 跳过本次循环
 
 				list_html_a.append('''{% if zd_list.0.''' + str(html_arr[2]) + ''' %}
@@ -473,15 +587,62 @@ def crud_post(request):
 
 		if post3:
 
+			db_list = dngadmin_common.dng_ziduan(post3)  # 获取对应表下所有字段值
+			update_list = zip(db_list[0], db_list[1], db_list[2])
+			#####开始构造代码》》》》》
+			update_a = []
+			update_b = []
+			added_c = []
+			added_x = []
 
+			for update_arr in update_list:  # 遍历字符串，遍历输出
+
+				if str(update_arr[0]) == "create_time":
+					continue  # 跳过本次循环
+				if str(update_arr[0]) == "update_time":
+					continue  # 跳过本次循环
+
+				update_a.append("""
+	post""" + str(update_arr[2]) + """ = request.POST.get('""" + str(update_arr[0]) + """', '')#""" + str(update_arr[1]) + """
+	""")  # 循环写入空数组
+
+				update_b.append('''
+			models.''' + str(post3) + '''.objects.filter(id=post0).update(''' + str(update_arr[0]) + '''=form[''' + str(update_arr[2]) + '''])#''' + str(update_arr[1]) + '''
+	''')  # 循环写入空数组
+				added_x.append("post" + str(update_arr[2]) + ",")  # 循
+				if str(update_arr[0]) == "id":
+					continue  # 跳过本次循环
+				added_c.append(str(update_arr[0]) + "=form[" + str(update_arr[2]) + "], ")  # 循环写入空数组
+
+			update_a = ''.join(update_a)
+			update_b = ''.join(update_b)
+			added_c = ''.join(added_c)
+			added_d = "models." + str(post3) + ".objects.create(" + added_c + ")  #新增数据库"
+			added_z = ''.join(added_x)
+			added_y = "post_arry =[" + added_z + "]"
+
+			#####构造代码结束《《《《《
 			root = os.getcwd()  # 获取项目运行根目录
 			root_py = os.path.abspath('app/dngadmin_demo_post.py')  # 跟目录+py文件所在路径
 
 			seo = open(root_py, "rb")  # 读取
-			key = str(seo.read(), 'utf-8')  # read是读取命令 str 转换字符串和编码
+			rorm_key = str(seo.read(), 'utf-8')  # read是读取命令 str 转换字符串和编码
+
+			strinfo = re.compile('# 1⊙表单替换⊙1 #')  # 正则替换前
+			rorm_key2 = strinfo.sub(update_a, rorm_key)  # 正则替换后
+
+			strinfo = re.compile('# 2⊙表单替换⊙2 #')  # 正则替换前
+			rorm_key3 = strinfo.sub(added_y, rorm_key2)  # 正则替换后
+
+			strinfo = re.compile('# 3⊙表单替换⊙3 #')  # 正则替换前
+			rorm_key4 = strinfo.sub(update_b, rorm_key3)  # 正则替换后
+
+			strinfo = re.compile('# 4⊙表单替换⊙4 #')  # 正则替换前
+			rorm_key5 = strinfo.sub(added_d, rorm_key4)  # 正则替换后
+
 
 			strinfo = re.compile('映射的路径名替换')  # 正则替换前
-			keyseo = strinfo.sub(post3, key)  # 正则替换后
+			keyseo = strinfo.sub(post3, rorm_key5)  # 正则替换后
 
 			root_py2 = os.path.abspath('app/dngadmin_' + post3 + '.py')  # 跟目录+py文件所在路径
 			kaobei2 = open(root_py2, "w")  # 写入
@@ -498,14 +659,14 @@ def crud_post(request):
 			root_py = os.path.abspath('app/Templates/dngadmin/demo_post.html')  # 跟目录+py文件所在路径
 
 			seo = open(root_py, "rb")  # 读取
-			key = str(seo.read(), 'utf-8')  # read是读取命令 str 转换字符串和编码
+			keypou = str(seo.read(), 'utf-8')  # read是读取命令 str 转换字符串和编码
 
 			strinfo = re.compile('映射的路径名替换')  # 正则替换前
-			keyseo = strinfo.sub(post4, key)  # 正则替换后
+			keyseopou = strinfo.sub(post4, keypou)  # 正则替换后
 
 			root_py2 = os.path.abspath('app/Templates/dngadmin/'+post4+'.html')  # 跟目录+py文件所在路径
 			kaobei2 = open(root_py2, "w")  # 写入
-			kaobei2.write(keyseo)  # write是写入命令
+			kaobei2.write(keyseopou)  # write是写入命令
 			kaobei2.close()  # close()是关闭命令
 
 
@@ -532,6 +693,8 @@ def crud_post(request):
 	url(r'^''' + post5 + '''_delete/', dngadmin_''' + post5 + '''.''' + post5 + '''_delete),  # ''' + post5_zhushi + '''删除
 	url(r'^''' + post5 + '''_update/', dngadmin_''' + post5 + '''.''' + post5 + '''_update),  # ''' + post5_zhushi + '''更新修改
 	url(r'^''' + post5 + '''_search/', dngadmin_''' + post5 + '''.''' + post5 + '''_search),  # ''' + post5_zhushi + '''搜索
+	url(r'^''' + post5 + '''_api_json/', dngadmin_''' + post5 + '''.''' + post5 + '''_api_json),  # ''' + post5_zhushi + '''的API查询
+	url(r'^''' + post5 + '''_api_post/', dngadmin_''' + post5 + '''.''' + post5 + '''_api_post),  # ''' + post5_zhushi + '''的API接收
 	# ⊙2映射替换2⊙'''
 			keyseo = strinfo.sub(tihuan_post5, keyseo)  # 正则替换后
 
@@ -566,6 +729,8 @@ def crud_post(request):
 			strinfo = re.compile('# ⊙2映射替换2⊙')  # 正则替换前
 			tihuan_post6 = '''url(r'^''' + post6 + '''/', dngadmin_''' + post6 + '''.''' + post6 + '''),  # ''' + post6_zhushi + '''
 	url(r'^''' + post6 + '''_post/', dngadmin_''' + post6 + '''.''' + post6 + '''_post),  # ''' + post6_zhushi + '''的post
+	url(r'^''' + post6 + '''_api_json/', dngadmin_''' + post6 + '''.''' + post6 + '''_api_json),  # ''' + post6_zhushi + '''的API查询
+	url(r'^''' + post6 + '''_api_post/', dngadmin_''' + post6 + '''.''' + post6 + '''_api_post),  # ''' + post6_zhushi + '''的API接收
 	# ⊙2映射替换2⊙'''
 			keyseo = strinfo.sub(tihuan_post6, keyseo)  # 正则替换后
 
@@ -578,6 +743,117 @@ def crud_post(request):
 			response = HttpResponseRedirect('/dngadmin/crud/?yes=' + urlstr)
 			return response
 
+		if post7:
+
+	# 		db_list = dngadmin_common.dng_ziduan(post7)  # 获取对应表下所有字段值
+	# 		update_list = zip(db_list[0], db_list[1], db_list[2])
+	# 		#####开始构造代码》》》》》
+	# 		update_a = []
+	# 		update_b = []
+	# 		added_c = []
+	# 		added_x = []
+	#
+	# 		for update_arr in update_list:  # 遍历字符串，遍历输出
+	#
+	# 			if str(update_arr[0]) == "create_time":
+	# 				continue  # 跳过本次循环
+	# 			if str(update_arr[0]) == "update_time":
+	# 				continue  # 跳过本次循环
+	#
+	# 			update_a.append("""
+	# post""" + str(update_arr[2]) + """ = request.POST.get('""" + str(update_arr[0]) + """', '')#""" + str(update_arr[1]) + """
+	# """)  # 循环写入空数组
+	#
+	# 			update_b.append('''
+	# 		models.''' + str(post7) + '''.objects.filter(id=post0).update(''' + str(update_arr[0]) + '''=form[''' + str(update_arr[2]) + '''])#''' + str(update_arr[1]) + '''
+	# ''')  # 循环写入空数组
+	# 			added_x.append("post" + str(update_arr[2]) + ",")  # 循
+	# 			if str(update_arr[0]) == "id":
+	# 				continue  # 跳过本次循环
+	# 			added_c.append(str(update_arr[0]) + "=form[" + str(update_arr[2]) + "], ")  # 循环写入空数组
+	#
+	# 		update_a = ''.join(update_a)
+	# 		update_b = ''.join(update_b)
+	# 		added_c = ''.join(added_c)
+	# 		added_d = "models." + str(post7) + ".objects.create(" + added_c + ")  #新增数据库"
+	# 		added_z = ''.join(added_x)
+	# 		added_y = "post_arry =[" + added_z + "]"
+
+			#####构造代码结束《《《《《
+			root = os.getcwd()  # 获取项目运行根目录
+			root_py = os.path.abspath('app/dngadmin_demo_none.py')  # 跟目录+py文件所在路径
+
+			seo = open(root_py, "rb")  # 读取
+			rorm_key = str(seo.read(), 'utf-8')  # read是读取命令 str 转换字符串和编码
+
+			# strinfo = re.compile('# 1⊙表单替换⊙1 #')  # 正则替换前
+			# rorm_key2 = strinfo.sub(update_a, rorm_key)  # 正则替换后
+			#
+			# strinfo = re.compile('# 2⊙表单替换⊙2 #')  # 正则替换前
+			# rorm_key3 = strinfo.sub(added_y, rorm_key2)  # 正则替换后
+			#
+			# strinfo = re.compile('# 3⊙表单替换⊙3 #')  # 正则替换前
+			# rorm_key4 = strinfo.sub(update_b, rorm_key3)  # 正则替换后
+			#
+			# strinfo = re.compile('# 4⊙表单替换⊙4 #')  # 正则替换前
+			# rorm_key5 = strinfo.sub(added_d, rorm_key4)  # 正则替换后
+
+			strinfo = re.compile('映射的路径名替换')  # 正则替换前
+			keyseo = strinfo.sub(post7, rorm_key)  # 正则替换后
+
+			root_py2 = os.path.abspath('app/dngadmin_' + post7 + '.py')  # 跟目录+py文件所在路径
+			kaobei2 = open(root_py2, "w")  # 写入
+			kaobei2.write(keyseo)  # write是写入命令
+			kaobei2.close()  # close()是关闭命令
+
+			urlstr = parse.quote('空白Py文件' + post7 + '构造成功')
+			response = HttpResponseRedirect('/dngadmin/crud/?yes=' + urlstr)
+			return response
+		if post8:
+			root = os.getcwd()  # 获取项目运行根目录
+			root_py = os.path.abspath('app/Templates/dngadmin/demo_none.html')  # 跟目录+py文件所在路径
+
+			seo = open(root_py, "rb")  # 读取
+			keypou = str(seo.read(), 'utf-8')  # read是读取命令 str 转换字符串和编码
+
+			strinfo = re.compile('映射的路径名替换')  # 正则替换前
+			keyseopou = strinfo.sub(post8, keypou)  # 正则替换后
+
+			root_py2 = os.path.abspath('app/Templates/dngadmin/'+post8+'.html')  # 跟目录+py文件所在路径
+			kaobei2 = open(root_py2, "w")  # 写入
+			kaobei2.write(keyseopou)  # write是写入命令
+			kaobei2.close()  # close()是关闭命令
+
+
+			urlstr = parse.quote('模板' + post8 + '构造成功')
+			response = HttpResponseRedirect('/dngadmin/crud/?yes=' + urlstr)
+			return response
+		if post9 and post9_zhushi:
+			root = os.getcwd()  # 获取项目运行根目录
+			root_py = os.path.abspath('app/dngadmin_urls.py')  # 跟目录+py文件所在路径
+
+			seo = open(root_py, "rb")  # 读取
+			key = str(seo.read(), 'utf-8')  # read是读取命令 str 转换字符串和编码
+
+			strinfo = re.compile('# ⊙1映射替换1⊙')  # 正则替换前
+			tihuan_post9 = '''from . import dngadmin_''' + post9 + '''   #''' + post9_zhushi + '''
+# ⊙1映射替换1⊙'''
+			keyseo = strinfo.sub(tihuan_post9, key)  # 正则替换后
+
+			strinfo = re.compile('# ⊙2映射替换2⊙')  # 正则替换前
+			tihuan_post9 = '''url(r'^''' + post9 + '''/', dngadmin_''' + post9 + '''.''' + post9 + '''),  # ''' + post9_zhushi + '''
+	url(r'^''' + post9 + '''_post/', dngadmin_''' + post9 + '''.''' + post9 + '''_post),  # ''' + post9_zhushi + '''的post
+	# ⊙2映射替换2⊙'''
+			keyseo = strinfo.sub(tihuan_post9, keyseo)  # 正则替换后
+
+			root_py2 = os.path.abspath('app/dngadmin_urls.py')  # 跟目录+py文件所在路径
+			kaobei2 = open(root_py2, "w")  # 写入
+			kaobei2.write(keyseo)  # write是写入命令
+			kaobei2.close()  # close()是关闭命令
+
+			urlstr = parse.quote('参数' + post9 + '表单映射写入成功')
+			response = HttpResponseRedirect('/dngadmin/crud/?yes=' + urlstr)
+			return response
 	else:
 		urlstr = parse.quote('您没有修改权限')
 		response = HttpResponseRedirect('/dngadmin/crud/?jinggao=' + urlstr)

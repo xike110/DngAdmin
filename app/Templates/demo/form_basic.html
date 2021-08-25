@@ -6,613 +6,649 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
 
-    <title>inspinia 后台主题UI框架 - 基本表单</title>
-    <meta name="keywords" content="inspinia后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
-    <meta name="description" content="inspinia是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
 
-    <link rel="shortcut icon" href="{% static "favicon.ico"%}"> <link href="{% static "css/bootstrap.min.css"%}"rel="stylesheet">
-    <link href="{% static "css/font-awesome.min.css"%}" rel="stylesheet">
-    <link href="{% static "css/plugins/iCheck/custom.css"%}" rel="stylesheet">
-    <link href="{% static "css/animate.min.css"%}" rel="stylesheet">
-    <link href="{% static "css/style.min.css"%}" rel="stylesheet"><base target="_blank">
+    <title>{{ title }}</title>
+    <meta name="keywords" content="{{ title }}">
+    <meta name="description" content="{{ title }}">
+
+    <link rel="shortcut icon" href="{% static "favicon.ico" %}">
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/font-awesome.min.css" %}" rel="stylesheet">
+
+    <link href="{% static "css/animate.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/style.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/plugins/iCheck/custom.css" %}" rel="stylesheet">
+
+    {#    <link href="{% static "css/plugins/colorpicker/css/bootstrap-colorpicker.min.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/cropper/cropper.min.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/switchery/switchery.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/jasny/jasny-bootstrap.min.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/nouslider/jquery.nouislider.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/datapicker/datepicker3.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/ionRangeSlider/ion.rangeSlider.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/plugins/clockpicker/clockpicker.css" %}" rel="stylesheet">#}
+
+
+    {#    <link rel="stylesheet" href="{% static "layui/css/layui.css" %}" media="all">#}
 
 </head>
+<script>
 
+    {% if tishi %}
+
+    window.onload = function () {
+        layer.alert('{{tishi}}', {
+            icon: 0,
+            skin: 'layer-ext-moon', time: 2000, //20s后自动关闭
+        })
+    }
+    {% endif %}
+
+    {% if jinggao %}
+
+    window.onload = function () {
+        layer.alert('{{jinggao}}', {
+            icon: 2,
+            skin: 'layer-ext-moon', time: 2000, //20s后自动关闭
+        })
+    }
+    {% endif %}
+
+
+    {% if yes %}
+
+    window.onload = function () {
+        layer.alert('{{yes}}', {
+            icon: 1,
+            skin: 'layer-ext-moon', time: 200000, //20s后自动关闭
+        })
+    }
+    {% endif %}
+
+</script>
 <body class="gray-bg">
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-sm-7">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>基本表单 <small>简单登录表单示例</small></h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="form_basic.html#">选项1</a>
-                                </li>
-                                <li><a href="form_basic.html#">选项2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="row">
-                            <div class="col-sm-6 b-r">
-                                <h3 class="m-t-none m-b">登录</h3>
-                                <p>欢迎登录本站(⊙o⊙)</p>
-                                <form role="form">
-                                    <div class="form-group">
-                                        <label>用户名</label>
-                                        <input type="email" placeholder="请输入您注册的E-mail" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>密码</label>
-                                        <input type="password" placeholder="请输入密码" class="form-control">
-                                    </div>
-                                    <div>
-                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>登 录</strong>
-                                        </button>
-                                        <label>
-                                            <input type="checkbox" class="i-checks">自动登录</label>
-                                    </div>
-                                </form>
+
+
+<div class="wrapper wrapper-content animated fadeInDown">
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>{{ title }}</h5>
+
+                </div>
+
+
+                <div class="ibox-content">
+
+
+                    <form class="form-horizontal" method="POST" action="/dngadmin/sms/?yes=提交成功">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">文本框</label>
+
+                            <div class="col-sm-8">
+                                <input type="text" name="txt" placeholder="请输入" class="form-control" minlength="1"
+                                       maxlength="200" required>
                             </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">邮件框</label>
+
+                            <div class="col-sm-8">
+                                <input type="email" name="mail" placeholder="输入邮箱" class="form-control" maxlength="200"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">18位身份证号</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="phone" placeholder="输入18位身份证，如果身份证包含X，联系管理员协助" class="form-control" data-mask="999999999999999999">
+
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">手机号</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="phone" class="form-control" data-mask="19999999999" placeholder="输入手机号">
+
+                            </div>
+                        </div>
+                        {#                        <div class="hr-line-dashed"></div>#}
+                        {#                        <div class="form-group">#}
+                        {#                            <label class="col-sm-2 control-label">说明文本框</label>#}
+                        {#                            <div class="col-sm-8">#}
+                            {#                                <input type="text" name="shuoming_txt" class="form-control" required="" maxlength="200"#}
+                                                                     {#                                       aria-required="true"> <span#}
+                            {#                                    class="help-block m-b-none">帮助文本，可能会超过一行，以块级元素显示</span>#}
+                            {#                            </div>#}
+                        {#                        </div>#}
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">密码框</label>
+
+                            <div class="col-sm-8">
+                                <input type="password" class="form-control" name="password" required minlength="6" placeholder="输入密码"
+                                       maxlength="30" aria-required="true">
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">数字框</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="int" class="form-control" placeholder="只能输入数字" required  maxlength="9" onkeyup="this.value=this.value.replace(/[^0-9]+/,'');" />
+
+                            </div>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">禁用框</label>
+
+                            <div class="col-sm-4">
+                                <input type="hidden" name="jinyong" value="已被禁用">
+                                <input type="text" disabled="" placeholder="已被禁用" maxlength="200" class="form-control">
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">静态文本</label>
+
+                            <div class="col-sm-8">
+                                <input type="hidden" name="jingtai" value="88888888@qq.com" maxlength="200">
+                                <p class="form-control-static">88888888@qq.com</p>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">竖单选框
+
+                            </label>
+
                             <div class="col-sm-6">
-                                <h4>还不是会员？</h4>
-                                <p>您可以注册一个新账户</p>
-                                <p class="text-center">
-                                    <a href="form_basic.html"><i class="fa fa-sign-in big-icon"></i></a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-5">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>横向表单</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="form_basic.html#">选项1</a>
-                                </li>
-                                <li><a href="form_basic.html#">选项2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-                        <form class="form-horizontal">
-                            <p>欢迎登录本站(⊙o⊙)</p>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">用户名：</label>
 
-                                <div class="col-sm-8">
-                                    <input type="email" placeholder="用户名" class="form-control"> <span class="help-block m-b-none">请输入您注册时所填的E-mail</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">密码：</label>
+                                <div class="i-checks">
+                                    <input type="radio" name="shu_danxuan" id="radio" value="竖单选框 01" checked="">
+                                    <label class="badge badge-primary">
+                                        竖单选框 01
+                                    </label>
 
-                                <div class="col-sm-8">
-                                    <input type="password" placeholder="密码" class="form-control">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-8">
-                                    <button class="btn btn-sm btn-white" type="submit">登 录</button>
+                                <p></p>
+                                <div class="i-checks">
+                                    <input type="radio" name="shu_danxuan" id="radio" value="竖单选框 02">
+                                    <label class="badge badge-success">
+                                        竖单选框 02
+                                    </label>
+
                                 </div>
+                                <p></p>
+                                <div class="i-checks">
+                                    <input type="radio" name="shu_danxuan" id="radio" value="竖单选框 03">
+                                    <label class="badge badge-warning">
+                                        竖单选框 03
+                                    </label>
+
+                                </div>
+                                <p></p>
+                                <div class="i-checks">
+                                    <input type="radio" name="shu_danxuan" id="radio" value="竖单选框 04">
+                                    <label class="badge badge-danger">
+                                        竖单选框 04
+                                    </label>
+
+                                </div>
+
                             </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-8">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>内联表单</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="form_basic.html#">选项1</a>
-                                </li>
-                                <li><a href="form_basic.html#">选项2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
                         </div>
-                    </div>
-                    <div class="ibox-content">
-                        <form role="form" class="form-inline">
-                            <div class="form-group">
-                                <label for="exampleInputEmail2" class="sr-only">用户名</label>
-                                <input type="email" placeholder="请输入用户名" id="exampleInputEmail2" class="form-control">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">横单选框
+
+                            </label>
+
+                            <div class="col-sm-8">
+
+                                <div class="checkbox-inline i-checks">
+                                    <input type="radio" id="inlineRadio" value="横单选框 01" name="heng_danxuan" checked="">
+                                    <label class="badge badge-primary" for="inlineRadio1"> 横单选框 01 </label>
+                                </div>
+                                <div class="checkbox-inline i-checks">
+                                    <input type="radio" id="inlineRadio" value="横单选框 02" name="heng_danxuan">
+                                    <label class="badge badge-success" for="inlineRadio2"> 横单选框 02 </label>
+                                </div>
+                                <div class="checkbox-inline i-checks">
+                                    <input type="radio" id="inlineRadio" value="横单选框 03" name="heng_danxuan">
+                                    <label class="badge badge-danger" for="inlineRadio3"> 横单选框 03 </label>
+                                </div>
+                                <div class="checkbox-inline i-checks">
+                                    <input type="radio" id="inlineRadio" value="横单选框 04" name="heng_danxuan">
+                                    <label class="badge badge-warning" for="inlineRadio4"> 横单选框 04 </label>
+                                </div>
+
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword2" class="sr-only">密码</label>
-                                <input type="password" placeholder="请输入密码" id="exampleInputPassword2" class="form-control">
-                            </div>
-                            <div class="checkbox m-l m-r-xs">
-                                <label class="i-checks">
-                                    <input type="checkbox"><i></i> 自动登录</label>
-                            </div>
-                            <button class="btn btn-white" type="submit">登录</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>弹出表单 <small>弹出框登录示例</small></h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="form_basic.html#">选项1</a>
-                                </li>
-                                <li><a href="form_basic.html#">选项2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
                         </div>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="text-center">
-                            <a data-toggle="modal" class="btn btn-primary" href="form_basic.html#modal-form">打开登录窗口</a>
+
+
+
+                        <div class="hr-line-dashed"></div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">日期：</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="date" id="hello" class="laydate-icon form-control layer-date"  value="2020-01-01"  data-mask="9999-99-99">
+                            </div>
                         </div>
-                    </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">时间：</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="time" id="hello" class="laydate-icon form-control layer-date"  value="23:59:59"  data-mask="99:99:99">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">日期+时间：</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="datetime" class="form-control layer-date" placeholder="YYYY-MM-DD hh:mm:ss"  value="2020-12-28 23:59:59" data-mask="9999-99-99 99:99:99" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                <label class="laydate-icon"></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">时间范围：</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="datetime01" value="2010-12-28 23:59:59" placeholder="开始日期" class="form-control layer-date" id="start">
+                                <input type="text" name="datetime02" value="2030-12-28 23:59:59" placeholder="结束日期" class="form-control layer-date" id="end">
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">切换开关</label>
+
+                            <div class="col-sm-8">
+
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="kaiguan" checked="" class="onoffswitch-checkbox"
+                                           id="example1">
+                                    <label class="onoffswitch-label" for="example1">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">竖复选框</label>
+
+                            <div class="col-sm-8">
+                                <div class="i-checks">
+                                    <label class="checkbox-inline i-checks">
+                                        <div class="icheckbox_square-green" style="position: relative;"><input
+                                                type="checkbox" name="shu_fuxuan_01" checked="" value="竖复选框 01"
+                                                style="position: absolute; opacity: 0;">
+                                            <ins class="iCheck-helper"
+                                                 style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                        </div>
+                                        <i></i>竖复选框 01</label>
+                                </div>
+                                <div class="i-checks">
+                                    <label class="checkbox-inline i-checks">
+                                        <div class="icheckbox_square-green" style="position: relative;"><input
+                                                type="checkbox" name="shu_fuxuan_02" value="竖复选框 02"
+                                                style="position: absolute; opacity: 0;">
+                                            <ins class="iCheck-helper"
+                                                 style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                        </div>
+                                        <i></i>竖复选框 02</label>
+                                </div>
+                                <div class="i-checks">
+                                    <label class="checkbox-inline i-checks">
+                                        <div class="icheckbox_square-green"
+                                             style="position: relative;"><input type="checkbox" name="shu_fuxuan_03"
+                                                                                value="竖复选框 03"
+
+                                                                                style="position: absolute; opacity: 0;">
+                                            <ins class="iCheck-helper"
+                                                 style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                        </div>
+                                        <i></i>竖复选框 03</label>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">横复选框</label>
+
+                            <div class="col-sm-8">
+                                <label class="checkbox-inline i-checks">
+                                    <div class="icheckbox_square-green" style="position: relative;"><input
+                                            type="checkbox" name="heng_fuxuan_01" checked="" value="横复选框 01"
+                                            style="position: absolute; opacity: 0;">
+                                        <ins class="iCheck-helper"
+                                             style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                    </div>
+                                    横复选框 01</label>
+                                <label class="checkbox-inline i-checks">
+                                    <div class="icheckbox_square-green" style="position: relative;"><input
+                                            type="checkbox" name="heng_fuxuan_02" value="横复选框 02"
+                                            style="position: absolute; opacity: 0;">
+                                        <ins class="iCheck-helper"
+                                             style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                    </div>
+                                    横复选框 02</label>
+                                <label class="checkbox-inline i-checks">
+                                    <div class="icheckbox_square-green" style="position: relative;"><input
+                                            type="checkbox" name="heng_fuxuan_03" value="横复选框 03"
+                                            style="position: absolute; opacity: 0;">
+                                        <ins class="iCheck-helper"
+                                             style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                    </div>
+                                    横复选框 03</label>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">下拉框</label>
+
+                            <div class="col-sm-4">
+                                <select class="form-control m-b" name="xiala">
+                                    <option selected>下拉框 01</option>
+                                    <option>下拉框 02</option>
+                                    <option>下拉框 03</option>
+                                    <option>下拉框 04</option>
+                                </select>
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">选择框</label>
+
+
+                            <div class="col-sm-4">
+                                <select class="form-control" multiple="" name="xiala2">
+                                    <option selected>选择框 01</option>
+                                    <option>选择框 02</option>
+                                    <option>选择框 03</option>
+                                    <option>选择框 04</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">富文本框</label>
+
+                            <div class="col-sm-8">
+                                <textarea placeholder="请输入内容" name="fu_txt" maxlength="10000" class="form-control"
+                                          style="margin: 0px -15.9844px 0px 0px; height: 150px; width: 100%;"
+                                          required="" aria-required="true"></textarea>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button class="btn btn-primary" lay-submit="" type="submit">提交表单</button>
+                                <button class="btn btn-white" type="submit">重新填写</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+
+
                 </div>
+
             </div>
-        </div>
-        <div class="row">
+
+
             <div class="col-sm-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>所有表单元素 <small>包括自定义样式的复选和单选按钮</small></h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="form_basic.html#">选项1</a>
-                                </li>
-                                <li><a href="form_basic.html#">选项2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <i class="fa fa-info-circle"></i> 此页面用的CSS
                     </div>
-                    <div class="ibox-content">
-                        <form method="get" class="form-horizontal">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">普通</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">带说明信息</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control"> <span class="help-block m-b-none">帮助文本，可能会超过一行，以块级元素显示</span>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">密码</label>
-
-                                <div class="col-sm-10">
-                                    <input type="password" class="form-control" name="password">
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">提示</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" placeholder="提示信息" class="form-control">
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">禁用</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" disabled="" placeholder="已被禁用" class="form-control">
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">静态控制</label>
-
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">i@zi-han.net</p>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">复选框&amp;单选框
-                                    <br/>
-                                    <small class="text-navy">普通Bootstrap元素</small>
-                                </label>
-
-                                <div class="col-sm-10">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" value="">选项1</label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" checked="" value="option1" id="optionsRadios1" name="optionsRadios">选项1</label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" value="option2" id="optionsRadios2" name="optionsRadios">选项2</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">内联复选框</label>
-
-                                <div class="col-sm-10">
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" value="option1" id="inlineCheckbox1">a</label>
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" value="option2" id="inlineCheckbox2">b</label>
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" value="option3" id="inlineCheckbox3">c</label>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">复选框&amp;单选框
-                                    <br/><small class="text-navy">自定义样式</small>
-                                </label>
-
-                                <div class="col-sm-10">
-                                    <div class="checkbox i-checks">
-                                        <label>
-                                            <input type="checkbox" value=""> <i></i> 选项1</label>
-                                    </div>
-                                    <div class="checkbox i-checks">
-                                        <label>
-                                            <input type="checkbox" value="" checked=""> <i></i> 选项2（选中）</label>
-                                    </div>
-                                    <div class="checkbox i-checks">
-                                        <label>
-                                            <input type="checkbox" value="" disabled="" checked=""> <i></i> 选项3（选中并禁用）</label>
-                                    </div>
-                                    <div class="checkbox i-checks">
-                                        <label>
-                                            <input type="checkbox" value="" disabled=""> <i></i> 选项4（禁用）</label>
-                                    </div>
-                                    <div class="radio i-checks">
-                                        <label>
-                                            <input type="radio" value="option1" name="a"> <i></i> 选项1</label>
-                                    </div>
-                                    <div class="radio i-checks">
-                                        <label>
-                                            <input type="radio" checked="" value="option2" name="a"> <i></i> 选项2（选中）</label>
-                                    </div>
-                                    <div class="radio i-checks">
-                                        <label>
-                                            <input type="radio" disabled="" checked="" value="option2"> <i></i> 选项3（选中并禁用）</label>
-                                    </div>
-                                    <div class="radio i-checks">
-                                        <label>
-                                            <input type="radio" disabled="" name="a"> <i></i> 选项4（禁用）</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">内联复选框</label>
-
-                                <div class="col-sm-10">
-                                    <label class="checkbox-inline i-checks">
-                                        <input type="checkbox" value="option1">a</label>
-                                    <label class="checkbox-inline i-checks">
-                                        <input type="checkbox" value="option2">b</label>
-                                    <label class="checkbox-inline i-checks">
-                                        <input type="checkbox" value="option3">c</label>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Select</label>
-
-                                <div class="col-sm-10">
-                                    <select class="form-control m-b" name="account">
-                                        <option>选项 1</option>
-                                        <option>选项 2</option>
-                                        <option>选项 3</option>
-                                        <option>选项 4</option>
-                                    </select>
-
-                                    <div class="col-sm-4 m-l-n">
-                                        <select class="form-control" multiple="">
-                                            <option>选项 1</option>
-                                            <option>选项 2</option>
-                                            <option>选项 3</option>
-                                            <option>选项 4</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group has-success">
-                                <label class="col-sm-2 control-label">验证通过</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group has-warning">
-                                <label class="col-sm-2 control-label">未填写</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group has-error">
-                                <label class="col-sm-2 control-label">验证未通过</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">自定义尺寸</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" placeholder=".input-lg" class="form-control input-lg m-b">
-                                    <input type="text" placeholder="Default input" class="form-control m-b">
-                                    <input type="text" placeholder=".input-sm" class="form-control input-sm">
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">列尺寸</label>
-
-                                <div class="col-sm-10">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <input type="text" placeholder=".col-md-2" class="form-control">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="text" placeholder=".col-md-3" class="form-control">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input type="text" placeholder=".col-md-4" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">文本框组</label>
-
-                                <div class="col-sm-10">
-                                    <div class="input-group m-b"><span class="input-group-addon">@</span>
-                                        <input type="text" placeholder="用户名" class="form-control">
-                                    </div>
-                                    <div class="input-group m-b">
-                                        <input type="text" class="form-control"> <span class="input-group-addon">.00</span>
-                                    </div>
-                                    <div class="input-group m-b"><span class="input-group-addon">&yen;</span>
-                                        <input type="text" class="form-control"> <span class="input-group-addon">.00</span>
-                                    </div>
-                                    <div class="input-group m-b"><span class="input-group-addon"> <input type="checkbox"> </span>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="input-group"><span class="input-group-addon"> <input type="radio"> </span>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">按钮插件</label>
-
-                                <div class="col-sm-10">
-                                    <div class="input-group m-b"><span class="input-group-btn">
-                                            <button type="button" class="btn btn-primary">搜</button> </span>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control"> <span class="input-group-btn"> <button type="button" class="btn btn-primary">搜索
-                                        </button> </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">带下拉框</label>
-
-                                <div class="col-sm-10">
-                                    <div class="input-group m-b">
-                                        <div class="input-group-btn">
-                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">操作 <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="form_basic.html#">选项1</a>
-                                                </li>
-                                                <li><a href="form_basic.html#">选项2</a>
-                                                </li>
-                                                <li><a href="form_basic.html#">选项3</a>
-                                                </li>
-                                                <li class="divider"></li>
-                                                <li><a href="form_basic.html#">选项4</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control">
-
-                                        <div class="input-group-btn">
-                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">操作 <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li><a href="form_basic.html#">选项1</a>
-                                                </li>
-                                                <li><a href="form_basic.html#">选项2</a>
-                                                </li>
-                                                <li><a href="form_basic.html#">选项3</a>
-                                                </li>
-                                                <li class="divider"></li>
-                                                <li><a href="form_basic.html#">选项4</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">分段</label>
-
-                                <div class="col-sm-10">
-                                    <div class="input-group m-b">
-                                        <div class="input-group-btn">
-                                            <button tabindex="-1" class="btn btn-white" type="button">操作</button>
-                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button"><span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="form_basic.html#">选项1</a>
-                                                </li>
-                                                <li><a href="form_basic.html#">选项2</a>
-                                                </li>
-                                                <li><a href="form_basic.html#">选项3</a>
-                                                </li>
-                                                <li class="divider"></li>
-                                                <li><a href="form_basic.html#">选项4</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control">
-
-                                        <div class="input-group-btn">
-                                            <button tabindex="-1" class="btn btn-white" type="button">操作</button>
-                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button"><span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu pull-right">
-                                                分段
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <div class="col-sm-4 col-sm-offset-2">
-                                    <button class="btn btn-primary" type="submit">保存内容</button>
-                                    <button class="btn btn-white" type="submit">取消</button>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="panel-body">
+                        <p>
+                            全局CSS<br>
+                            tatic/css/bootstrap.min.css<br>
+                            static/css/font-awesome.min.css<br><br>
+                            本页面CSS<br>
+                            static/css/animate.min.css<br>
+                            static/css/style.min.css<br>
+                            static/css/plugins/iCheck/custom.css</p>
                     </div>
+
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <i class="fa fa-info-circle"></i> 此页面用的js
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            全局js<br>
+                            tatic/css/bootstrap.min.css<br>
+                            static/css/font-awesome.min.css<br><br>
+                            本页面js<br>
+                            js/plugins/chosen/chosen.jquery.js<br>
+                            js/plugins/iCheck/icheck.min.js<br>
+                            js/plugins/validate/jquery.validate.min.js<br>
+                            js/plugins/validate/messages_zh.min.js<br>
+                            js/plugins/jasny/jasny-bootstrap.min.js<br>
+                            js/plugins/clockpicker/clockpicker.js<br>
+                            layui/layui.js<br>
+
+                    </div>
+
                 </div>
             </div>
         </div>
+
+
     </div>
-
-    <div id="modal-form" class="modal fade" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-6 b-r">
-                            <h3 class="m-t-none m-b">登录</h3>
-
-                            <p>欢迎登录本站(⊙o⊙)</p>
-
-                            <form role="form">
-                                <div class="form-group">
-                                    <label>用户名：</label>
-                                    <input type="email" placeholder="请输入用户名" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>密码：</label>
-                                    <input type="password" placeholder="请输入密码" class="form-control">
-                                </div>
-                                <div>
-                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>登录</strong>
-                                    </button>
-                                    <label>
-                                        <input type="checkbox" class="i-checks">自动登录</label>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-sm-6">
-                            <h4>还不是会员？</h4>
-                            <p>您可以注册一个账户</p>
-                            <p class="text-center">
-                                <a href="form_basic.html"><i class="fa fa-sign-in big-icon"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- 全局js -->
     <script src="{% static "js/jquery.min.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
-    <script src="{% static "js/content.min.js" %}"></script>
+    <script src="{% static "js/content.js" %}"></script>
+
+    <!-- layui的js -->
+    <script src="{% static "layui/layui.js" %}" charset="utf-8"></script>
+    <!-- 自定义js -->
+    <script src="{% static "js/plugins/chosen/chosen.jquery.js" %}"></script>
     <script src="{% static "js/plugins/iCheck/icheck.min.js" %}"></script>
+    <script src="{% static "js/plugins/validate/jquery.validate.min.js" %}"></script>
+    <script src="{% static "js/plugins/validate/messages_zh.min.js" %}"></script>
+    <script src="{% static "js/plugins/jasny/jasny-bootstrap.min.js" %}"></script>
+    <script src="{% static "js/plugins/clockpicker/clockpicker.js" %}"></script>
+
+    <!-- layerDate plugin javascript -->
+    <script src="{% static "js/plugins/layer/laydate/laydate.js" %}"></script>
     <script>
-        $(document).ready(function(){$(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",})});
+    //外部js调用
+    laydate({
+        elem: '#hello', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+        event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+    });
+
+    //日期范围限制
+    var start = {
+        elem: '#start',
+        format: 'YYYY/MM/DD hh:mm:ss',
+        min: laydate.now(), //设定最小日期为当前日期
+        max: '2099-06-16 23:59:59', //最大日期
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            end.min = datas; //开始日选好后，重置结束日的最小日期
+            end.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    var end = {
+        elem: '#end',
+        format: 'YYYY/MM/DD hh:mm:ss',
+        min: laydate.now(),
+        max: '2099-06-16 23:59:59',
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            start.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    laydate(start);
+    laydate(end);
     </script>
-    
+
+
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+    <script>
+        layui.use('element', function () {
+            var $ = layui.jquery
+                , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+            //触发事件
+            var active = {
+                tabAdd: function () {
+                    //新增一个Tab项
+                    element.tabAdd('demo', {
+                        title: '新选项' + (Math.random() * 1000 | 0) //用于演示
+                        , content: '内容' + (Math.random() * 1000 | 0)
+                        , id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+                    })
+                }
+                , tabDelete: function (othis) {
+                    //删除指定Tab项
+                    element.tabDelete('demo', '44'); //删除：“商品管理”
+
+
+                    othis.addClass('layui-btn-disabled');
+                }
+                , tabChange: function () {
+                    //切换到指定Tab项
+                    element.tabChange('demo', '22'); //切换到：用户管理
+                }
+            };
+
+            $('.site-demo-active').on('click', function () {
+                var othis = $(this), type = othis.data('type');
+                active[type] ? active[type].call(this, othis) : '';
+            });
+
+            //Hash地址的定位
+            var layid = location.hash.replace(/^#test=/, '');
+            element.tabChange('test', layid);
+
+            element.on('tab(test)', function (elem) {
+                location.hash = 'test=' + $(this).attr('lay-id');
+            });
+
+        });
+    </script>
+    <script>
+        layui.use(['form', 'layedit', 'laydate'], function () {
+            var form = layui.formo
+                , layer = layui.layer
+                , layedit = layui.layedit
+                , laydate = layui.laydate;
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+            laydate.render({
+                elem: '#date1'
+            });
+
+            //创建一个编辑器
+            var editIndex = layedit.build('LAY_demo_editor');
+
+            //自定义验证规则
+            form.verify({
+                title: function (value) {
+                    if (value.length < 5) {
+                        return '标题至少得5个字符啊';
+                    }
+                }
+                , pass: [
+                    /^[\S]{6,12}$/
+                    , '密码必须6到12位，且不能出现空格'
+                ]
+                , content: function (value) {
+                    layedit.sync(editIndex);
+                }
+            });
+
+            //监听指定开关
+            form.on('switch(switchTest)', function (data) {
+                layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+                    offset: '6px'
+                });
+                layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+            });
+
+            //监听提交
+            form.on('submit(demo1)', function (data) {
+                layer.alert(JSON.stringify(data.field), {
+                    title: '最终的提交信息'
+                })
+                return false;
+            });
+
+            //表单赋值
+            layui.$('#LAY-component-form-setval').on('click', function () {
+                form.val('example', {
+                    "username": "贤心" // "name": "value"
+                    , "password": "123456"
+                    , "interest": 1
+                    , "like[write]": true //复选框选中状态
+                    , "close": true //开关状态
+                    , "sex": "女"
+                    , "desc": "我爱 layui"
+                });
+            });
+
+            //表单取值
+            layui.$('#LAY-component-form-getval').on('click', function () {
+                var data = form.val('example');
+                alert(JSON.stringify(data));
+            });
+
+        });
+
+    </script>
+
 </body>
 
 </html>

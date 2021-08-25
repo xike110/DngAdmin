@@ -1,0 +1,228 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title }}</title>
+
+
+    <meta name="keywords" content=" {{ keywords }} "/>
+    <meta name="description" content="{{ description }} "/>
+
+
+</head>
+<script>
+
+    {% if tishi %}
+
+        window.onload = function () {
+            layer.alert('{{tishi}}', {
+                icon: 0,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+
+            })
+        }
+        setTimeout(function () {
+            window.location.href = "{{ route.url_str }}"
+        }, 3000);
+
+    {% endif %}
+
+    {% if jinggao %}
+
+        window.onload = function () {
+            layer.alert('{{jinggao}}', {
+                icon: 2,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+
+            })
+        }
+
+        setTimeout(function () {
+            window.location.href = "{{ route.url_str }}"
+        }, 3000);
+
+
+
+    {% endif %}
+
+
+    {% if yes %}
+
+        window.onload = function () {
+            layer.alert('{{yes}}', {
+                icon: 1,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+            })
+        }
+        setTimeout(function () {
+            window.location.href = "{{ route.url_str }}"
+        }, 3000);
+    {% endif %}
+
+</script>
+
+
+<body class="top-navigation">
+
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+
+        {% include 'html/head.html' %}  <!--公共头部导航-->
+
+        <div class="wrapper wrapper-content">
+             <div class="row wrapper border-bottom  page-heading">
+                <div class="col-lg-10">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a >导航</a></li>
+                        <li class="breadcrumb-item"><a href="/">网站首页</a></li>
+
+                        <li class="breadcrumb-item active"><strong>{{ route.name_str }}</strong></li>
+                    </ol>
+                </div>
+                <div class="col-lg-2"></div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins fadeInDown">
+                        <div class="ibox-title">
+                            <h5>基本面板(一)<small class="m-l-sm">这是一个空白页面</small></h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <br>
+                            <h2>
+                                空白页面，根据自己需求开发！<br>
+                            </h2>
+                            <br>
+                            <p>
+                                DngAdmin后台系统！专注Python极速Web开发。</p>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+{#            <div class="row">#}
+{#                <div class="col-sm-6 ui-sortable">#}
+{#                    <div class="ibox float-e-margins">#}
+{#                        <div class="ibox-title">#}
+{#                            <h5>空白面板(二)</h5>#}
+{#                            <div class="ibox-tools">#}
+{#                                <label class="label label-primary">点击更多</label>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="ibox-content">#}
+{#                            <h2>#}
+{#                                空白页面，根据自己需求开发！#}
+{#                            </h2>#}
+{#                            <p>#}
+{#                                攻城狮们夜以继日的疯狂加班，毛都快掉光了，解决了下列问题，赶快升级吧！#}
+{#                                <br>1.DngAdmin后台系统！#}
+{#                                <br>2.DngAdmin后台系统！专注Python极速Web开发#}
+{#                            </p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-sm-6 ui-sortable">#}
+{#                    <div class="ibox float-e-margins no-drop">#}
+{#                        <div class="ibox-title">#}
+{#                            <h5>空白面板(三)</h5>#}
+{#                            <div class="ibox-tools">#}
+{#                                <label class="label label-danger">点击更多</label>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="ibox-content">#}
+{#                            <h2>#}
+{#                                空白页面，根据自己需求开发！#}
+{#                            </h2>#}
+{#                            <p>#}
+{#                                攻城狮们夜以继日的疯狂加班，毛都快掉光了，解决了下列问题，赶快升级吧！#}
+{#                                <br>1.DngAdmin后台系统！#}
+{#                                <br>2.DngAdmin后台系统！专注Python极速Web开发#}
+{#                            </p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-sm-6 ui-sortable">#}
+{#                    <div class="ibox float-e-margins">#}
+{#                        <div class="ibox-title">#}
+{#                            <h5>空白面板(四)</h5>#}
+{#                            <div class="ibox-tools">#}
+{#                                <label class="label label-primary">点击更多</label>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="ibox-content">#}
+{#                            <h2>#}
+{#                                空白页面，根据自己需求开发！#}
+{#                            </h2>#}
+{#                            <p>#}
+{#                                攻城狮们夜以继日的疯狂加班，毛都快掉光了，解决了下列问题，赶快升级吧！#}
+{#                                <br>1.DngAdmin后台系统！#}
+{#                                <br>2.DngAdmin后台系统！专注Python极速Web开发#}
+{#                            </p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-sm-6 ui-sortable">#}
+{#                    <div class="ibox float-e-margins no-drop">#}
+{#                        <div class="ibox-title">#}
+{#                            <h5>空白面板(五)</h5>#}
+{#                            <div class="ibox-tools">#}
+{#                                <label class="label label-danger">点击更多</label>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="ibox-content">#}
+{#                            <h2>#}
+{#                                空白页面，根据自己需求开发！#}
+{#                            </h2>#}
+{#                            <p>#}
+{#                                攻城狮们夜以继日的疯狂加班，毛都快掉光了，解决了下列问题，赶快升级吧！#}
+{#                                <br>1.DngAdmin后台系统！#}
+{#                                <br>2.DngAdmin后台系统！专注Python极速Web开发#}
+{#                            </p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#            </div>#}
+
+
+        </div>
+
+
+        {% include 'html/footer.html' %}  <!--公共尾部-->
+    </div>
+</div>
+
+
+</body>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        WinMove()
+    });
+</script>
+
+</html>

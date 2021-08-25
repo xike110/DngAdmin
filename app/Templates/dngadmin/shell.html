@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>{{title}}、</title>
+  <title>{{title}}</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -43,13 +43,13 @@
 </form>
 
 
-<form class="layui-form" method="POST" action="/dngadmin/shell_post/">
+<form class="layui-form" method="POST" action="/dngadmin/shell/">
     {% csrf_token %}
 
     <div class="layui-form-item">
-    <label class="layui-form-label">参数2</label>
+    <label class="layui-form-label">POST接收</label>
     <div class="layui-input-inline">
-      <input  name="list_html"  placeholder="请填写参数说明" autocomplete="off" class="layui-input" lay-verify= "required">
+      <input  name="post_gouzao"  placeholder="请填写参数说明" autocomplete="off" class="layui-input" lay-verify= "required">
     </div>
     <div class="layui-form-mid layui-word-aux">参数说明</div>
   </div>
@@ -61,6 +61,33 @@
     </div>
   </div>
 </form>
+
+    {% if update_a %}
+    <pre class="layui-code layui-box layui-code-view layui-code-notepad" lay-title="JavaScript" lay-skin="notepad">
+        <h3 class="layui-code-h3">{{post_gouzao}}字段构造后的代码</h3>
+        <ol class="layui-code-ol">
+
+
+
+     {{update_a}}
+
+            <br><br>
+             {{added_y}}
+
+            <br><br>
+
+                {{update_b}}
+                <br><br>
+
+             {{added_d}}    <br><br>
+
+    </ol>
+    </pre>
+    {% else %}
+
+    {% endif %}
+
+
 
 </div>
 

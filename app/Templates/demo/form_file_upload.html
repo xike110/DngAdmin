@@ -17,7 +17,7 @@
     <link href="{% static "css/animate.min.css"%}" rel="stylesheet">
     <link href="{% static "css/plugins/dropzone/basic.css"%}" rel="stylesheet">
     <link href="{% static "css/plugins/dropzone/dropzone.css"%}" rel="stylesheet">
-    <link href="{% static "css/style.min.css"%}" rel="stylesheet"><base target="_blank">
+    <link href="{% static "css/style.min.css"%}" rel="stylesheet">
 
 </head>
 
@@ -61,7 +61,7 @@
     </div>
     <script src="{% static "js/jquery.min.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
-    <script src="{% static "js/content.min.js" %}"></script>
+    <script src="{% static "js/content.js" %}"></script>
     <script src="{% static "js/plugins/dropzone/dropzone.js" %}"></script>
     <script>
         $(document).ready(function(){Dropzone.options.myAwesomeDropzone={autoProcessQueue:false,uploadMultiple:true,parallelUploads:100,maxFiles:100,init:function(){var myDropzone=this;this.element.querySelector("button[type=submit]").addEventListener("click",function(e){e.preventDefault();e.stopPropagation();myDropzone.processQueue()});this.on("sendingmultiple",function(){});this.on("successmultiple",function(files,response){});this.on("errormultiple",function(files,response){})}}});

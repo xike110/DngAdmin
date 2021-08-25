@@ -9,8 +9,13 @@ from django.db.models import Avg,Max,Min,Sum #数据库聚合计算模块
 from datetime import datetime,timedelta #Cookie 模块
 from django.http import HttpResponse, HttpResponseRedirect #重定向模块
 from django.shortcuts import render
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 import os
 import sys
+import rsa
+import base64
+import sqlite3
 from urllib import parse#转码
 import re #正则模块
 import random#随机模块
@@ -18,169 +23,565 @@ import hashlib# 加密模块
 from django.utils import timezone #时间处理模块
 import datetime#时间
 import time# 日期模块
+from . import html_common #公共函数
 
-
-
+@cache_page(10 * 1)
 def index(request): #前端首页
 
 
-		return render(request,"html/demo_index.html",{
-		"title":"感谢您使用DngAdmin框架-首页演示",
-		"keywords":"DngAdmin框架",
-		"description":"DngAdmin框架3.0-基于python和Django的极速后台开发框架,为极速开发而生！",
+	htmlsetup = html_common.dng_htmlsetup()  # 获取前台配置
+	anquan =html_common.dng_protect() #获取前台安全
+	####系统安装####
+	urlstr = None
+	uid = models.dnguser.objects.filter().order_by('id').first()  # 最开始的第一条  # 查询管理员ID是否为空
+	if uid:
+		urlstr = False
+	else:
+		urlstr = True
+	if not htmlsetup:
+		# 创建管理员界面
+		return HttpResponseRedirect('/dngadmin/install/?jinggao=' + parse.quote('创建管理员'))
+	####系统安装结束####
+	tishi = request.GET.get('tishi')  # 提示
+	jinggao = request.GET.get('jinggao')  # 警告
+	yes = request.GET.get('yes')  # 警告
+	route= html_common.html_ckurl(request)
 
 
-		})
+	true_daohang=None
+	home_daohang=None
+	group=None
+	added = None
+	delete =None
+	update = None
+	see = None
+	if "cms_user_name" in request.COOKIES:  # 判断cookies有无，跳转
+		cookie_user_uid = request.get_signed_cookie(key="cms_user_uid", default=None,salt=anquan.salt_str, max_age=None)
+		cookie_user_name = request.get_signed_cookie(key="cms_user_name", default=None,salt=anquan.salt_str, max_age=None)
+		cookie_user_cookie_echo = request.get_signed_cookie(key="cms_user_cookie_echo", default=None,salt=anquan.salt_str, max_age=None)
+		cookie_user_cookie = request.get_signed_cookie(key="cms_user_cookie", default=None,salt=anquan.salt_str, max_age=None)
+		cookie_pr = html_common.dng_yanzheng(cookie_user_uid, cookie_user_name, cookie_user_cookie, cookie_user_cookie_echo)
+		if cookie_pr:
+			# ----------------------------------------------------------
+			#    cookie授权开始》》》开始
+			# ----------------------------------------------------------
+			dnguser_uid = cookie_pr.uid_int  # 赋值ID
+			dnguser_name = cookie_pr.username_str  # 赋值用户名
+			dnguser_cookie = cookie_pr.cookie_str  # 赋值COOKIE记录
+			true_daohang = html_common.true_daohang(dnguser_uid, 0)# 登录后导航
+			home_daohang = html_common.home_daohang(dnguser_uid, 0) #用户中心菜单
+			# ----------------------------------------------------------
+			#    判断页面权限开始》》》开始
+			# ----------------------------------------------------------
+			if route.prove_bool ==True:
+				group = html_common.html_usergroup(gid=cookie_pr.group_int)  # 获取会员组名称
+				added = html_common.dng_zsgc(cookie_pr.group_int, group.added_text)  # 增
+				delete = html_common.dng_zsgc(cookie_pr.group_int, group.delete_text)  # 删
+				update = html_common.dng_zsgc(cookie_pr.group_int, group.update_text)  # 改
+				see = html_common.dng_zsgc(cookie_pr.group_int, group.see_text)  # 开发者
 
+				if not '|' + str(route.uid_int) + '|' in group.menu_text:  # 判断菜单权限
+					return HttpResponse("""<BR><BR><BR><BR><BR><center><h1>您没有访问这个栏目的权限</h1></center><div>""")
+
+				user = html_common.html_user(dnguser_uid)
+				qx_if = html_common.html_qx_if(route.uid_int, group.menu_text, user.integral_int, route.integral_int,
+											   user.money_int, route.money_int, user.totalmoney_int,
+											   route.totalmoney_int, user.totalspend_int, route.totalspend_int,
+											   user.spread_int, route.spread_int)
+				if qx_if:
+					if "您" in qx_if:  # 目录权限判断
+						return HttpResponseRedirect('/dngadmin/tips/?jinggao=' + parse.quote(qx_if))
+		else:
+			return HttpResponseRedirect('/signout/?jinggao=' + parse.quote('检测到非法登录'))
+
+		if anquan.tongshi_bool == False:  # 验证是否同时登录
+			if html_common.html_tongshi(uid=dnguser_uid, cookie=dnguser_cookie) == False:
+				return HttpResponseRedirect('/signout/?tishi' + parse.quote('不允许同时登录账号'))
+
+
+
+
+
+
+
+
+
+
+
+	return render(request,"html/index.html",{
+	"title":route.seotirle_str,#网站SEO标题
+	"logotitle": htmlsetup.logotitle_str, #品牌名称
+	"keywords": route.keywords_str, # 关键词
+	"description":route.description_str, #描述
+	"file": htmlsetup.file_str, #备案号
+	"htmlsetup": htmlsetup,#网站配置
+	"statistics": htmlsetup.statistics_text, #统计代码
+	"tishi": tishi,
+	"jinggao": jinggao,
+	"yes": yes,
+	"added": added,  # 增
+	"delete": delete,  # 删
+	"update": update,  # 改
+	"see": see,  # 开发者权限
+	"caidan_1": html_common.false_daohang(0, 0), #无需登陆菜单
+	"caidan_2": true_daohang, #登陆后菜单
+	"caidan_3": home_daohang,  # 用户中心菜单
+
+
+
+
+
+	})
+
+@cache_page(10 * 1)
 def mulu(request): #主目录页
+	htmlsetup = html_common.dng_htmlsetup()  # 获取前台配置
+	anquan = html_common.dng_protect()  # 获取前台安全
+	route = html_common.html_ckurl(request)
+	true_daohang = None
+	home_daohang = None
+	group = None
+	added = None
+	delete = None
+	update = None
+	see = None
+	if "cms_user_name" in request.COOKIES:  # 判断cookies有无，跳转
+		cookie_user_uid = request.get_signed_cookie(key="cms_user_uid", default=None, salt=anquan.salt_str,
+													max_age=None)
+		cookie_user_name = request.get_signed_cookie(key="cms_user_name", default=None, salt=anquan.salt_str,
+													 max_age=None)
+		cookie_user_cookie_echo = request.get_signed_cookie(key="cms_user_cookie_echo", default=None,
+															salt=anquan.salt_str, max_age=None)
+		cookie_user_cookie = request.get_signed_cookie(key="cms_user_cookie", default=None, salt=anquan.salt_str,
+													   max_age=None)
+		cookie_pr = html_common.dng_yanzheng(cookie_user_uid, cookie_user_name, cookie_user_cookie,
+											 cookie_user_cookie_echo)
+		if cookie_pr:
+			# ----------------------------------------------------------
+			#    cookie授权开始》》》开始
+			# ----------------------------------------------------------
+			dnguser_uid = cookie_pr.uid_int  # 赋值ID
+			dnguser_name = cookie_pr.username_str  # 赋值用户名
+			dnguser_cookie = cookie_pr.cookie_str  # 赋值COOKIE记录
+			true_daohang = html_common.true_daohang(dnguser_uid, 0)  # 登录后导航
+			home_daohang = html_common.home_daohang(dnguser_uid, 0)  # 用户中心菜单
+			# ----------------------------------------------------------
+			#    判断页面权限开始》》》开始
+			# ----------------------------------------------------------
+			if route.prove_bool == True:
+				group = html_common.html_usergroup(gid=cookie_pr.group_int)  # 获取会员组名称
+				added = html_common.dng_zsgc(cookie_pr.group_int, group.added_text)  # 增
+				delete = html_common.dng_zsgc(cookie_pr.group_int, group.delete_text)  # 删
+				update = html_common.dng_zsgc(cookie_pr.group_int, group.update_text)  # 改
+				see = html_common.dng_zsgc(cookie_pr.group_int, group.see_text)  # 开发者
 
-	return render(request,"html/demo_mulu.html",{
-		"title":"主目录地址",
-		"keywords":"主目录",
-		"description":"DngAdmin框架3.0-基于python和Django的极速后台开发框架,为极速开发而生！",
+				user = html_common.html_user(dnguser_uid)
+				qx_if = html_common.html_qx_if(route.uid_int, group.menu_text, user.integral_int, route.integral_int,
+											   user.money_int, route.money_int, user.totalmoney_int,
+											   route.totalmoney_int, user.totalspend_int, route.totalspend_int,
+											   user.spread_int, route.spread_int)
+				if qx_if:
+					if "您" in qx_if:  # 目录权限判断
+						return HttpResponseRedirect('/dngadmin/tips/?jinggao=' + parse.quote(qx_if))
+		else:
+			return HttpResponseRedirect('/signout/?jinggao=' + parse.quote('检测到非法登录'))
 
-		})
+		if anquan.tongshi_bool == False:  # 验证是否同时登录
+			if html_common.html_tongshi(uid=dnguser_uid, cookie=dnguser_cookie) == False:
+				return HttpResponseRedirect('/signout/?tishi' + parse.quote('不允许同时登录账号'))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+	return render(request, "html/mulu.html", {
+		"title":route.seotirle_str,#网站SEO标题
+		"logotitle": htmlsetup.logotitle_str, #品牌名称
+		"keywords": route.keywords_str, # 关键词
+		"description":route.description_str, #描述
+		"file": htmlsetup.file_str,  # 备案号
+		"htmlsetup": htmlsetup,  # 网站配置
+		"statistics": htmlsetup.statistics_text,  # 统计代码
+		"added": added,  # 增
+		"delete": delete,  # 删
+		"update": update,  # 改
+		"see": see,  # 开发者权限
+		"caidan_1": html_common.false_daohang(0, 0),  # 无需登陆菜单
+		"caidan_2": true_daohang,  # 登陆后菜单
+		"caidan_3": home_daohang,  # 用户中心菜单
+
+
+
+	})
+
+
+
+@cache_page(10 * 1)
 def zimulu(request): #子目录页
+	htmlsetup = html_common.dng_htmlsetup()  # 获取前台配置
+	anquan = html_common.dng_protect()  # 获取前台安全
+	route = html_common.html_ckurl(request)
+	true_daohang = None
+	home_daohang = None
+	group = None
+	added = None
+	delete = None
+	update = None
+	see = None
+	if "cms_user_name" in request.COOKIES:  # 判断cookies有无，跳转
+		cookie_user_uid = request.get_signed_cookie(key="cms_user_uid", default=None, salt=anquan.salt_str,
+													max_age=None)
+		cookie_user_name = request.get_signed_cookie(key="cms_user_name", default=None, salt=anquan.salt_str,
+													 max_age=None)
+		cookie_user_cookie_echo = request.get_signed_cookie(key="cms_user_cookie_echo", default=None,
+															salt=anquan.salt_str, max_age=None)
+		cookie_user_cookie = request.get_signed_cookie(key="cms_user_cookie", default=None, salt=anquan.salt_str,
+													   max_age=None)
+		cookie_pr = html_common.dng_yanzheng(cookie_user_uid, cookie_user_name, cookie_user_cookie,
+											 cookie_user_cookie_echo)
+		if cookie_pr:
+			# ----------------------------------------------------------
+			#    cookie授权开始》》》开始
+			# ----------------------------------------------------------
+			dnguser_uid = cookie_pr.uid_int  # 赋值ID
+			dnguser_name = cookie_pr.username_str  # 赋值用户名
+			dnguser_cookie = cookie_pr.cookie_str  # 赋值COOKIE记录
+			true_daohang = html_common.true_daohang(dnguser_uid, 0)  # 登录后导航
+			home_daohang = html_common.home_daohang(dnguser_uid, 0)  # 用户中心菜单
+			# ----------------------------------------------------------
+			#    判断页面权限开始》》》开始
+			# ----------------------------------------------------------
+			if route.prove_bool == True:
+				group = html_common.html_usergroup(gid=cookie_pr.group_int)  # 获取会员组名称
+				added = html_common.dng_zsgc(cookie_pr.group_int, group.added_text)  # 增
+				delete = html_common.dng_zsgc(cookie_pr.group_int, group.delete_text)  # 删
+				update = html_common.dng_zsgc(cookie_pr.group_int, group.update_text)  # 改
+				see = html_common.dng_zsgc(cookie_pr.group_int, group.see_text)  # 开发者
 
-	return render(request,"html/demo_zimulu.html",{
-		"title":"子目录地址",
-		"keywords":"子目录",
-		"description":"DngAdmin框架3.0-基于python和Django的极速后台开发框架,为极速开发而生！",
+				user = html_common.html_user(dnguser_uid)
+				qx_if = html_common.html_qx_if(route.uid_int, group.menu_text, user.integral_int, route.integral_int,
+											   user.money_int, route.money_int, user.totalmoney_int,
+											   route.totalmoney_int, user.totalspend_int, route.totalspend_int,
+											   user.spread_int, route.spread_int)
+				if qx_if:
+					if "您" in qx_if:  # 目录权限判断
+						return HttpResponseRedirect('/dngadmin/tips/?jinggao=' + parse.quote(qx_if))
+		else:
+			return HttpResponseRedirect('/signout/?jinggao=' + parse.quote('检测到非法登录'))
 
+		if anquan.tongshi_bool == False:  # 验证是否同时登录
+			if html_common.html_tongshi(uid=dnguser_uid, cookie=dnguser_cookie) == False:
+				return HttpResponseRedirect('/signout/?tishi' + parse.quote('不允许同时登录账号'))
+
+
+	
+
+
+
+	return render(request,"html/zimulu.html",{
+		"title":route.seotirle_str,#网站SEO标题
+		"logotitle": htmlsetup.logotitle_str, #品牌名称
+		"keywords": route.keywords_str, # 关键词
+		"description":route.description_str, #描述
+		"file": htmlsetup.file_str,  # 备案号
+		"htmlsetup": htmlsetup,  # 网站配置
+		"statistics": htmlsetup.statistics_text,  # 统计代码
+		"added": added,  # 增
+		"delete": delete,  # 删
+		"update": update,  # 改
+		"see": see,  # 开发者权限
+		"caidan_1": html_common.false_daohang(0, 0),  # 无需登陆菜单
+		"caidan_2": true_daohang,  # 登陆后菜单
+		"caidan_3": home_daohang,  # 用户中心菜单
 		})
+
+
+@cache_page(10 * 1)
+def sitemap(request): #网站地图
+	htmlsetup = html_common.dng_htmlsetup()  # 获取前台配置
+	anquan = html_common.dng_protect()  # 获取前台安全
+	route = html_common.html_ckurl(request)
+	true_daohang = None
+	home_daohang = None
+	group = None
+	added = None
+	delete = None
+	update = None
+	see = None
+	if "cms_user_name" in request.COOKIES:  # 判断cookies有无，跳转
+		cookie_user_uid = request.get_signed_cookie(key="cms_user_uid", default=None, salt=anquan.salt_str,
+													max_age=None)
+		cookie_user_name = request.get_signed_cookie(key="cms_user_name", default=None, salt=anquan.salt_str,
+													 max_age=None)
+		cookie_user_cookie_echo = request.get_signed_cookie(key="cms_user_cookie_echo", default=None,
+															salt=anquan.salt_str, max_age=None)
+		cookie_user_cookie = request.get_signed_cookie(key="cms_user_cookie", default=None, salt=anquan.salt_str,
+													   max_age=None)
+		cookie_pr = html_common.dng_yanzheng(cookie_user_uid, cookie_user_name, cookie_user_cookie,
+											 cookie_user_cookie_echo)
+		if cookie_pr:
+			# ----------------------------------------------------------
+			#    cookie授权开始》》》开始
+			# ----------------------------------------------------------
+			dnguser_uid = cookie_pr.uid_int  # 赋值ID
+			dnguser_name = cookie_pr.username_str  # 赋值用户名
+			dnguser_cookie = cookie_pr.cookie_str  # 赋值COOKIE记录
+			true_daohang = html_common.true_daohang(dnguser_uid, 0)  # 登录后导航
+			home_daohang = html_common.home_daohang(dnguser_uid, 0)  # 用户中心菜单
+			# ----------------------------------------------------------
+			#    判断页面权限开始》》》开始
+			# ----------------------------------------------------------
+			if route.prove_bool == True:
+				group = html_common.html_usergroup(gid=cookie_pr.group_int)  # 获取会员组名称
+				added = html_common.dng_zsgc(cookie_pr.group_int, group.added_text)  # 增
+				delete = html_common.dng_zsgc(cookie_pr.group_int, group.delete_text)  # 删
+				update = html_common.dng_zsgc(cookie_pr.group_int, group.update_text)  # 改
+				see = html_common.dng_zsgc(cookie_pr.group_int, group.see_text)  # 开发者
+
+				user = html_common.html_user(dnguser_uid)
+				qx_if = html_common.html_qx_if(route.uid_int, group.menu_text, user.integral_int, route.integral_int,
+											   user.money_int, route.money_int, user.totalmoney_int,
+											   route.totalmoney_int, user.totalspend_int, route.totalspend_int,
+											   user.spread_int, route.spread_int)
+				if qx_if:
+					if "您" in qx_if:  # 目录权限判断
+						return HttpResponseRedirect('/dngadmin/tips/?jinggao=' + parse.quote(qx_if))
+		else:
+			return HttpResponseRedirect('/signout/?jinggao=' + parse.quote('检测到非法登录'))
+
+		if anquan.tongshi_bool == False:  # 验证是否同时登录
+			if html_common.html_tongshi(uid=dnguser_uid, cookie=dnguser_cookie) == False:
+				return HttpResponseRedirect('/signout/?tishi' + parse.quote('不允许同时登录账号'))
+
+
+
+
+
+
+
+
+
+
+	return render(request,"html/sitemap.html",{
+		"title":route.seotirle_str,#网站SEO标题
+		"logotitle": htmlsetup.logotitle_str, #品牌名称
+		"keywords": route.keywords_str, # 关键词
+		"description":route.description_str, #描述
+		"file": htmlsetup.file_str,  # 备案号
+		"htmlsetup": htmlsetup,  # 网站配置
+		"statistics": htmlsetup.statistics_text,  # 统计代码
+		"added": added,  # 增
+		"delete": delete,  # 删
+		"update": update,  # 改
+		"see": see,  # 开发者权限
+		"caidan_1": html_common.false_daohang(0, 0),  # 无需登陆菜单
+		"caidan_2": true_daohang,  # 登陆后菜单
+		"caidan_3": home_daohang,  # 用户中心菜单
+		})
+
+
+@cache_page(10 * 1)
 def list(request):  #列表页
+	htmlsetup = html_common.dng_htmlsetup()  # 获取前台配置
+	anquan = html_common.dng_protect()  # 获取前台安全
+	route = html_common.html_ckurl(request)
+	true_daohang = None
+	home_daohang = None
+	group = None
+	added = None
+	delete = None
+	update = None
+	see = None
+	if "cms_user_name" in request.COOKIES:  # 判断cookies有无，跳转
+		cookie_user_uid = request.get_signed_cookie(key="cms_user_uid", default=None, salt=anquan.salt_str,
+													max_age=None)
+		cookie_user_name = request.get_signed_cookie(key="cms_user_name", default=None, salt=anquan.salt_str,
+													 max_age=None)
+		cookie_user_cookie_echo = request.get_signed_cookie(key="cms_user_cookie_echo", default=None,
+															salt=anquan.salt_str, max_age=None)
+		cookie_user_cookie = request.get_signed_cookie(key="cms_user_cookie", default=None, salt=anquan.salt_str,
+													   max_age=None)
+		cookie_pr = html_common.dng_yanzheng(cookie_user_uid, cookie_user_name, cookie_user_cookie,
+											 cookie_user_cookie_echo)
+		if cookie_pr:
+			# ----------------------------------------------------------
+			#    cookie授权开始》》》开始
+			# ----------------------------------------------------------
+			dnguser_uid = cookie_pr.uid_int  # 赋值ID
+			dnguser_name = cookie_pr.username_str  # 赋值用户名
+			dnguser_cookie = cookie_pr.cookie_str  # 赋值COOKIE记录
+			true_daohang = html_common.true_daohang(dnguser_uid, 0)  # 登录后导航
+			home_daohang = html_common.home_daohang(dnguser_uid, 0)  # 用户中心菜单
+			# ----------------------------------------------------------
+			#    判断页面权限开始》》》开始
+			# ----------------------------------------------------------
+			if route.prove_bool == True:
+				group = html_common.html_usergroup(gid=cookie_pr.group_int)  # 获取会员组名称
+				added = html_common.dng_zsgc(cookie_pr.group_int, group.added_text)  # 增
+				delete = html_common.dng_zsgc(cookie_pr.group_int, group.delete_text)  # 删
+				update = html_common.dng_zsgc(cookie_pr.group_int, group.update_text)  # 改
+				see = html_common.dng_zsgc(cookie_pr.group_int, group.see_text)  # 开发者
 
-	return render(request,"html/demo_list.html",{
-		"title":"列表页地址",
-		"keywords":"列表页",
-		"description":"DngAdmin框架3.0-基于python和Django的极速后台开发框架,为极速开发而生！",
+				user = html_common.html_user(dnguser_uid)
+				qx_if = html_common.html_qx_if(route.uid_int, group.menu_text, user.integral_int, route.integral_int,
+											   user.money_int, route.money_int, user.totalmoney_int,
+											   route.totalmoney_int, user.totalspend_int, route.totalspend_int,
+											   user.spread_int, route.spread_int)
+				if qx_if:
+					if "您" in qx_if:  # 目录权限判断
+						return HttpResponseRedirect('/dngadmin/tips/?jinggao=' + parse.quote(qx_if))
+		else:
+			return HttpResponseRedirect('/signout/?jinggao=' + parse.quote('检测到非法登录'))
+
+		if anquan.tongshi_bool == False:  # 验证是否同时登录
+			if html_common.html_tongshi(uid=dnguser_uid, cookie=dnguser_cookie) == False:
+				return HttpResponseRedirect('/signout/?tishi' + parse.quote('不允许同时登录账号'))
+
+
+
+	return render(request,"html/list.html",{
+		"title":route.seotirle_str,#网站SEO标题
+		"logotitle": htmlsetup.logotitle_str, #品牌名称
+		"keywords": route.keywords_str, # 关键词
+		"description":route.description_str, #描述
+		"file": htmlsetup.file_str,  # 备案号
+		"htmlsetup": htmlsetup,  # 网站配置
+		"statistics": htmlsetup.statistics_text,  # 统计代码
+		"added": added,  # 增
+		"delete": delete,  # 删
+		"update": update,  # 改
+		"see": see,  # 开发者权限
+		"caidan_1": html_common.false_daohang(0, 0),  # 无需登陆菜单
+		"caidan_2": true_daohang,  # 登陆后菜单
+		"caidan_3": home_daohang,  # 用户中心菜单
 
 		})
 
+@cache_page(10 * 1)
 def new(request): #内容页
+	htmlsetup = html_common.dng_htmlsetup()  # 获取前台配置
+	anquan = html_common.dng_protect()  # 获取前台安全
+	route = html_common.html_ckurl(request)
+	true_daohang = None
+	home_daohang = None
+	group = None
+	added = None
+	delete = None
+	update = None
+	see = None
+	if "cms_user_name" in request.COOKIES:  # 判断cookies有无，跳转
+		cookie_user_uid = request.get_signed_cookie(key="cms_user_uid", default=None, salt=anquan.salt_str,
+													max_age=None)
+		cookie_user_name = request.get_signed_cookie(key="cms_user_name", default=None, salt=anquan.salt_str,
+													 max_age=None)
+		cookie_user_cookie_echo = request.get_signed_cookie(key="cms_user_cookie_echo", default=None,
+															salt=anquan.salt_str, max_age=None)
+		cookie_user_cookie = request.get_signed_cookie(key="cms_user_cookie", default=None, salt=anquan.salt_str,
+													   max_age=None)
+		cookie_pr = html_common.dng_yanzheng(cookie_user_uid, cookie_user_name, cookie_user_cookie,
+											 cookie_user_cookie_echo)
+		if cookie_pr:
+			# ----------------------------------------------------------
+			#    cookie授权开始》》》开始
+			# ----------------------------------------------------------
+			dnguser_uid = cookie_pr.uid_int  # 赋值ID
+			dnguser_name = cookie_pr.username_str  # 赋值用户名
+			dnguser_cookie = cookie_pr.cookie_str  # 赋值COOKIE记录
+			true_daohang = html_common.true_daohang(dnguser_uid, 0)  # 登录后导航
+			home_daohang = html_common.home_daohang(dnguser_uid, 0)  # 用户中心菜单
+			# ----------------------------------------------------------
+			#    判断页面权限开始》》》开始
+			# ----------------------------------------------------------
+			if route.prove_bool == True:
+				group = html_common.html_usergroup(gid=cookie_pr.group_int)  # 获取会员组名称
+				added = html_common.dng_zsgc(cookie_pr.group_int, group.added_text)  # 增
+				delete = html_common.dng_zsgc(cookie_pr.group_int, group.delete_text)  # 删
+				update = html_common.dng_zsgc(cookie_pr.group_int, group.update_text)  # 改
+				see = html_common.dng_zsgc(cookie_pr.group_int, group.see_text)  # 开发者
 
-	return render(request,"html/demo_new.html",{
-		"title":"内容页地址",
-		"keywords":"内容页",
-		"description":"DngAdmin框架3.0-基于python和Django的极速后台开发框架,为极速开发而生！",
+				user = html_common.html_user(dnguser_uid)
+				qx_if = html_common.html_qx_if(route.uid_int, group.menu_text, user.integral_int, route.integral_int,
+											   user.money_int, route.money_int, user.totalmoney_int,
+											   route.totalmoney_int, user.totalspend_int, route.totalspend_int,
+											   user.spread_int, route.spread_int)
+				if qx_if:
+					if "您" in qx_if:  # 目录权限判断
+						return HttpResponseRedirect('/dngadmin/tips/?jinggao=' + parse.quote(qx_if))
+		else:
+			return HttpResponseRedirect('/signout/?jinggao=' + parse.quote('检测到非法登录'))
+
+		if anquan.tongshi_bool == False:  # 验证是否同时登录
+			if html_common.html_tongshi(uid=dnguser_uid, cookie=dnguser_cookie) == False:
+				return HttpResponseRedirect('/signout/?tishi' + parse.quote('不允许同时登录账号'))
+
+
+	return render(request,"html/new.html",{
+		"title":route.seotirle_str,#网站SEO标题
+		"logotitle": htmlsetup.logotitle_str, #品牌名称
+		"keywords": route.keywords_str, # 关键词
+		"description":route.description_str, #描述
+		"file": htmlsetup.file_str,  # 备案号
+		"htmlsetup": htmlsetup,  # 网站配置
+		"statistics": htmlsetup.statistics_text,  # 统计代码
+		"added": added,  # 增
+		"delete": delete,  # 删
+		"update": update,  # 改
+		"see": see,  # 开发者权限
+		"caidan_1": html_common.false_daohang(0, 0),  # 无需登陆菜单
+		"caidan_2": true_daohang,  # 登陆后菜单
+		"caidan_3": home_daohang,  # 用户中心菜单
 
 		})
 
-def get(request): #get地址
-	
-	return HttpResponse("DngAdmin框架GET预留地址") #retorn是返回声明
-
-def post(request): #psot地址
-	
-	return HttpResponse("DngAdmin框架POST预留地址") #retorn是返回声明
+@cache_page(10 * 1)
+def http404(request): #get地址
+	htmlsetup = html_common.dng_htmlsetup()  # 获取前台配置
 
 
 
 
+	return render(request, "html/404.html", {
+		"title": "404页面",  # 网站SEO标题
+		"logotitle": htmlsetup.logotitle_str,  # 品牌名称
+		"keywords": "404页面",  # 关键词
+		"description": "404页面",  # 描述
+		"file": htmlsetup.file_str, #备案号
+		"statistics": htmlsetup.statistics_text, #统计代码
+
+
+	})
+@cache_page(10 * 1)
+def http505(request): #psot地址
 
 
 
-def app_index(request):#工具首页
-	
-	
-
-	return render(request,"app/app_index.html",{
-		"title":"DngAdmin在线开发工具",
-		"keywords":"在线开发工具",
-		"description":"基于Django的极速后台开发框架",
-	
-
-		})
-
-def app_http(request): #请求获取类
-	#打印头部所以信息
-	# print(request.META)
-	ip = request.META.get('HTTP_X_FORWARDED_FOR')# 获取ip信息
-	liulanqi = request.META.get('HTTP_USER_AGENT')# 获取浏览器信息
-	get_url = request.META.get('QUERY_STRING')# 获取域名后缀的URL
-	sessionid_cookie_url = request.META.get('HTTP_COOKIE')# 您的请求的token和sessionid
-	cookie_url = request.META.get('CSRF_COOKIE')# 获取请求的token
-	lailu_url = request.META.get('HTTP_REFERER')# 获取请求的上级来路
-	yuming_url = request.META.get('HTTP_HOST')# 当前访问的域名
-	duankou_url = request.META.get('SERVER_PORT')# 当前访问的端口
-	qingqiu_url = request.META.get('REQUEST_METHOD')# 当前的请求方式是get还是POST
-	http_ceho = request.META #所有请求参数
+	htmlsetup = html_common.dng_htmlsetup()  # 获取前台配置
 
 
-	
-	
-	return render(request,"app/app_http.html",{
-		"title":"DngAdmin框架-请求获取类工具",
-		"keywords":"请求获取类",
-		"description":"基于Django的极速后台开发框架",
-		"ip":ip,
-		"liulanqi":liulanqi,
-		"get_url":get_url,
-		"sessionid_cookie_url":sessionid_cookie_url,
-		"cookie_url":cookie_url,
-		"lailu_url":lailu_url,
-		"yuming_url":yuming_url,
-		"duankou_url":duankou_url,
-		"qingqiu_url":qingqiu_url,
-		"http_ceho":http_ceho,
-
-		})
-
-def app_models(request): #数据库类
+	return render(request, "html/505.html", {
+		"title": "505页面",  # 网站SEO标题
+		"logotitle": htmlsetup.logotitle_str,  # 品牌名称
+		"keywords": "505页面",  # 关键词
+		"description": "505页面",  # 描述
+		"file": htmlsetup.file_str,  # 备案号
+		"statistics": htmlsetup.statistics_text,  # 统计代码
 
 
-	root = os.getcwd()#获取项目运行根目录
-	root_py = os.path.abspath('app/common.py') # 跟目录+py文件所在路径
-	root_py = os.path.abspath('app/common1.py') # 跟目录+py文件所在路径
-
-	seo = open (root_py,"rb")  #读取
-	key = str(seo.read(),'utf-8') #read是读取命令 str 转换字符串和编码
+	})
 
 
-	strinfo = re.compile('值') #正则替换前
-	keyseo = strinfo.sub('数据',key)#正则替换后
+def dug(request): #调试地址
 
-	keyseo ='''
-from django.db import models
-
-# Create your models here.
-# 
-# # ORM模型
-# 类 -> 数据库表
-# 对象 -> 表中的每一行数据
-# 对象.id，对象.value -> 每行中的数据
-#这个类是用来生成数据库表的，这个类必须继承models.Model类
-#注：对于ORM框架，可以简单的认为自定义类UserInfo表示数据库的表；根据UserInfo创建的对象表示数据库表
-#里的一行数据；而对象.username和对象.password表示每一行数据里具体的字段(username/password)的数据。
-
-class dnguser(models.Model): #后台会员表
-
-	#id            = models.AutoField(max_length=11,db_column='id',primary_key=True) #id主键
-	user_uid           = models.CharField(max_length=255,null=False) #会员ID,设置不能为空
-	user_username      = models.CharField(max_length=255,null= True) #会员账号
-	user_password      = models.CharField(max_length=255,null= True) #会员密码MD5加密
-	user_name          = models.CharField(max_length=255,null= True) #后台会员昵称
-	user_emall         = models.CharField(max_length=255,null= True) #后台会员邮箱
-	user_mobile        = models.CharField(max_length=255,null= True) #手机号接收短信等
-	user_portrait      = models.CharField(max_length=255,null= True) #上传头像后的地址
-	user_grade         = models.CharField(max_length=255,null= True) #后台会员组
-	user_integral      = models.CharField(max_length=255,null= True) #积分
-	user_ip            = models.CharField(max_length=255,null= True) #最后一次登录ip地址
-	user_shebei        = models.CharField(max_length=255,null= True) #登录后台设备
-	user_zctime        = models.CharField(max_length=255,null= True) #后台注册时间
-	user_token         = models.CharField(max_length=255,null= True) #后台客户token密钥，预留加密授权登录用
-	user_onine         = models.CharField(max_length=255,null= True) #后台是否允许账号在多设备同时在线，考虑大家都是做授权系统卖VIP账号，默认为空不允许同时在线，0=等于不允许 1=允许同时在线
-	user_dltime        = models.CharField(max_length=255,null= True) #最后一次登录时间'''
-
-
-	kaobei2 = open(root_py,"w") #写入
-	kaobei2.write(keyseo)  #write是写入命令
-	kaobei2.close()   #close()是关闭命令
-
-
-	return HttpResponse(keyseo) #retorn是返回声明
-
+	return HttpResponse("BUG调试页面")
 
 
 	

@@ -1,0 +1,100 @@
+{% load static %}
+
+
+<link rel="stylesheet" href="{% static "layui/css/layui.css" %}" media="all">
+
+<link href="{% static "css/bootstrap.html.css" %}" rel="stylesheet">
+{#<link href="{% static "css/font-awesome.html.css" %}" rel="stylesheet">#}
+{#<link href="{% static "css/animate.html.css" %}" rel="stylesheet">#}
+<link href="{% static "css/style.html.css" %}" rel="stylesheet">
+
+
+<div class="row border-bottom white-bg">
+    <nav class="navbar navbar-expand-lg navbar-static-top" role="navigation"><a href="/"
+                                                                                class="navbar-brand">{{ logotitle }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                aria-label="Toggle navigation"><i class="fa fa-reorder"></i></button>
+
+        {% if htmlsetup.http_bool %}
+            <div class="navbar-collapse collapse" id="navbar">
+                <ul class="nav navbar-nav mr-auto">
+
+
+
+
+                    {% for aa in caidan_1 %}
+
+
+
+                    {{ aa|safe }}
+
+
+                    {% endfor %}
+
+
+
+
+                    {% if "cms_user_cookie_echo" in request.COOKIES %}
+{#                        <li class="dropdown active"><a aria-expanded="false" role="button" href="" class="dropdown-toggle"#}
+{#                                            data-toggle="dropdown">售后服务</a>#}
+{#                        <ul role="menu" class="dropdown-menu">#}
+{#                            <li><a href="">故障申报</a>#}
+{#                            </li>#}
+{#                            <li><a href="">故障列表</a>#}
+{#                            </li>#}
+{##}
+{#                        </ul>#}
+{#                    </li>#}
+                        {% for bb in caidan_2 %}
+
+                        {{ bb|safe }}
+
+                        {% endfor %}
+
+
+
+
+
+                    {% else %}
+                    {% endif %}
+
+
+
+                </ul>
+
+                <ul class="nav navbar-top-links  navbar-right">
+
+                    {% if "cms_user_cookie_echo" in request.COOKIES %}
+
+
+                        <li class="dropdown"><a aria-expanded="false" role="button" class="dropdown-toggle"
+                                                data-toggle="dropdown"><i class="fa fa-user"></i>会员中心</a>
+                            <ul role="menu" class="dropdown-menu">
+                                {% for cc in caidan_3 %}
+
+                                {{ cc|safe }}
+
+                                {% endfor %}
+                                <li><a href="/signout/">退出账户</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="/signout/"><i class="fa fa-sign-out"></i>退出登录</a></li>
+                    {% else %}
+                        <li><a href="/login/"><i class="fa fa-arrow-circle-o-up"></i>登录账户</a></li>
+                        <li><a href="/register/"><i class="fa fa-user-plus"></i>注册账户</a></li>
+                    {% endif %}
+
+
+                </ul>
+            </div>
+
+        {% else %}
+
+        {% endif %}
+
+
+    </nav>
+</div>
+
+{#增：{{ added }}  删：{{ delete }}  改：{{ update }}  开发者：{{ see }}#}

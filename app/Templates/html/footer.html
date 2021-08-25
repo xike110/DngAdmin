@@ -1,0 +1,985 @@
+{% load static %}
+
+{% load cache %}
+{% cache 60 cms.footer %}
+<div class="footer">
+    {#    <div class="pull-right">#}
+    {##}
+    {#    </div>#}
+    <div>
+        <strong>技术支持:</strong>©<a href="http://www.dngadmin.com" TARGET="_blank">DngAdmin系统</a>{% if htmlsetup.http_bool %}<strong>  </strong>|<strong>  </strong><a href="/sitemap/">sitemap地图</a>{% else %}  {% endif %}
+        {% if file %}
+            |<strong>  </strong><a href="https://beian.miit.gov.cn" TARGET="_blank">{{ file }} </a>
+        {% elif statistics %}
+            |{% autoescape off %} <strong>  </strong>{{ statistics }}{% endautoescape %}
+        {% else %}
+
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+{% endcache %}
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/bootstrap.html.js" %}"></script>
+<script src="{% static "js/content.js" %}"></script>
+<script src="{% static "js/plugins/flot/jquery.flot.js" %}"></script>
+<script src="{% static "js/plugins/flot/jquery.flot.tooltip.min.js" %}"></script>
+<script src="{% static "js/plugins/flot/jquery.flot.resize.js" %}"></script>
+<script src="{% static "js/plugins/chartJs/Chart.min.js" %}"></script>
+<script src="{% static "js/plugins/peity/jquery.peity.min.js" %}"></script>
+<script src="{% static "js/demo/peity-demo.min.js" %}"></script>
+<script src="{% static "layui/layui.js" %}" charset="utf-8"></script>
+<script src="{% static "js/plugins/jasny/jasny-bootstrap.min.js" %}"></script>
+<script src="{% static "/js/plugins/jquery-ui/jquery-ui.min.js" %}"></script>
+
+
+<script>
+layui.use('layer', function(){ //独立版的layer无需执行这一句
+  var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+  //多窗口模式 - esc 键
+  $(document).on('keyup', function(e){
+    if(e.keyCode === 27){
+      layer.close(layer.escIndex ? layer.escIndex[0] : 0);
+    }
+  });
+});
+</script>
+
+{% if "登录" in title %}
+    <script type="text/javascript" charset="utf-8">
+
+        let csrf = $("[name=csrfmiddlewaretoken]").val();
+
+        let user = document.getElementById("user");
+
+        let password = document.getElementById("password");
+
+        layui.config({
+            base: "{% static "layui/dist/sliderVerify/"%}"
+        }).use(['sliderVerify', 'jquery', 'form'], function () {
+
+            var sliderVerify = layui.sliderVerify,
+                $ = layui.jquery,
+                form = layui.form;
+            var slider = sliderVerify.render({
+                elem: '#slider',
+                onOk: function () {//当验证通过回调
+                    //监听提交
+                    if (user.value == ""||password.value == "") {
+                        layer.msg("帐号或密码未填写，验证失败！",);
+                        setTimeout(function () {
+                                layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+                            },
+                            3000);
+                        return false
+                    }
+
+                    {% if anquan.sms_bool %}
+                        // 手机验证码开始
+                        $.ajax({
+                            url: '/login_csrf/',
+                            type: 'POST',
+                            data: {
+                                csrfmiddlewaretoken: '' + csrf + '',
+                                login: 1,
+                                user: '' + user.value + '',
+                                password: '' + password.value + '',
+                                phone_csrf: '' + csrf + '',
+                            },//提交参数
+                            success: function (msg) {
+                                if (msg == "True") {
+                                    layer.msg("验证码发送您注册手机！请在3分钟内输入");
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+
+                                        },
+                                        3000);
+                                } else if (msg == "False") {
+                                    layer.msg("验证码已经发送失败！请重试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "None") {
+                                    layer.msg("账户不存在,请检测是否填写正确！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "psd_no") {
+                                    layer.msg("密码错误！请核对密码！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                }else if (msg == "stop60") {
+                                    layer.msg("60秒内只能申请一次验证码！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "stop86400") {
+                                    layer.msg("请求验证码次数过多，明天再试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else {
+                                    layer.msg("提供信息不正确！验证失败！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+
+
+                                }
+                            }
+                        })
+                        // 手机验证码结束
+                    {% elif anquan.station_bool %}
+                        // 邮件验证码开始
+                        $.ajax({
+                            url: '/login_csrf/',
+                            type: 'POST',
+                            data: {
+                                csrfmiddlewaretoken: '' + csrf + '',
+                                login: 1,
+                                user: '' + user.value + '',
+                                password: '' + password.value + '',
+                                mail_csrf: '' + csrf + '',
+                            },//提交参数
+                            success: function (msg) {
+                                if (msg == "True") {
+                                    layer.msg("验证码发送您注册邮箱！请在3分钟内输入");
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+
+                                        },
+                                        3000);
+                                } else if (msg == "False") {
+                                    layer.msg("验证码已经发送失败！请重试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "None") {
+                                    layer.msg("账户不存在,请检测是否填写正确！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "psd_no") {
+                                    layer.msg("密码错误！请核对密码！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                }else if (msg == "stop60") {
+                                    layer.msg("60秒内只能申请一次验证码！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "stop86400") {
+                                    layer.msg("请求验证码次数过多，明天再试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else {
+                                    layer.msg("提供信息不正确！验证失败！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+
+
+                                }
+                            }
+                        })
+                        // 邮件验证码结束
+                    {% elif anquan.graphic_bool %}
+                        // 滑动验证开始
+                        layer.msg("滑动验证成功！");
+
+                        // 滑动验证结束
+                    {% else %}
+                        // 无验证方式
+                    {% endif %}
+
+
+                }
+            })
+            $('#reset').on('click', function () {
+                slider.reset();
+            })
+
+
+            form.on('submit(formDemo)', function (data) {
+                if (slider.isOk()) {
+                    //alert('验证成功，添加你自己的代码！');
+                    //......后续操作
+                    Form_Submit()
+                } else {
+                    layer.msg("您没有滑动验证");
+                }
+                return false;
+            });
+
+        })
+    </script>
+{% elif  "找回密码" in title %}
+    <script type="text/javascript" charset="utf-8">
+
+        let csrf = $("[name=csrfmiddlewaretoken]").val();
+
+        let user = document.getElementById("user");
+
+        {% if anquan.sms_bool %}
+            let phone = document.getElementById("phone");
+        {% elif anquan.station_bool %}
+            let email = document.getElementById("email");
+
+        {% elif anquan.graphic_bool %}
+            let email = document.getElementById("email");
+
+        {% endif %}
+
+
+        layui.config({
+            base: "{% static "layui/dist/sliderVerify/"%}"
+        }).use(['sliderVerify', 'jquery', 'form'], function () {
+
+            var sliderVerify = layui.sliderVerify,
+                $ = layui.jquery,
+                form = layui.form;
+            var slider = sliderVerify.render({
+                elem: '#slider',
+                onOk: function () {//当验证通过回调
+                    //监听提交
+
+                    {% if anquan.sms_bool %}
+                        // 手机验证码开始
+                        if (user.value == "" || phone.value == "") {
+                            layer.msg("帐号和手机填写不完整",);
+                            setTimeout(function () {
+                                    layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+                                },
+                                3000);
+                            return false
+                        }
+                        $.ajax({
+                            url: '/login_csrf/',
+                            type: 'POST',
+                            data: {
+                                csrfmiddlewaretoken: '' + csrf + '',
+                                forgot: 1,
+                                user: '' + user.value + '',
+                                phone: '' + phone.value + '',
+                                phone_csrf: '' + csrf + '',
+                            },//提交参数
+                            success: function (msg) {
+                                if (msg == "True") {
+                                    layer.msg("验证码发送您注册手机！请在3分钟内输入");
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+
+                                        },
+                                        3000);
+                                } else if (msg == "False") {
+                                    layer.msg("验证码已经发送失败！请重试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "None") {
+                                    layer.msg("账户不存在,请检测是否填写正确！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                }else if (msg == "phone_None") {
+                                    layer.msg("帐号与手机号不匹配,填写正确手机号！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "stop60") {
+                                    layer.msg("60秒内只能申请一次验证码！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "stop86400") {
+                                    layer.msg("请求验证码次数过多，明天再试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else {
+                                    layer.msg("提供信息不正确！验证失败！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+
+
+                                }
+                            }
+                        })
+                        // 手机验证码结束
+                    {% elif anquan.station_bool %}
+                        // 邮件验证码开始
+                        if (user.value == "" || email.value == ""|| email.value.indexOf("@")==-1 ) {
+                            layer.msg("帐号和邮箱填写不完整",);
+                            setTimeout(function () {
+                                    layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+                                },
+                                3000);
+                            return false
+                        }
+
+                        $.ajax({
+                            url: '/login_csrf/',
+                            type: 'POST',
+                            data: {
+                                csrfmiddlewaretoken: '' + csrf + '',
+                                forgot: 1,
+                                user: '' + user.value + '',
+                                email: '' + email.value + '',
+                                mail_csrf: '' + csrf + '',
+                            },//提交参数
+                            success: function (msg) {
+                                if (msg == "True") {
+                                    layer.msg("验证码发送您注册邮箱！请在3分钟内输入");
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+
+                                        },
+                                        3000);
+                                } else if (msg == "False") {
+                                    layer.msg("验证码已经发送失败！请重试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "None") {
+                                    layer.msg("账户不存在,请检测是否填写正确！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "emal_None") {
+                                    layer.msg("帐号与邮箱不匹配,填写正确邮箱！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                }  else if (msg == "stop60") {
+                                    layer.msg("60秒内只能申请一次验证码！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "stop86400") {
+                                    layer.msg("请求验证码次数过多，明天再试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else {
+                                    layer.msg("提供信息不正确！验证失败！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+
+
+                                }
+                            }
+                        })
+                        // 邮件验证码结束
+                    {% elif anquan.graphic_bool %}
+                        // 滑动验证开始
+                        layer.msg("滑动验证成功！");
+
+                        // 滑动验证结束
+                    {% else %}
+                        // 无验证方式
+                    {% endif %}
+
+
+                }
+            })
+            $('#reset').on('click', function () {
+                slider.reset();
+            })
+
+
+            form.on('submit(formDemo)', function (data) {
+                if (slider.isOk()) {
+                    //alert('验证成功，添加你自己的代码！');
+                    //......后续操作
+                    Form_Submit()
+                } else {
+                    layer.msg("您没有滑动验证");
+                }
+                return false;
+            });
+
+        })
+    </script>
+
+{% elif  "解锁" in title %}
+    <script type="text/javascript" charset="utf-8">
+
+        let csrf = $("[name=csrfmiddlewaretoken]").val();
+
+        let user = document.getElementById("user");
+
+        {% if anquan.sms_bool %}
+            let phone = document.getElementById("phone");
+        {% elif anquan.station_bool %}
+            let email = document.getElementById("email");
+
+        {% elif anquan.graphic_bool %}
+            let email = document.getElementById("email");
+
+        {% endif %}
+
+
+        layui.config({
+            base: "{% static "layui/dist/sliderVerify/"%}"
+        }).use(['sliderVerify', 'jquery', 'form'], function () {
+
+            var sliderVerify = layui.sliderVerify,
+                $ = layui.jquery,
+                form = layui.form;
+            var slider = sliderVerify.render({
+                elem: '#slider',
+                onOk: function () {//当验证通过回调
+                    //监听提交
+
+                    {% if anquan.sms_bool %}
+                        // 手机验证码开始
+                        if (user.value == "" || phone.value == "") {
+                            layer.msg("帐号和手机填写不完整",);
+                            setTimeout(function () {
+                                    layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+                                },
+                                3000);
+                            return false
+                        }
+                        $.ajax({
+                            url: '/login_csrf/',
+                            type: 'POST',
+                            data: {
+                                csrfmiddlewaretoken: '' + csrf + '',
+                                unlock: 1,
+                                user: '' + user.value + '',
+                                phone: '' + phone.value + '',
+                                phone_csrf: '' + csrf + '',
+                            },//提交参数
+                            success: function (msg) {
+                                if (msg == "True") {
+                                    layer.msg("验证码发送您注册手机！请在3分钟内输入");
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+
+                                        },
+                                        3000);
+                                } else if (msg == "False") {
+                                    layer.msg("验证码已经发送失败！请重试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "None") {
+                                    layer.msg("账户不存在,请检测是否填写正确！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "phone_None") {
+                                    layer.msg("帐号与手机号不匹配,填写正确手机号！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "stop60") {
+                                    layer.msg("60秒内只能申请一次验证码！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "stop86400") {
+                                    layer.msg("请求验证码次数过多，明天再试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else {
+                                    layer.msg("提供信息不正确！验证失败！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+
+
+                                }
+                            }
+                        })
+                        // 手机验证码结束
+                    {% elif anquan.station_bool %}
+                        // 邮件验证码开始
+                        if (user.value == "" || email.value == ""|| email.value.indexOf("@")==-1) {
+                            layer.msg("帐号和邮箱填写不完整",);
+                            setTimeout(function () {
+                                    layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+                                },
+                                3000);
+                            return false
+                        }
+
+                        $.ajax({
+                            url: '/login_csrf/',
+                            type: 'POST',
+                            data: {
+                                csrfmiddlewaretoken: '' + csrf + '',
+                                unlock: 1,
+                                user: '' + user.value + '',
+                                email: '' + email.value + '',
+                                mail_csrf: '' + csrf + '',
+                            },//提交参数
+                            success: function (msg) {
+                                if (msg == "True") {
+                                    layer.msg("验证码发送您注册邮箱！请在3分钟内输入");
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+
+                                        },
+                                        3000);
+                                } else if (msg == "False") {
+                                    layer.msg("验证码已经发送失败！请重试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "None") {
+                                    layer.msg("账户不存在,请检测是否填写正确！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "emal_None") {
+                                    layer.msg("帐号与邮箱不匹配,填写正确邮箱！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                }  else if (msg == "stop60") {
+                                    layer.msg("60秒内只能申请一次验证码！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "stop86400") {
+                                    layer.msg("请求验证码次数过多，明天再试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else {
+                                    layer.msg("提供信息不正确！验证失败！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+
+
+                                }
+                            }
+                        })
+                        // 邮件验证码结束
+                    {% elif anquan.graphic_bool %}
+                        // 滑动验证开始
+                        layer.msg("滑动验证成功！");
+
+                        // 滑动验证结束
+                    {% else %}
+                        // 无验证方式
+                    {% endif %}
+
+
+                }
+            })
+            $('#reset').on('click', function () {
+                slider.reset();
+            })
+
+
+            form.on('submit(formDemo)', function (data) {
+                if (slider.isOk()) {
+                    //alert('验证成功，添加你自己的代码！');
+                    //......后续操作
+                    Form_Submit()
+                } else {
+                    layer.msg("您没有滑动验证");
+                }
+                return false;
+            });
+
+        })
+    </script>
+{% elif  "注册" in title %}
+    <script type="text/javascript" charset="utf-8">
+
+        let csrf = $("[name=csrfmiddlewaretoken]").val();
+
+        let user = document.getElementById("user");
+        let email = document.getElementById("email");
+        let phone = document.getElementById("phone");
+        let password = document.getElementById("password");
+        let passwords = document.getElementById("passwords");
+
+        layui.config({
+            base: "{% static "layui/dist/sliderVerify/"%}"
+        }).use(['sliderVerify', 'jquery', 'form'], function () {
+
+            var sliderVerify = layui.sliderVerify,
+                $ = layui.jquery,
+                form = layui.form;
+            var slider = sliderVerify.render({
+                elem: '#slider',
+                onOk: function () {//当验证通过回调
+                    //监听提交
+                    if (user.value == ""||email.value == ""||phone.value == ""||password.value == ""||passwords.value == ""|| email.value.indexOf("@")==-1) {
+                        layer.msg("注册信息未填写完整验证失败",);
+                        setTimeout(function () {
+                                layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+                            },
+                            3000);
+                        return false
+                    }
+
+                    {% if anquan.sms_bool %}
+                        // 手机验证码开始
+                        $.ajax({
+                            url: '/login_csrf/',
+                            type: 'POST',
+                            data: {
+                                csrfmiddlewaretoken: '' + csrf + '',
+                                register: 1,
+                                user: '' + user.value + '',
+                                email: '' + email.value + '',
+                                phone: '' + phone.value + '',
+                                password: '' + password.value + '',
+                                passwords: '' + passwords.value + '',
+                                phone_csrf: '' + csrf + '',
+                            },//提交参数
+                            success: function (msg) {
+                                if (msg == "True") {
+                                    layer.msg("验证码发送您注册手机！请在3分钟内输入");
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+
+                                        },
+                                        3000);
+                                } else if (msg == "False") {
+                                    layer.msg("验证码已经发送失败！请重试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "None") {
+                                    layer.msg("账户不存在,请检测是否填写正确！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "stop60") {
+                                    layer.msg("60秒内只能申请一次验证码！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "stop86400") {
+                                    layer.msg("请求验证码次数过多，明天再试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "psd_no") {
+                                    layer.msg("两次输入的密码不一致,请重新输入！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "user_no") {
+                                    layer.msg("帐号已经注册！请更换帐号！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "email_no") {
+                                    layer.msg("邮箱已经注册！请更换邮箱！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "phone_no") {
+                                    layer.msg("手机号已经注册！请更换手机号！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                }else {
+                                    layer.msg("提供信息不正确！验证失败！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+
+
+                                }
+                            }
+                        })
+                        // 手机验证码结束
+                    {% elif anquan.station_bool %}
+                        // 邮件验证码开始
+                        $.ajax({
+                            url: '/login_csrf/',
+                            type: 'POST',
+                            data: {
+                                csrfmiddlewaretoken: '' + csrf + '',
+                                register: 1,
+                                user: '' + user.value + '',
+                                email: '' + email.value + '',
+                                phone: '' + phone.value + '',
+                                password: '' + password.value + '',
+                                passwords: '' + passwords.value + '',
+                                mail_csrf: '' + csrf + '',
+                            },//提交参数
+                            success: function (msg) {
+                                if (msg == "True") {
+                                    layer.msg("验证码发送您注册邮箱！请在3分钟内输入");
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+
+                                        },
+                                        3000);
+                                } else if (msg == "False") {
+                                    layer.msg("验证码已经发送失败！请重试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "None") {
+                                    layer.msg("账户不存在,请检测是否填写正确！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "stop60") {
+                                    layer.msg("60秒内只能申请一次验证码！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "stop86400") {
+                                    layer.msg("请求验证码次数过多，明天再试！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "psd_no") {
+                                    layer.msg("两次输入的密码不一致,请重新输入！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "user_no") {
+                                    layer.msg("帐号已经注册！请更换帐号！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "email_no") {
+                                    layer.msg("邮箱已经注册！请更换邮箱！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "phone_no") {
+                                    layer.msg("手机号已经注册！请更换手机号！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                }else {
+                                    layer.msg("提供信息不正确！验证失败！",);
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+
+
+                                }
+                            }
+                        })
+                        // 邮件验证码结束
+                    {% elif anquan.graphic_bool %}
+                        // 滑动验证开始
+                        layer.msg("滑动验证成功！");
+
+                        // 滑动验证结束
+                    {% else %}
+                        // 无验证方式
+                    {% endif %}
+
+
+                }
+            })
+            $('#reset').on('click', function () {
+                slider.reset();
+            })
+
+
+            form.on('submit(formDemo)', function (data) {
+                if (slider.isOk()) {
+                    //alert('验证成功，添加你自己的代码！');
+                    //......后续操作
+                    Form_Submit()
+                } else {
+                    layer.msg("您没有滑动验证");
+                }
+                return false;
+            });
+
+        })
+    </script>
+{% else %}
+
+{% endif %}
+
+
+
+
+

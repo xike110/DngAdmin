@@ -9,16 +9,67 @@
 
     <title>{{title}}-管理登录</title>
 
-   <link rel="shortcut icon" href="{% static "favicon.ico"%}"> <link href="{% static "css/bootstrap.min.css"%}"rel="stylesheet">
+   <link rel="shortcut icon" href="{% static "favicon.ico"%}">
+    <link href="{% static "css/bootstrap.min.css"%}"rel="stylesheet">
     <link href="{% static "css/font-awesome.min.css"%}" rel="stylesheet">
 
     <link href="{% static "css/animate.min.css"%}" rel="stylesheet">
-    <link href="{% static "css/style.min.css"%}" rel="stylesheet"><base target="_blank">
+    <link href="{% static "css/style.min.css"%}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "layui/css/layui.css" %}" media="all">
     <!--[if lt IE 8]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
     <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+    <script>
 
+    {% if tishi %}
+
+        window.onload = function () {
+            layer.alert('{{tishi}}', {
+                icon: 0,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+
+            })
+        }
+         setTimeout(function () {
+             window.location.href="/dngadmin/longin/?dngurl={{ dngurl }}"
+        }, 3000);
+
+    {% endif %}
+
+    {% if jinggao %}
+
+        window.onload = function () {
+            layer.alert('{{jinggao}}', {
+                icon: 2,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+
+                    })
+        }
+
+        setTimeout(function () {
+             window.location.href="/dngadmin/longin/?dngurl={{ dngurl }}"
+        }, 3000);
+
+
+
+    {% endif %}
+
+
+    {% if yes %}
+
+        window.onload = function () {
+            layer.alert('{{yes}}', {
+                icon: 1,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+            })
+        }
+         setTimeout(function () {
+             window.location.href="/dngadmin/longin/?dngurl={{ dngurl }}"
+        }, 3000);
+    {% endif %}
+
+</script>
 </head>
 
 <body class="gray-bg">
@@ -32,14 +83,21 @@
 
             </div>
 
-
+<BR><BR>
  {% if jinggao_post %}
 <div class="alert alert-danger">
   {{jinggao_post}}
  </div>
+
+{% elif "dnguser_cookie_echo" in request.COOKIES %}
+      <div class="alert alert-success">
+     {{cookie}}-您已经登录<br><br>
+      <a href="/dngadmin/">点击这里返回后台</a>
+     </div>
 {% elif tishikey %}
     <div class="alert alert-success">
-                           {{tishikey}}
+                           {{tishikey}}<br>
+
  </div>
 
 {% else %}
@@ -49,18 +107,59 @@
                   {% csrf_token %}
                 <input type="hidden" name="dngurl" value="{{dngurl}}">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="输入账号" name="username" required="" minlength="6" maxlength="18">
+                    <input type="text" class="form-control" placeholder="输入账号" name="username" value="" ID="username" required="" minlength="6" maxlength="18">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="输入密码" name="password" required="" minlength="6" maxlength="18">
+                    <input type="password" class="form-control" placeholder="输入密码" name="password" value="" ID="password" required="" minlength="6" maxlength="18">
                 </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">登录</button>
+                                    {% if anquan.sms_bool %}
+                                    <!-- 手机验证码开始 -->
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label-huadong">获取验证码
+                                            <i>&nbsp;</i>
+                                            <i class="fa fa-arrow-right animated shake"></i></label>
+                                        <div class="layui-input-block">
+                                            <div id="slider"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"><input type="text" name="Verification" lay-verify= "required" class="form-control"
+                                                                   placeholder="输入验证码" required="" data-mask="999999" minlength="6" maxlength="6"></div>
+                                    <!-- 手机验证码结束 -->
+                                {% elif anquan.station_bool %}
+                                    <!-- 邮件验证码开始 -->
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label-huadong">获取验证码
+                                            <i>&nbsp;</i>
+                                            <i class="fa fa-arrow-right animated shake"></i></label>
+                                        <div class="layui-input-block">
+                                            <div id="slider"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"><input type="text" name="Verification" class="form-control" lay-verify= "required"
+                                                                   placeholder="输入验证码" required="" data-mask="999999" minlength="6" maxlength="6"></div>
+                                    <!-- 邮件验证码结束 -->
+                                {% elif anquan.graphic_bool %}
+                                    <!-- 滑动验证开始 -->
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label-huadong">滑动验证
+                                            <i>&nbsp;</i>
+                                            <i class="fa fa-arrow-right"></i></label>
+                                        <div class="layui-input-block">
+                                            <div id="slider"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 滑动验证结束 -->
+                                {% else %}
+                                     <!-- 无验证方式 -->
+                                {% endif %}
+                <button type="submit" class="btn btn-primary block full-width m-b" lay-submit
+                                        lay-filter="formDemo">登录</button>
 
                 <a href="#"><small>登录不了联系客服</small></a>
 
-                <p> {{cookie}}</p>
-                <p> {{graphic}}</p>
-                <p> {{sms}}</p>
+
+
                 <p class="text-muted text-center"><small>此页虽然极简，但适配所有手机端</small></p>
 <!--                <a class="btn btn-sm btn-white btn-block" href="register.html">1111</a>-->
             </form>
@@ -69,8 +168,227 @@
     </div>
 
     <!-- Mainly scripts -->
-   <script src="{% static "js/jquery.min.js" %}"></script>
-    <script src="{% static "js/bootstrap.min.js" %}"></script>
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/bootstrap.html.js" %}"></script>
+<script src="{% static "js/content.js" %}"></script>
+<script src="{% static "js/plugins/flot/jquery.flot.js" %}"></script>
+<script src="{% static "js/plugins/flot/jquery.flot.tooltip.min.js" %}"></script>
+<script src="{% static "js/plugins/flot/jquery.flot.resize.js" %}"></script>
+<script src="{% static "js/plugins/chartJs/Chart.min.js" %}"></script>
+<script src="{% static "js/plugins/peity/jquery.peity.min.js" %}"></script>
+<script src="{% static "js/demo/peity-demo.min.js" %}"></script>
+<script src="{% static "layui/layui.js" %}" charset="utf-8"></script>
+
+
+
+     <script type="text/javascript" charset="utf-8">
+
+        let csrf = $("[name=csrfmiddlewaretoken]").val();
+
+        let user = document.getElementById("username");
+
+        let password = document.getElementById("password");
+
+        layui.config({
+            base: "{% static "layui/dist/sliderVerify/"%}"
+        }).use(['sliderVerify', 'jquery', 'form'], function () {
+
+            var sliderVerify = layui.sliderVerify,
+                $ = layui.jquery,
+                form = layui.form;
+            var slider = sliderVerify.render({
+                elem: '#slider',
+                onOk: function () {//当验证通过回调
+                    //监听提交
+                    if (user.value == ""||password.value == "") {
+                        layer.msg("帐号或密码未填写，验证失败！",);
+                        setTimeout(function () {
+                                layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+                            },
+                            20000);
+                        return false
+                    }
+
+                    {% if anquan.sms_bool %}
+                        // 手机验证码开始
+                        $.ajax({
+                            url: '/dngadmin/login_csrf/',
+                            type: 'POST',
+                            data: {
+                                csrfmiddlewaretoken: '' + csrf + '',
+                                login: 1,
+                                user: '' + user.value + '',
+                                password: '' + password.value + '',
+                                phone_csrf: '' + csrf + '',
+                            },//提交参数
+                            success: function (msg) {
+                                if (msg == "True") {
+                                    layer.msg("验证码发送您注册手机！请在3分钟内输入",{icon:1,time:2000, shift: 6});
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+
+                                        },
+                                        3000);
+                                } else if (msg == "False") {
+                                    layer.msg("验证码已经发送失败！请重试！",{icon:2,time:2000, shift: 6});
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "None") {
+                                    layer.msg("账户不存在,请检测是否填写正确！",{icon:2,time:2000, shift: 6});
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "psd_no") {
+                                    layer.msg("密码错误！请核对密码！",{icon:2,time:2000, shift: 6});
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                }else if (msg == "stop60") {
+                                    layer.msg("60秒内只能申请一次验证码！",{icon:4,time:2000, shift: 6});
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "stop86400") {
+                                    layer.msg("请求验证码次数过多，明天再试！",{icon:4,time:2000, shift: 6});
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else {
+                                    layer.msg("提供信息不正确！验证失败！",{icon:2,time:2000, shift: 6});
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+
+
+                                }
+                            }
+                        })
+                        // 手机验证码结束
+                    {% elif anquan.station_bool %}
+                        // 邮件验证码开始
+                        $.ajax({
+                            url: '/dngadmin/login_csrf/',
+                            type: 'POST',
+                            data: {
+                                csrfmiddlewaretoken: '' + csrf + '',
+                                login: 1,
+                                user: '' + user.value + '',
+                                password: '' + password.value + '',
+                                mail_csrf: '' + csrf + '',
+                            },//提交参数
+                            success: function (msg) {
+                                if (msg == "True") {
+                                    layer.msg("验证码发送您注册邮箱！请在3分钟内输入",{icon:1,time:2000, shift: 6});
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+
+                                        },
+                                        3000);
+                                } else if (msg == "False") {
+                                    layer.msg("验证码已经发送失败！请重试！",{icon:2,time:2000, shift: 6});
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "None") {
+                                    layer.msg("账户不存在,请检测是否填写正确！",{icon:2,time:2000, shift: 6});
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "psd_no") {
+                                    layer.msg("密码错误！请核对密码！",{icon:2,time:2000, shift: 6});
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                }else if (msg == "stop60") {
+                                    layer.msg("60秒内只能申请一次验证码！",{icon:4,time:2000, shift: 6});
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else if (msg == "stop86400") {
+                                    layer.msg("请求验证码次数过多，明天再试！",{icon:4,time:2000, shift: 6});
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+                                } else {
+                                    layer.msg("提供信息不正确！验证失败！",{icon:2,time:2000, shift: 6});
+                                    setTimeout(function () {
+                                            layer.closeAll();//关闭所有的弹出层
+                                            slider.reset();//重置滑块
+
+                                        },
+                                        3000);
+
+
+                                }
+                            }
+                        })
+                        // 邮件验证码结束
+                    {% elif anquan.graphic_bool %}
+                        // 滑动验证开始
+                        layer.msg("滑动验证成功！");
+
+                        // 滑动验证结束
+                    {% else %}
+                        // 无验证方式
+                    {% endif %}
+
+
+                }
+            })
+            $('#reset').on('click', function () {
+                slider.reset();
+            })
+
+
+            form.on('submit(formDemo)', function (data) {
+                if (slider.isOk()) {
+                    //alert('验证成功，添加你自己的代码！');
+                    //......后续操作
+                    Form_Submit()
+                } else {
+                    layer.msg("您没有滑动验证");
+                }
+                return false;
+            });
+
+        })
+    </script>
+
 </body>
 
 </html>

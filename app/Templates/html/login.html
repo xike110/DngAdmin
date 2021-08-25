@@ -1,0 +1,203 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title }}</title>
+
+
+    <meta name="keywords" content=" {{ keywords }} "/>
+    <meta name="description" content="{{ description }} "/>
+
+
+</head>
+<script>
+
+    {% if tishi %}
+
+        window.onload = function () {
+            layer.alert('{{tishi}}', {
+                icon: 0,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+
+            })
+        }
+         setTimeout(function () {
+             window.location.href="/login/"
+        }, 3000);
+
+    {% endif %}
+
+    {% if jinggao %}
+
+        window.onload = function () {
+            layer.alert('{{jinggao}}', {
+                icon: 2,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+
+                    })
+        }
+
+        setTimeout(function () {
+             window.location.href="/login/"
+        }, 3000);
+
+
+
+    {% endif %}
+
+
+    {% if yes %}
+
+        window.onload = function () {
+            layer.alert('{{yes}}', {
+                icon: 1,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+            })
+        }
+         setTimeout(function () {
+             window.location.href="/login/"
+        }, 3000);
+    {% endif %}
+
+</script>
+<body class="top-navigation">
+
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+
+        {% include 'html/head.html' %}  <!--公共头部导航-->
+
+        <div class="wrapper wrapper-content">
+
+            <div class="loginColumnswap animated fadeInDown">
+                <div class="row">
+
+                    {% if "安卓" in shebei %}
+                        <div class="col-md-6 text-center"><h2 class="font-bold">{{ logotitle }}</h2></div>
+                    {% elif "苹果" in shebei %}
+                        <div class="col-md-6 text-center"><h2 class="font-bold">{{ logotitle }}</h2></div>
+                    {% else %}
+                        <div class="col-md-6"><h2 class="font-bold">{{ logotitle }}</h2>
+                            <p>DngAdmin后台系统免费开源
+                                专注Python极速Web开发！</p>
+                            <p>编写目的
+                                目前Python已经成为市场第二大开发语言，但是web开发目前还是很少，主要是Python的环境搭建复杂不适合新手，还有目前没有一款适合的后台系统来管理WEB信息的原因，导致WEB优秀项目很少，由此开发了DngAdmin后台系统填补目前的空白</p>
+                            <p>系统优势
+                                DngAdmin后台系统,采用Python原生语言开发，没有安装多余的三方模块，方便新手环境搭建，采用前后端分离开发思维，通用的RBAC权限管理功能，实现多用户组管理，实现多用户管理，</p>
+                        </div>
+                    {% endif %}
+
+
+
+                    <div class="col-md-6">
+                        <div class="ibox-content">
+                            <form class="m-t" name="login" role="form" method="POST" action="/login_post/">
+                                {% csrf_token %}
+                                <div  class="form-group"><input type="text" name="user"  value="" ID="user" lay-verify= "required" class="form-control"
+                                                               placeholder="输入账户" required="" minlength="6" maxlength="18">
+                                </div>
+                                <div class="form-group"><input type="password" name="password"  value="" ID="password" lay-verify= "required" class="form-control"
+                                                               placeholder="输入密码"
+                                                               required="" minlength="6" maxlength="30"></div>
+                                {% if anquan.sms_bool %}
+                                    <!-- 手机验证码开始 -->
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label-huadong">获取验证码
+                                            <i>&nbsp;</i>
+                                            <i class="fa fa-arrow-right animated shake"></i></label>
+                                        <div class="layui-input-block">
+                                            <div id="slider"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"><input type="text" name="Verification" lay-verify= "required" class="form-control"
+                                                                   placeholder="输入验证码" required="" data-mask="999999" ></div>
+                                    <!-- 手机验证码结束 -->
+                                {% elif anquan.station_bool %}
+                                    <!-- 邮件验证码开始 -->
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label-huadong">获取验证码
+                                            <i>&nbsp;</i>
+                                            <i class="fa fa-arrow-right animated shake"></i></label>
+                                        <div class="layui-input-block">
+                                            <div id="slider"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"><input type="text" name="Verification" class="form-control" lay-verify= "required"
+                                                                   placeholder="输入验证码" required="" data-mask="999999" ></div>
+                                    <!-- 邮件验证码结束 -->
+                                {% elif anquan.graphic_bool %}
+                                    <!-- 滑动验证开始 -->
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label-huadong">滑动验证
+                                            <i>&nbsp;</i>
+                                            <i class="fa fa-arrow-right"></i></label>
+                                        <div class="layui-input-block">
+                                            <div id="slider"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 滑动验证结束 -->
+                                {% else %}
+                                     <!-- 无验证方式 -->
+                                {% endif %}
+
+
+
+
+                                <button type="submit" class="btn btn-primary block full-width m-b" lay-submit
+                                        lay-filter="formDemo">登录账户
+                                </button>
+
+
+                                <div id="mpanel4" style="margin-top:20px;">
+
+                                </div>
+                            </form>
+
+
+                            <h3><p class="text-muted text-center">
+                                 {% if anquan.sms_bool %}
+                                     <a class="text-muted text-center" href="/register/"><small>【注册帐号】</small></a>|<a
+                                    class="text-muted text-center" href="/forgot/"><small>【忘记密码】</small></a>|<a
+                                    class="text-muted text-center" href="/unlock/"><small>【解锁帐号】</small></a>
+                                 {% elif anquan.station_bool %}
+                                     <a class="text-muted text-center" href="/register/"><small>【注册帐号】</small></a>|<a
+                                    class="text-muted text-center" href="/forgot/"><small>【忘记密码】</small></a>|<a
+                                    class="text-muted text-center" href="/unlock/"><small>【解锁帐号】</small></a>
+                                 {% elif anquan.graphic_bool %}
+                                     <a class="text-muted text-center" href="/register/"><small>【注册帐号】</small></a>
+                                 {% endif %}
+
+                            </p></h3>
+                            <a class="btn btn-sm btn-white btn-block" href="/register/">注册帐户</a>
+                            <p class="m-t"><small>遵循国家互联网安全法，对您的账户隐私保密</small></p></div>
+
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-md-6"><a title="DngAdmin">技术支持</a>DngAdmin
+                    </div>
+                    <div class="col-md-6 text-right"><small>© 2021-2030</small></div>
+                </div>
+            </div>
+        </div>
+
+
+        {% include 'html/footer.html' %}  <!--公共尾部-->
+    </div>
+</div>
+
+
+</body>
+
+</html>

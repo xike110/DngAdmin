@@ -19,8 +19,60 @@
     <link rel="shortcut icon" href="{% static "favicon.ico"%}">
     <link href="{% static "css/bootstrap.min.css"%}"rel="stylesheet">
     <link href="{% static "css/font-awesome.min.css"%}" rel="stylesheet">
-    <link href="{% static "css/animate.min.css"%}" rel="stylesheet">
-    <link href="{% static "css/style.min.css"%}" rel="stylesheet">
+    <link href="{% static "css/animate.css"%}" rel="stylesheet">
+    <link href="{% static "css/style.css"%}" rel="stylesheet">
+
+
+ <script>
+
+    {% if tishi %}
+
+        window.onload = function () {
+            layer.alert('{{tishi}}', {
+                icon: 0,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+
+            })
+        }
+         setTimeout(function () {
+             window.location.href="/dngadmin/"
+        }, 3000);
+
+    {% endif %}
+
+    {% if jinggao %}
+
+        window.onload = function () {
+            layer.alert('{{jinggao}}', {
+                icon: 2,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+
+                    })
+        }
+
+        setTimeout(function () {
+             window.location.href="/dngadmin/"
+        }, 3000);
+
+
+
+    {% endif %}
+
+
+    {% if yes %}
+
+        window.onload = function () {
+            layer.alert('{{yes}}', {
+                icon: 1,
+                skin: 'layer-ext-moon', time: 3000, //20s后自动关闭
+            })
+        }
+         setTimeout(function () {
+             window.location.href="/dngadmin/"
+        }, 3000);
+    {% endif %}
+
+</script>
 
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
@@ -35,20 +87,23 @@
                         <div class="dropdown profile-element">
                             <span><img alt="image" class="img-circle" src="{% static "img/profile_small.jpg"%}"/></span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+
                                 <span class="clear">
+
                                <span class="block m-t-xs"><strong class="font-bold">{{name}}</strong></span>
+
                                 <span class="text-muted text-xs block">{{group_gname}}<b class="caret"></b></span>
                                 </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a class="J_menuItem" href="form_avatar.html">修改头像</a>
+
+                                <li><a class="J_menuItem" href="/dngadmin/userpsd/">修改密码</a>
                                 </li>
-                                <li><a class="J_menuItem" href="profile.html">个人资料</a>
+                                <li><a class="J_menuItem" href="/dngadmin/userdata/">个人资料</a>
                                 </li>
-                                <li><a class="J_menuItem" href="contacts.html">联系我们</a>
+                                <li><a class="J_menuItem" href="http://www.dngadmin.com/">联系我们</a>
                                 </li>
-                                <li><a class="J_menuItem" href="mailbox.html">信箱</a>
-                                </li>
+
                                 <li class="divider"></li>
                                 <li><a href="/dngadmin/longin_out/">安全退出</a>
                                 </li>
@@ -57,45 +112,36 @@
                         <div class="logo-element">Dng
                         </div>
                     </li>
-                    <li>
-                        <a class="J_menuItem" href="{{listindex.url_str}}/index.php"><i class="fa fa-home"></i> <span class="nav-label">我的首页</span></a>
-                    </li>
+                {% if "管理员" in  group_gname %}
+{#                    {% if "1" in  gm %}#}
+{#                    <li><a href="/dngadmin/?gm=2"><i class="fa fa-refresh"></i> <span class="nav-label">后台管理</span></a></li>#}
+{#                    {% elif "2" in  gm  %}#}
+{#                    <li><a href="/dngadmin/?gm=1"><i class="fa fa-refresh"></i> <span class="nav-label">前台管理</span></a></li>#}
+{#                    {% else %}#}
+{#                    <li><a href="/dngadmin/?gm=2"><i class="fa fa-refresh"></i> <span class="nav-label">后台管理</span></a></li>#}
+{#                    {% endif %}#}
 
-{% for seo in caidan1_list%}
- <li>
-<a href="">
- <i class="{{seo.icon_str}}"></i>
-<span class="nav-label">{{seo.name_str}}</span>
- <span class="fa arrow"></span>
- </a>
- <ul class="nav nav-second-level">
+                {% endif %}
 
 
-{% for key in caidan2_list%}
+{#                    <li>#}
+{#                        <a class="J_menuItem" href="/index.php"><i class="fa fa-home"></i> <span class="nav-label">我的首页</span></a>#}
+{#                    </li>#}
+ {% for aa in caidan %}
 
-{% for list in key%}
 
- {% if seo.uid_int == list.superior_int %}
+{{ aa|safe }}
 
- <li>
 
- <a class="J_menuItem" href="{{list.url_str}}" data-index="0">{{list.name_str}}</a>
-</li>
-
- {% endif %}
-{% endfor %}
-{% endfor %}
-</ul>
- </li>
-{% endfor %}
+ {% endfor %}
 
 
 
-{% for list in indexurl_list %}
-                    <li>
-                        <a class="J_menuItem" href="{{list.url_str}}"><i class="{{list.icon_str}}"></i> <span class="nav-label">{{list.name_str}}</span></a>
-                    </li>
-{% endfor %}
+{#{% for list in indexurl_list %}#}
+{#                    <li>#}
+{#                        <a class="J_menuItem" href="{{list.url_str}}"><i class="{{list.icon_str}}"></i> <span class="nav-label">{{list.name_str}}</span></a>#}
+{#                    </li>#}
+{#{% endfor %}#}
 
 <!--                    <li>-->
 <!--                        <a class="J_menuItem" href="http://www.dngadmin.com/"><i class="fa fa-home"></i> <span class="nav-label">DngAdmin开发手册</span></a>-->
@@ -123,89 +169,29 @@
 
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
-<!--                        <li class="dropdown">
-                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                                <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-messages">
-                                <li class="m-t-xs">
-                                    <div class="dropdown-messages-box">
-                                        <a href="profile.html" class="pull-left">
-                                            <img alt="image" class="img-circle" src="{% static "img/a7.jpg"%}">
-                                        </a>
-                                        <div class="media-body">
-                                            <small class="pull-right">46小时前</small>
-                                            <strong>小四</strong> 这个在日本投降书上签字的军官，建国后一定是个不小的干部吧？
-                                            <br>
-                                            <small class="text-muted">3天前 2014.11.8</small>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <div class="dropdown-messages-box">
-                                        <a href="profile.html" class="pull-left">
-                                            <img alt="image" class="img-circle" src="{% static "img/a4.jpg"%}">
-                                        </a>
-                                        <div class="media-body ">
-                                            <small class="pull-right text-navy">25小时前</small>
-                                            <strong>国民岳父</strong> 如何看待“男子不满自己爱犬被称为狗，刺伤路人”？——这人比犬还凶
-                                            <br>
-                                            <small class="text-muted">昨天</small>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <div class="text-center link-block">
-                                        <a class="J_menuItem" href="mailbox.html">
-                                            <i class="fa fa-envelope"></i> <strong> 查看所有消息</strong>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                                <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-alerts">
-                                <li>
-                                    <a href="mailbox.html">
-                                        <div>
-                                            <i class="fa fa-envelope fa-fw"></i> 您有16条未读消息
-                                            <span class="pull-right text-muted small">4分钟前</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="profile.html">
-                                        <div>
-                                            <i class="fa fa-qq fa-fw"></i> 3条新回复
-                                            <span class="pull-right text-muted small">12分钟钱</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <div class="text-center link-block">
-                                        <a class="J_menuItem" href="notifications.html">
-                                            <strong>查看所有 </strong>
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>-->
+
                         <li class="hidden-xs">
                             <a href="/" target="_blank"  ><i class="fa fa-desktop"></i> 前台首页</a>
                         </li>
-                        <li class="dropdown hidden-xs">
-                            <a class="right-sidebar-toggle" aria-expanded="false">
-                                <i class="fa fa-tasks"></i> 主题
-                            </a>
+
+
+                        {% if "管理员" in  group_gname %}
+                        <li class="hidden-xs">
+                            <a href="/dngadmin/?cache_get=1"  ><i class="fa fa-trash-o"></i> 清理缓存</a>
                         </li>
+                            <li class="hidden-xs">
+                            <a href="http://www.dngadmin.com/docs/index" target="_blank"  ><i class="fa fa-tasks"></i>开发手册</a>
+                        </li>
+                         <li class="hidden-xs">
+                            <a href="http://www.dngadmin.com/video.html" target="_blank"  ><i class="fa fa-caret-square-o-right"></i>使用教程</a>
+                        </li>
+                        {% endif %}
+
+{#                        <li class="dropdown hidden-xs">#}
+{#                            <a class="right-sidebar-toggle" aria-expanded="false">#}
+{#                                <i class="fa fa-tasks"></i> 主题#}
+{#                            </a>#}
+{#                        </li>#}
                     </ul>
                 </nav>
             </div>
@@ -214,7 +200,7 @@
                 </button>
                 <nav class="page-tabs J_menuTabs">
                     <div class="page-tabs-content">
-                        <a href="javascript:;" class="active J_menuTab" data-id="{{listindex.url_str}}/index.html">默认</a>
+                        <a href="javascript:;" class="active J_menuTab" data-id="index_v2.html">默认</a>
                     </div>
                 </nav>
                 <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
@@ -236,7 +222,7 @@
                 <a href="/dngadmin/longin_out/" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
             </div>
             <div class="row J_mainContent" id="content-main">
-                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="{{listindex.url_str}}/index.py" frameborder="0" data-id="index_v2.html" seamless></iframe>
+                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="/dngadmin/datahome/" frameborder="0" data-id="index_v2.html" seamless></iframe>
             </div>
             <div class="footer">
 
@@ -568,15 +554,27 @@
 
 
     </div>
-    <script src="{% static "js/jquery.min.js" %}"></script>
+     </div>
+
+</body>
+
+
+<script src="{% static "js/jquery.min.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/plugins/metisMenu/jquery.metisMenu.js" %}"></script>
     <script src="{% static "js/plugins/slimscroll/jquery.slimscroll.min.js" %}"></script>
     <script src="{% static "js/plugins/layer/layer.min.js" %}"></script>
     <script src="{% static "js/hplus.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/contabs.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/contabs.js" %}"></script>
+
     <script src="{% static "js/plugins/pace/pace.min.js" %}"></script>
-</body>
+
+ <!-- 全局js -->
+
+
+
+
+
        <script>
 
 
