@@ -291,7 +291,7 @@ def api_yanzheng(user_uid, user_name,user_token,user_cookie_echo):  # 验证cook
             cookie_echo = get_hash256(hashlib.md5(cookie_jiami.encode(encoding='UTF-8')).hexdigest())  # sha256+MD5加密token
             if user_cookie_echo_rsa==cookie_echo:
 
-                cache.set(user_cookie_echo, user, 60*24)  # 在缓存中设置
+                cache.set(user_cookie_echo, user, 60*365)  # 在缓存中设置
                 return user #返回ID,用户名，COOK记录,验证加密盐
             else:
                 return False
