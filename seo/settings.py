@@ -55,7 +55,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 
 # Application definition
@@ -170,7 +170,6 @@ CACHES = {
 #           }
 #     }
 # }
-
 # 固定写法设置Email引擎
 
 
