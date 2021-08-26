@@ -128,7 +128,7 @@
       <workItem from="1629785200919" duration="2006000" />
       <workItem from="1629787662750" duration="2053000" />
       <workItem from="1629868931004" duration="6568000" />
-      <workItem from="1629903472025" duration="2933000" />
+      <workItem from="1629903472025" duration="8381000" />
     </task>
     <servers />
   </component>
@@ -206,6 +206,10 @@
           <url>file://$PROJECT_DIR$/app/html_demo_post.py</url>
           <line>3</line>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$USER_HOME$/Documents/html_urls.py</url>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
