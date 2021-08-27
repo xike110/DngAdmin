@@ -57,25 +57,24 @@ web框架：Django2.2以上都支持
 一键列表和一键表单的功能，需要数据库表名的后缀作为判断标准，规划数据库名称，请参考下面对照表，表名_加上后缀
 
 #表名后缀对照表
-```
-框体名称 | 后缀 | 数据类型 |说明
---------|-----|------|-----
-静态框|_id|models.IntegerField_整形数字|生成静态框,不可修改，验证规则=是否为数字，不能重复，不能为空值 
-文本框|_str|models.CharField_字符串|生成文本框,验证规则=填写不能为空
-禁用文本框|_stop|models.CharField_字符串|禁止填写,禁止修改
-密码框|_psd|models.CharField_字符串|禁用文本框,验证规则=密码必须6到12位，且不能出现空格，存时候会默认转MD5
-手机框|_phone|models.CharField_字符串|生成文本框,验证规则=是否为手机号
-邮箱框|_email|models.CharField_字符串|生成文本框,验证规则=是否为邮箱
-身份证框|_email|models.CharField_字符串|生成文本框,验证规则=是否为邮箱
-数字框|_int|models.IntegerField整形数字|生成数字框,验证规则=只能输入非负整数，做大输入1个亿
-下拉框|_xiala|models.CharField_字符串|生成下拉框,验证规则=默认下拉值,default默认值必须写，添加好选择元组  choices=(('nan','男'),('nv','女')),default='男'
-选择框|_xuanze|models.CharField_字符串|生成选择框,验证规则=默认选择值,default默认值必须写，添加好选择元组  choices=(('nan','男'),('nv','女')),default='男'
-竖单选框|_shudanxuan|models.CharField_字符串|生成竖单选框,验证规则=默认选择值,default默认值必须写，添加好选择元组  choices=(('nan','男'),('nv','女')),default='男'
-横单选框|_hengdanxuan|models.CharField_字符串|生成竖单选框,验证规则=默认选择值,default默认值必须写，添加好选择元组  choices=(('nan','男'),('nv','女')),default='男'
-开关框|_bool|models.BooleanField_布尔|生成开关框
-日期框|_years|DateTimeField 时间类型|生成日期框，验证规则=是否为时间格式=日期,(2099-12-28 00:00:00)
-日期时间框|_datetime|DateTimeField 时间类型|生成时间框，格式=日期+时间,(2099-12-28 23:59:59)
-富文本框|_text|models.TextField_富文本|生成超大文本框,验证规则=填写不能为空，字数限制1万以内
-自动创建时间|create_time完整默认字段名称|DateTimeField 时间类型|请规范写，不然会前端要求填写创建时间，前端不会显示此值
-自动更新时间|update_time完整默认字段名称|DateTimeField 时间类型|请规范写，不然会前端要求填写创建时间，前端不会显示此值
-```
+
+| 框体名称 | 后缀 | 数据类型 |说明| 
+| :-----| ----: | :----: |:----: |
+|静态框|_id|models.IntegerField_整形数字|生成静态框,不可修改，验证规则=是否为数字，不能重复，不能为空值 |
+|文本框|_str|models.CharField_字符串|生成文本框,验证规则=填写不能为空|
+|禁用文本框|_stop|models.CharField_字符串|禁止填写,禁止修改|
+|密码框|_psd|models.CharField_字符串|禁用文本框,验证规则=密码必须6到12位，且不能出现空格，存时候会默认转MD5|
+|手机框|_phone|models.CharField_字符串|生成文本框,验证规则=是否为手机号|
+|邮箱框|_email|models.CharField_字符串|生成文本框,验证规则=是否为邮箱|
+|身份证框|_email|models.CharField_字符串|生成文本框,验证规则=是否为邮箱|
+|数字框|_int|models.IntegerField整形数字|生成数字框,验证规则=只能输入非负整数，做大输入1个亿|
+|下拉框|_xiala|models.CharField_字符串|生成下拉框,验证规则=默认下拉值,default默认值必须写，添加好选择元组  choices=(('nan','男'),('nv','女')),default='男'|
+|选择框|_xuanze|models.CharField_字符串|生成选择框,验证规则=默认选择值,default默认值必须写，添加好选择元组  choices=(('nan','男'),('nv','女')),default='男'|
+|竖单选框|_shudanxuan|models.CharField_字符串|生成竖单选框,验证规则=默认选择值,default默认值必须写，添加好选择元组  choices=(('nan','男'),('nv','女')),default='男'|
+|横单选框|_hengdanxuan|models.CharField_字符串|生成竖单选框,验证规则=默认选择值,default默认值必须写，添加好选择元组  choices=(('nan','男'),('nv','女')),default='男'|
+|开关框|_bool|models.BooleanField_布尔|生成开关框|
+|日期框|_years|DateTimeField 时间类型|生成日期框，验证规则=是否为时间格式=日期,(2099-12-28 00:00:00)|
+|日期时间框|_datetime|DateTimeField 时间类型|生成时间框，格式=日期+时间,(2099-12-28 23:59:59)|
+|富文本框|_text|models.TextField_富文本|生成超大文本框,验证规则=填写不能为空，字数限制1万以内|
+|自动创建时间|create_time完整默认字段名称|DateTimeField 时间类型|请规范写，不然会前端要求填写创建时间，前端不会显示此值|
+|自动更新时间|update_time完整默认字段名称|DateTimeField 时间类型|请规范写，不然会前端要求填写创建时间，前端不会显示此值|
