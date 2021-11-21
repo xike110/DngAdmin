@@ -28,3 +28,4 @@ SecretStorage==2.3.1
 six==1.11.0
 sqlparse==0.3.0
 urllib3==1.22
+uWSGI==2.0.18

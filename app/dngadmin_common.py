@@ -437,7 +437,7 @@ def dng_daohang(uid,gm):  # 有权限导航
             else:
                 data_0.append(tt)
 
-        cache.set('dng_daohang'+str(uid), data_0, 3)  #
+        cache.set('dng_daohang'+str(uid), data_0, 60*24)  #
 
         return (data_0)  # 返回最终结果
 
