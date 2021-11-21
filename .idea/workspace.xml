@@ -199,6 +199,8 @@
       <workItem from="1635943819936" duration="10049000" />
       <workItem from="1636005338995" duration="1701000" />
       <workItem from="1636437668554" duration="5906000" />
+      <workItem from="1637468154821" duration="270000" />
+      <workItem from="1637468589061" duration="34000" />
     </task>
     <servers />
   </component>
@@ -218,27 +220,22 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="475" y="280" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1635940499853" />
-    <state x="633" y="280" key="FileChooserDialogImpl/0.0.2560.1050@0.0.2560.1050" timestamp="1627837569039" />
     <state width="675" height="938" key="GridCell.Tab.0.bottom" timestamp="1636443909949">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="675" height="938" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1636443909949" />
-    <state width="1705" height="281" key="GridCell.Tab.0.bottom/0.0.2560.1050@0.0.2560.1050" timestamp="1628613740358" />
     <state width="675" height="938" key="GridCell.Tab.0.center" timestamp="1636443909949">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="675" height="938" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1636443909949" />
-    <state width="1705" height="281" key="GridCell.Tab.0.center/0.0.2560.1050@0.0.2560.1050" timestamp="1628613740358" />
     <state width="675" height="938" key="GridCell.Tab.0.left" timestamp="1636443909949">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="675" height="938" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1636443909949" />
-    <state width="1705" height="281" key="GridCell.Tab.0.left/0.0.2560.1050@0.0.2560.1050" timestamp="1628613740358" />
     <state width="675" height="938" key="GridCell.Tab.0.right" timestamp="1636443909949">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="675" height="938" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1636443909949" />
-    <state width="1705" height="281" key="GridCell.Tab.0.right/0.0.2560.1050@0.0.2560.1050" timestamp="1628613740358" />
     <state width="1921" height="350" key="GridCell.Tab.1.bottom" timestamp="1635946919304">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -259,11 +256,9 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="-5" y="0" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1636443242582" />
-    <state x="-7" y="0" width="1721" height="1050" key="SettingsEditor/0.0.2560.1050@0.0.2560.1050" timestamp="1628429785280" />
     <state x="-7" y="-4" width="1721" height="1059" key="dock-window-1" timestamp="1629099978309">
       <screen x="0" y="0" width="2560" height="1050" />
     </state>
-    <state x="-7" y="0" width="1721" height="1027" key="dock-window-1/0.0.1920.1050@0.0.1920.1050" timestamp="1628598989524" />
     <state x="-7" y="-4" width="1721" height="1059" key="dock-window-1/0.0.2560.1050@0.0.2560.1050" timestamp="1629099978309" />
     <state x="-7" y="-4" width="1721" height="1059" key="dock-window-2" timestamp="1629286100468">
       <screen x="0" y="0" width="2560" height="1050" />
@@ -273,10 +268,10 @@
       <screen x="0" y="0" width="2560" height="1050" />
     </state>
     <state x="-7" y="-4" width="1721" height="1059" key="dock-window-3/0.0.2560.1050@0.0.2560.1050" timestamp="1629508051176" />
-    <state x="-5" y="0" width="1291" height="1050" key="find.popup" timestamp="1636443901358">
+    <state x="545" y="0" width="1291" height="1050" key="find.popup" timestamp="1637468618627">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="-5" y="0" width="1291" height="1050" key="find.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1636443901358" />
+    <state x="545" y="0" width="1291" height="1050" key="find.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1637468618627" />
     <state x="-7" y="0" width="1721" height="1050" key="find.popup/0.0.2560.1050@0.0.2560.1050" timestamp="1629971991131" />
   </component>
   <component name="XDebuggerManager">

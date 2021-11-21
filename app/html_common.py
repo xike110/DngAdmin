@@ -236,7 +236,7 @@ def dng_yanzheng(user_uid, user_name,user_cookie,user_cookie_echo):  # 验证coo
                 cookie_jiami = str(username_post) + str(user_password_str) + str(anquan_salt_str)  # 需要解的MD5
                 cookie_echo = get_hash256(hashlib.md5(cookie_jiami.encode(encoding='UTF-8')).hexdigest())  # sha256+MD5加密token
                 if user_cookie_echo_rsa==cookie_echo:
-                    cache.set(user_cookie_echo, user, 60 * 24)  # 在缓存中设置
+                    cache.set(user_cookie_echo, user, 86400)  # 在缓存中设置
                     return user #返回ID,用户名，COOK记录,验证加密盐
                 else:
                     return False
@@ -251,7 +251,7 @@ def dng_yanzheng(user_uid, user_name,user_cookie,user_cookie_echo):  # 验证coo
                 cookie_jiami = str(username_post) + str(user_password_str) + str(anquan_salt_str)  # 需要解的MD5
                 cookie_echo = get_hash256(hashlib.md5(cookie_jiami.encode(encoding='UTF-8')).hexdigest()) # sha256+MD5加密token
                 if user_cookie_echo_rsa == cookie_echo:
-                    cache.set(user_cookie_echo, user, 60 * 24)  # 在缓存中设置
+                    cache.set(user_cookie_echo, user, 86400)  # 在缓存中设置
                     return user  # 返回ID,用户名，COOK记录,验证加密盐
                 else:
                     return False
@@ -286,7 +286,7 @@ def api_yanzheng(user_uid, user_name,user_token,user_cookie_echo):  # 验证cook
             cookie_jiami = str(username_post) + str(user_password_str) + str(anquan_salt_str)  # 需要解的MD5
             cookie_echo = get_hash256(hashlib.md5(cookie_jiami.encode(encoding='UTF-8')).hexdigest())  # sha256+MD5加密token
             if user_cookie_echo_rsa==cookie_echo:
-                cache.set(user_cookie_echo, user, 60 * 24)  # 在缓存中设置
+                cache.set(user_cookie_echo, user, 86400)  # 在缓存中设置
                 return user #返回ID,用户名，COOK记录,验证加密盐
             else:
                 return False
@@ -424,7 +424,7 @@ def false_daohang(uid,gm):  # 免权限导航
 
 
 
-        cache.set('false_daohang', data_0, 60*24)  #
+        cache.set('false_daohang', data_0, 86400)  #
 
         return (data_0)  # 返回最终结果
 
@@ -536,7 +536,7 @@ def true_daohang(uid,gm):  # 有权限导航
             else:
                 data_0.append(tt)
 
-        cache.set('true_daohang'+str(uid), data_0, 60*24)  #
+        cache.set('true_daohang'+str(uid), data_0, 86400)  #
 
         return (data_0)  # 返回最终结果
 
@@ -598,7 +598,7 @@ def home_daohang(uid,gm):#用户中心菜单
 
                     data_2.append(a_href)
 
-        cache.set('home_daohang' + str(uid), data_2, 10)  #
+        cache.set('home_daohang' + str(uid), data_2, 180)  #
 
         return (data_2)  # 返回最终结果
 
