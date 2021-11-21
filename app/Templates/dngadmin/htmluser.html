@@ -659,9 +659,9 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
                         setTimeout(function(){
                             layer.closeAll();//关闭所有的弹出层
                             table.reload("Users");
+                            window.location.reload();//刷新页面
                         }, 1000);
-                        window.location.reload();//刷新页面
-                        加载层-风格
+
                     }else{
                         layer.msg(msg, {icon: 5});
                     }
@@ -684,9 +684,9 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
                         setTimeout(function(){
                             layer.closeAll();//关闭所有的弹出层
                             table.reload("Users");
+                            window.location.reload();//刷新页面
                         }, 1000);
-                        window.location.reload();//刷新页面
-                        加载层-风格
+
                     }else{
                         layer.msg(msg, {icon: 5});
                     }
