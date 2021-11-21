@@ -819,10 +819,12 @@
                             {% endif %}
 
 
-                            btn: ['关闭退出'],
-                            yes: function () {
-                                layer.closeAll();
-                            },
+                            closeBtn :0,
+btn: ['关闭退出'],
+yes: function () {
+    layer.closeAll();
+    window.location.reload();//刷新页面
+},
                             content: $("#added")
                         });
                         break;
@@ -839,10 +841,12 @@
                                 area: ['500px', '600px'],
                             {% endif %}
 
-                            btn: ['关闭退出'],
-                            yes: function () {
-                                layer.closeAll();
-                            },
+                            closeBtn :0,
+btn: ['关闭退出'],
+yes: function () {
+    layer.closeAll();
+    window.location.reload();//刷新页面
+},
                             content: $("#search")
                         });
                         break;
@@ -860,10 +864,12 @@
 
                 layer.alert(JSON.stringify(data), {
                     title: '开发者模式查看：',
-                    btn: ['关闭退出'],
-                    yes: function () {
-                        layer.closeAll();
-                    },
+                    closeBtn :0,
+btn: ['关闭退出'],
+yes: function () {
+    layer.closeAll();
+    window.location.reload();//刷新页面
+},
                 });
 
 
@@ -1001,10 +1007,12 @@
                         area: ['{{xitong.wide_int}}px', '{{xitong.high_int}}px'],
                     {% endif %}
 
-                    btn: ['关闭退出'],
-                    yes: function () {
-                        layer.closeAll();
-                    },
+                    closeBtn :0,
+btn: ['关闭退出'],
+yes: function () {
+    layer.closeAll();
+    window.location.reload();//刷新页面
+},
                     content: $("#EditUser")
 
                 });
