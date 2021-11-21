@@ -342,7 +342,7 @@ def dng_daohang(uid,gm):  # 有权限导航
     group.menu_text = group.menu_text.strip("|")  # 去两边
     group.menu_text = group.menu_text.split("||")  # 分割
 
-    if not cache.get('dng_daohang'+str(uid)):
+    if not cache.get('dng_daohang'+str(uid)+str(gm)):
 
         red = models.dngroute.objects.filter(display_bool=True, prove_bool=True).order_by('sort_int')  # 获取全部菜单列表
         red2 = models.dngroute.objects.filter(model_str='cover', display_bool=True,prove_bool=True).order_by('sort_int')  # 获取一级菜单列表
@@ -437,13 +437,13 @@ def dng_daohang(uid,gm):  # 有权限导航
             else:
                 data_0.append(tt)
 
-        cache.set('dng_daohang'+str(uid), data_0, 86400)  #
+        cache.set('dng_daohang'+str(uid)+str(gm), data_0, 86400)  #
 
         return (data_0)  # 返回最终结果
 
     else:
 
-        return (cache.get('dng_daohang'+str(uid)))  # 返回最终结果
+        return (cache.get('dng_daohang'+str(uid)+str(gm)))  # 返回最终结果
 
 
 def dng_ziduan(name):  # 获得对应表名下得所有字段名称
