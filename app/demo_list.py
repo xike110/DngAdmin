@@ -228,6 +228,10 @@ def 映射的路径名替换_json(request):
 
 
 	data = []
+	def deal_json_invaild(data):
+		#过滤字符，防止JSON解释报错
+		datas = str(data).replace('\'', ' ').replace('\"', ' ')
+		return datas
 	for key in book_list:
 
 		#group  = dngadmin_common.html_usergroup(gid=dngadmin_common.html_user(key.uperior_int).group_int)
@@ -236,27 +240,12 @@ def 映射的路径名替换_json(request):
 			# ⊙json查看替换⊙ #
 		})
 
+	# 下面开始构造JSON格式
+	datajson = """{"code": 0,"msg": "","count":""" + str(list_count) + ""","data":""" + str(data) + """}"""
 
-	#下面开始构造JSON格式
-	datajson ="""{
-		  "code": 0
-		  ,"msg": ""
-		  ,"count":"""+str(list_count)+"""
-		  ,"data":"""+str(data)+"""}"""
-
-
-	datajson = datajson.replace('\'', '\"') #替换成AJAX可以解析得格式
-	datajson = datajson.replace('True', '启用')
-	datajson = datajson.replace('False', '关闭')
-
+	datajson = datajson.replace('\'', '\"')  # 替换成AJAX可以解析得格式
 
 	return HttpResponse(datajson)
-
-
-
-
-
-
 
 
 def 映射的路径名替换_added(request):  #新增
@@ -653,6 +642,10 @@ def 映射的路径名替换_search(request):  #搜索
 	book_list = paginator.page(page)
 
 	data = []
+	def deal_json_invaild(data):
+		# 过滤字符，防止JSON解释报错
+		datas = str(data).replace('\'', ' ').replace('\"', ' ')
+		return datas
 	for key in book_list:
 		#group = dngadmin_common.html_usergroup(gid=dngadmin_common.html_user(key.uid_int).group_int)
 		data.append({"id": str(key.id),
@@ -660,15 +653,9 @@ def 映射的路径名替换_search(request):  #搜索
 					 })
 
 	# 下面开始构造JSON格式
-	datajson = """{
-			  "code": 0
-			  ,"msg": ""
-			  ,"count":""" + str(list_count) + """
-			  ,"data":""" + str(data) + """}"""
+	datajson = """{"code": 0,"msg": "","count":""" + str(list_count) + ""","data":""" + str(data) + """}"""
 
 	datajson = datajson.replace('\'', '\"')  # 替换成AJAX可以解析得格式
-	datajson = datajson.replace('True', '启用')
-	datajson = datajson.replace('False', '关闭')
 
 	return HttpResponse(datajson)
 

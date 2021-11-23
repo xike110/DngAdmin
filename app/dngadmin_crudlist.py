@@ -337,7 +337,7 @@ def crudlist_post(request):
 			for json_arr in json_list:  # 遍历字符串，遍历输出
 
 				json.append('''
-			"''' + str(json_arr[0]) + '''" : str(key.''' + str(json_arr[0]) + '''), # ''' + str(json_arr[1]) + '''
+			"''' + str(json_arr[0]) + '''" : deal_json_invaild(key.''' + str(json_arr[0]) + '''), # ''' + str(json_arr[1]) + '''
 			''')  # 循环写入空数组
 
 			json = ''.join(json)
@@ -398,7 +398,7 @@ def crudlist_post(request):
 					continue  # 跳过本次循环
 
 				search_a.append('''
-	post''' + str(search_arr[2]) + ''' = request.POST.get(zd_list[0][''' + str(search_arr[2]) + '''], '') #''' + str(search_arr[1]) + '''
+	post''' + str(search_arr[2]) + ''' = request.GET.get(zd_list[0][''' + str(search_arr[2]) + '''], '') #''' + str(search_arr[1]) + '''
 	''')  # 循环写入空数组
 				if str(search_arr[2]) == "1":
 					if_bq="if"
@@ -409,7 +409,7 @@ def crudlist_post(request):
 		dngred = models.映射的路径名替换.objects.filter(''' + search_arr[0] + '''__contains=post''' + str(search_arr[2]) + ''').order_by('-id') #''' + str(search_arr[1]) + '''
 	''')  # 循环写入空数组
 				search_c.append('''
-					 "''' + search_arr[0] + '''": str(key.''' + search_arr[0] + '''),  # ''' + search_arr[1])  # 循环写入空数组
+					 "''' + search_arr[0] + '''": deal_json_invaild(key.''' + search_arr[0] + '''),  # ''' + search_arr[1])  # 循环写入空数组
 
 			search_a = ''.join(search_a)
 			search_b = ''.join(search_b)
