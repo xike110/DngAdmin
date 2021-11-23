@@ -117,10 +117,23 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
         <form class="layui-form layui-from-pane" id="updateUser"   style="margin-top:20px" >
 
 
-            <input type="hidden" name="{{zd_list.0.0}}" id="{{zd_list.0.0}}">
+              {% for aa in vis1 %}
 
-            
-            <!-- 1⊙HTML模板替换⊙1 -->
+            {% if "id" == aa.0 %}
+                            <input type="hidden" name="{{aa.0}}" id="{{aa.0}}">
+
+
+            {% else %}
+                        <div class="layui-form-item">
+                    <label class="layui-form-label">{{aa.1}}</label>
+                <div class="layui-input-block">
+                    <input type="text" name="{{aa.0}}" id="{{aa.0}}"  required  lay-verify="required" autocomplete="off" placeholder="请输入{{aa.1}}" class="layui-input">
+                </div>
+            </div>
+            {% endif %}
+
+
+            {% endfor %}
 
 
 
@@ -140,10 +153,29 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
     <div class="layui-col-md10">
         <form class="layui-form layui-from-pane" id="added"   style="margin-top:20px" >
 
+            {% for aa in vis2 %}
 
-            <input type="hidden" name="{{zd_list.0.0}}" id="{{zd_list.0.0}}">
+            {% if "id" == aa.0 %}
+                            <input type="hidden" name="{{aa.0}}" id="{{aa.0}}">
 
-                <!-- 2⊙HTML模板替换⊙2 -->
+
+            {% else %}
+                        <div class="layui-form-item">
+                                <label class="layui-form-label">{{aa.1}}</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="{{aa.0}}" id="{{aa.0}}"    required  lay-verify="required"  autocomplete="off" placeholder="请输入{{aa.1}}" class="layui-input">
+                            </div>
+                        </div>
+            {% endif %}
+
+
+
+
+            {% endfor %}
+
+
+
+
 
 
 
@@ -313,98 +345,21 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
             ,cellMinWidth: {{xitong.inwidth_int}} //全局定义常规单元格的最小宽度，
             ,limit:{{xitong.limit_int}}
          ,cols:[[
-      {type: 'checkbox', fixed: 'left'}
-      ,{field:'{{zd_list.0.0}}', title:'{{zd_list.1.0}}', width:60,  unresize: true, sort: true , align:'center' },
-            {% if zd_list.0.1 %}
-            {field:'{{zd_list.0.1}}', title:'{{zd_list.1.1}}', sort: true , align:'center' },
+      {type: 'checkbox', fixed: 'left'},
+               {% for aa in vis3 %}
+
+            {% if "id" == aa.0 %}
+
+                <!-- 在此处写注释 -->
+                {field:'{{zd_list.0.0}}', title:'{{zd_list.1.0}}', width:60,  unresize: true, sort: true , align:'center' },
+
+            {% else %}
+                  {field:'{{aa.0}}', title:'{{aa.1}}', sort: true , align:'center' },
             {% endif %}
-            {% if zd_list.0.2 %}
-            {field:'{{zd_list.0.2}}', title:'{{zd_list.1.2}}' , sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.3 %}
-            {field:'{{zd_list.0.3}}', title:'{{zd_list.1.3}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.4 %}
-            {field:'{{zd_list.0.4}}', title:'{{zd_list.1.4}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.5 %}
-            {field:'{{zd_list.0.5}}', title:'{{zd_list.1.5}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.6 %}
-            {field:'{{zd_list.0.6}}', title:'{{zd_list.1.6}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.7 %}
-            {field:'{{zd_list.0.7}}', title:'{{zd_list.1.7}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.8 %}
-            {field:'{{zd_list.0.8}}', title:'{{zd_list.1.8}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.9 %}
-            {field:'{{zd_list.0.9}}', title:'{{zd_list.1.9}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.10 %}
-            {field:'{{zd_list.0.10}}', title:'{{zd_list.1.10}}', sort: true , align:'center' },
-            {% endif %}
- 			{% if zd_list.0.11 %}
-            {field:'{{zd_list.0.11}}', title:'{{zd_list.1.11}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.12 %}
-            {field:'{{zd_list.0.12}}', title:'{{zd_list.1.12}}' , sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.13 %}
-            {field:'{{zd_list.0.13}}', title:'{{zd_list.1.13}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.14 %}
-            {field:'{{zd_list.0.14}}', title:'{{zd_list.1.14}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.15 %}
-            {field:'{{zd_list.0.15}}', title:'{{zd_list.1.15}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.16 %}
-            {field:'{{zd_list.0.16}}', title:'{{zd_list.1.16}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.17 %}
-            {field:'{{zd_list.0.17}}', title:'{{zd_list.1.17}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.18 %}
-            {field:'{{zd_list.0.18}}', title:'{{zd_list.1.18}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.19 %}
-            {field:'{{zd_list.0.19}}', title:'{{zd_list.1.19}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.20 %}
-            {field:'{{zd_list.0.20}}', title:'{{zd_list.1.20}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.21 %}
-            {field:'{{zd_list.0.21}}', title:'{{zd_list.1.21}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.22 %}
-            {field:'{{zd_list.0.22}}', title:'{{zd_list.1.22}}' , sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.23 %}
-            {field:'{{zd_list.0.23}}', title:'{{zd_list.1.23}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.24 %}
-            {field:'{{zd_list.0.24}}', title:'{{zd_list.1.24}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.25 %}
-            {field:'{{zd_list.0.25}}', title:'{{zd_list.1.25}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.26 %}
-            {field:'{{zd_list.0.26}}', title:'{{zd_list.1.26}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.27 %}
-            {field:'{{zd_list.0.27}}', title:'{{zd_list.1.27}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.28 %}
-            {field:'{{zd_list.0.28}}', title:'{{zd_list.1.28}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.29 %}
-            {field:'{{zd_list.0.29}}', title:'{{zd_list.1.29}}', sort: true , align:'center' },
-            {% endif %}
-            {% if zd_list.0.30 %}
-            {field:'{{zd_list.0.30}}', title:'{{zd_list.1.30}}', sort: true , align:'center' },
-            {% endif %}
+
+
+            {% endfor %}
+
 
                  {% if "安卓" in shebei %}
                 { title:'操作',width:165, toolbar: '#barDemo',}
@@ -489,7 +444,7 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
                         setTimeout(function(){
                             layer.closeAll();//关闭所有的弹出层
                             table.reload("Users");
-                            window.location.reload();//刷新页面
+                             window.location.reload();//刷新页面
                         }, 1000);
 
                     }else{
@@ -514,7 +469,7 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
                         setTimeout(function(){
                             layer.closeAll();//关闭所有的弹出层
                             table.reload("Users");
-                            window.location.reload();//刷新页面
+                             window.location.reload();//刷新页面
                         }, 1000);
 
                     }else{
@@ -611,11 +566,11 @@ area: ['500px', '600px'],
 {% endif %}
 
                     closeBtn :0,
-btn: ['关闭退出'],
-yes: function () {
-    layer.closeAll();
-    window.location.reload();//刷新页面
-},
+                    btn: ['关闭退出'],
+                    yes: function () {
+                        layer.closeAll();
+                        window.location.reload();//刷新页面
+                    },
                     content: $("#search")
                 });
                 break;
@@ -670,97 +625,19 @@ yes: function () {
                 });
             } else if(obj.event === 'edit'){
 
-                $("#{{zd_list.0.0}}").val(data.{{zd_list.0.0}});
-                {% if zd_list.0.0 %}
-                $("#{{zd_list.0.1}}").val(data.{{zd_list.0.1}});
+                   {% for aa in vis4 %}
+
+                {% if "id" == aa.0 %}
+
+                   $("#{{aa.0}}").val(data.{{aa.0}});
+
+                {% else %}
+                      $("#{{aa.0}}").val(data.{{aa.0}});
                 {% endif %}
-                {% if zd_list.0.2 %}
-                $("#{{zd_list.0.2}}").val(data.{{zd_list.0.2}});
-                {% endif %}
-                {% if zd_list.0.3 %}
-                $("#{{zd_list.0.3}}").val(data.{{zd_list.0.3}});
-                {% endif %}
-                {% if zd_list.0.4 %}
-                $("#{{zd_list.0.4}}").val(data.{{zd_list.0.4}});
-                {% endif %}
-                {% if zd_list.0.5 %}
-                $("#{{zd_list.0.5}}").val(data.{{zd_list.0.5}});
-                {% endif %}
-                {% if zd_list.0.6 %}
-                $("#{{zd_list.0.6}}").val(data.{{zd_list.0.6}});
-                {% endif %}
-                {% if zd_list.0.7 %}
-                $("#{{zd_list.0.7}}").val(data.{{zd_list.0.7}});
-                {% endif %}
-                {% if zd_list.0.8%}
-                $("#{{zd_list.0.8}}").val(data.{{zd_list.0.8}});
-                {% endif %}
-                {% if zd_list.0.9 %}
-                $("#{{zd_list.0.9}}").val(data.{{zd_list.0.9}});
-                {% endif %}
-                {% if zd_list.0.10 %}
-                $("#{{zd_list.0.10}}").val(data.{{zd_list.0.10}});
-                {% endif %}
-                {% if zd_list.0.11 %}
-                $("#{{zd_list.0.11}}").val(data.{{zd_list.0.11}});
-                {% endif %}
-                {% if zd_list.0.12 %}
-                $("#{{zd_list.0.12}}").val(data.{{zd_list.0.12}});
-                {% endif %}
-                {% if zd_list.0.13 %}
-                $("#{{zd_list.0.13}}").val(data.{{zd_list.0.13}});
-                {% endif %}
-                {% if zd_list.0.14 %}
-                $("#{{zd_list.0.14}}").val(data.{{zd_list.0.14}});
-                {% endif %}
-                {% if zd_list.0.15 %}
-                $("#{{zd_list.0.15}}").val(data.{{zd_list.0.15}});
-                {% endif %}
-                {% if zd_list.0.16 %}
-                $("#{{zd_list.0.16}}").val(data.{{zd_list.0.16}});
-                {% endif %}
-                {% if zd_list.0.17 %}
-                $("#{{zd_list.0.17}}").val(data.{{zd_list.0.17}});
-                {% endif %}
-                {% if zd_list.0.18%}
-                $("#{{zd_list.0.18}}").val(data.{{zd_list.0.18}});
-                {% endif %}
-                {% if zd_list.0.19 %}
-                $("#{{zd_list.0.19}}").val(data.{{zd_list.0.19}});
-                {% endif %}
-                {% if zd_list.0.20 %}
-                $("#{{zd_list.0.20}}").val(data.{{zd_list.0.20}});
-                {% endif %}
-                {% if zd_list.0.21 %}
-                $("#{{zd_list.0.21}}").val(data.{{zd_list.0.21}});
-                {% endif %}
-                {% if zd_list.0.22 %}
-                $("#{{zd_list.0.22}}").val(data.{{zd_list.0.22}});
-                {% endif %}
-                {% if zd_list.0.23 %}
-                $("#{{zd_list.0.23}}").val(data.{{zd_list.0.23}});
-                {% endif %}
-                {% if zd_list.0.24 %}
-                $("#{{zd_list.0.24}}").val(data.{{zd_list.0.24}});
-                {% endif %}
-                {% if zd_list.0.25 %}
-                $("#{{zd_list.0.25}}").val(data.{{zd_list.0.25}});
-                {% endif %}
-                {% if zd_list.0.26 %}
-                $("#{{zd_list.0.26}}").val(data.{{zd_list.0.26}});
-                {% endif %}
-                {% if zd_list.0.27 %}
-                $("#{{zd_list.0.27}}").val(data.{{zd_list.0.27}});
-                {% endif %}
-                {% if zd_list.0.28%}
-                $("#{{zd_list.0.28}}").val(data.{{zd_list.0.28}});
-                {% endif %}
-                {% if zd_list.0.29 %}
-                $("#{{zd_list.0.29}}").val(data.{{zd_list.0.29}});
-                {% endif %}
-                {% if zd_list.0.30 %}
-                $("#{{zd_list.0.30}}").val(data.{{zd_list.0.30}});
-                {% endif %}
+
+
+                {% endfor %}
+
 
                 $('#imgshow').attr('src', "/file/"+data.headimg);
                 $('#demo1').attr('src', "/file/"+data.headimg);

@@ -116,7 +116,13 @@ def 映射的路径名替换(request):
 
 	#biaodan = dngadmin_common.dng_dnguser(uid=dnguser_uid)
 
-	vis = zip(zd_list[0], zd_list[1])
+
+	vist = zip(zd_list[0], zd_list[1])
+	vis1 = zip(zd_list[0], zd_list[1])
+	vis2 = zip(zd_list[0], zd_list[1])
+	vis3 = zip(zd_list[0], zd_list[1])
+	vis4 = zip(zd_list[0], zd_list[1])
+	vis5 = zip(zd_list[0], zd_list[1])
 	return render(request,"dngadmin/映射的路径名替换.html",{
 		"title":dngroute.name_str,
 		"xitong": xitong,  # 系统配置
@@ -131,7 +137,12 @@ def 映射的路径名替换(request):
 		"update": update, #改
 		"see": see, #开发者权限
 		"zd_list": zd_list,  # 字段名称
-		"vist": vis,
+		"vist": vist,
+		"vis1": vis1,
+		"vis2": vis2,
+		"vis3": vis3,
+		"vis4": vis4,
+		"vis5": vis5,
 
 		"tishi": tishi,
 		"jinggao": jinggao,
@@ -240,12 +251,20 @@ def 映射的路径名替换_json(request):
 			# ⊙json查看替换⊙ #
 		})
 
-	# 下面开始构造JSON格式
+
+	#下面开始构造JSON格式
 	datajson = """{"code": 0,"msg": "","count":""" + str(list_count) + ""","data":""" + str(data) + """}"""
 
 	datajson = datajson.replace('\'', '\"')  # 替换成AJAX可以解析得格式
 
+
 	return HttpResponse(datajson)
+
+
+
+
+
+
 
 
 def 映射的路径名替换_added(request):  #新增
@@ -642,6 +661,8 @@ def 映射的路径名替换_search(request):  #搜索
 	book_list = paginator.page(page)
 
 	data = []
+
+
 	def deal_json_invaild(data):
 		# 过滤字符，防止JSON解释报错
 		datas = str(data).replace('\'', ' ').replace('\"', ' ')
@@ -653,9 +674,11 @@ def 映射的路径名替换_search(request):  #搜索
 					 })
 
 	# 下面开始构造JSON格式
+	#下面开始构造JSON格式
 	datajson = """{"code": 0,"msg": "","count":""" + str(list_count) + ""","data":""" + str(data) + """}"""
 
 	datajson = datajson.replace('\'', '\"')  # 替换成AJAX可以解析得格式
+
 
 	return HttpResponse(datajson)
 
