@@ -288,8 +288,8 @@ def form_form(zd_list,db_values_list):  # 组件判断
 
                                     <div class="onoffswitch">
                                         <input type="checkbox" name="''' + zd_ming + '''" ''' + checked + ''' class="onoffswitch-checkbox"
-                                               id="example1">
-                                        <label class="onoffswitch-label" for="example1">
+                                               id="''' + zd_ming + '''">
+                                        <label class="onoffswitch-label" for="''' + zd_ming + '''">
                                             <span class="onoffswitch-inner"></span>
                                             <span class="onoffswitch-switch"></span>
                                         </label>
@@ -654,8 +654,8 @@ def form_form(zd_list,db_values_list):  # 组件判断
     
                                     <div class="onoffswitch">
                                         <input type="checkbox" name="'''+zd_ming+'''" '''+checked+''' class="onoffswitch-checkbox"
-                                               id="example1">
-                                        <label class="onoffswitch-label" for="example1">
+                                               id="''' + zd_ming + '''">
+                                        <label class="onoffswitch-label" for="''' + zd_ming + '''">
                                             <span class="onoffswitch-inner"></span>
                                             <span class="onoffswitch-switch"></span>
                                         </label>
