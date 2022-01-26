@@ -139,6 +139,8 @@ def longin_post(request):#cookie授权页
 	anquan = dngadmin_common.dng_anquan()  # 最开始的第一条  # 查询安全后缀
 	user  = models.dnguser.objects.filter(username_str=username_post).first()
 	ip = request.META.get('HTTP_X_FORWARDED_FOR')  # 获取ip信息
+	if not ip:
+		ip = request.META['REMOTE_ADDR']# 原生获取ip信息
 	liulanqi = request.META.get('HTTP_USER_AGENT')  # 获取浏览器信息
 	password_md5 = hashlib.md5(password_post.encode(encoding='UTF-8')).hexdigest()  # 密码MD5加密
 	yuming_url = request.META.get('HTTP_HOST')  # 当前访问的域名
@@ -508,6 +510,8 @@ def csrf_get(request): # 发送验证码接口
 	# -------------------------------------------------------------------
 
 	ip = request.META.get('HTTP_X_FORWARDED_FOR')  # 获取ip信息
+	if not ip:
+		ip = request.META['REMOTE_ADDR']# 原生获取ip信息
 	riqi = time.strftime("%Y-%m-%d", time.localtime())
 	login = request.POST.get('login', '')  # 提交登录
 	# forgot = request.POST.get('forgot', '')  # 提交找回密码

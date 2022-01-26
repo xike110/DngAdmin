@@ -37,6 +37,8 @@ def userjournal(request):
 	get_url=dngadmin_common.dng_ckurl(request)[1]
 
 	ip = request.META.get('HTTP_X_FORWARDED_FOR')  # 获取ip信息
+	if not ip:
+		ip = request.META['REMOTE_ADDR']# 原生获取ip信息
 	liulanqi = request.META.get('HTTP_USER_AGENT')  # 获取浏览器信息
 	yuming_url = request.META.get('HTTP_HOST')  # 当前访问的域名
 	geturl = request.META.get('QUERY_STRING')  # 获取域名后缀的URL
@@ -151,6 +153,8 @@ def userjournal_json(request):
 	get_url = dngadmin_common.dng_ckurl(request)[1]
 
 	ip = request.META.get('HTTP_X_FORWARDED_FOR')  # 获取ip信息
+	if not ip:
+		ip = request.META['REMOTE_ADDR']# 原生获取ip信息
 	liulanqi = request.META.get('HTTP_USER_AGENT')  # 获取浏览器信息
 	yuming_url = request.META.get('HTTP_HOST')  # 当前访问的域名
 	geturl = request.META.get('QUERY_STRING')  # 获取域名后缀的URL
@@ -264,6 +268,8 @@ def userjournal_added(request):  #新增
 	get_url = dngadmin_common.dng_ckurl(request)[1]
 
 	ip = request.META.get('HTTP_X_FORWARDED_FOR')  # 获取ip信息
+	if not ip:
+		ip = request.META['REMOTE_ADDR']# 原生获取ip信息
 	liulanqi = request.META.get('HTTP_USER_AGENT')  # 获取浏览器信息
 	yuming_url = request.META.get('HTTP_HOST')  # 当前访问的域名
 	geturl = request.META.get('QUERY_STRING')  # 获取域名后缀的URL
@@ -352,6 +358,8 @@ def userjournal_delete(request):  #删除
 	get_url = dngadmin_common.dng_ckurl(request)[1]
 
 	ip = request.META.get('HTTP_X_FORWARDED_FOR')  # 获取ip信息
+	if not ip:
+		ip = request.META['REMOTE_ADDR']# 原生获取ip信息
 	liulanqi = request.META.get('HTTP_USER_AGENT')  # 获取浏览器信息
 	yuming_url = request.META.get('HTTP_HOST')  # 当前访问的域名
 	geturl = request.META.get('QUERY_STRING')  # 获取域名后缀的URL
@@ -465,6 +473,8 @@ def userjournal_update(request):  #更新修改
 	get_url=dngadmin_common.dng_ckurl(request)[1]
 
 	ip = request.META.get('HTTP_X_FORWARDED_FOR')  # 获取ip信息
+	if not ip:
+		ip = request.META['REMOTE_ADDR']# 原生获取ip信息
 	liulanqi = request.META.get('HTTP_USER_AGENT')  # 获取浏览器信息
 	yuming_url = request.META.get('HTTP_HOST')  # 当前访问的域名
 	geturl = request.META.get('QUERY_STRING')  # 获取域名后缀的URL
@@ -571,6 +581,8 @@ def userjournal_search(request):  #搜索
 	get_url = dngadmin_common.dng_ckurl(request)[1]
 
 	ip = request.META.get('HTTP_X_FORWARDED_FOR')  # 获取ip信息
+	if not ip:
+		ip = request.META['REMOTE_ADDR']# 原生获取ip信息
 	liulanqi = request.META.get('HTTP_USER_AGENT')  # 获取浏览器信息
 	yuming_url = request.META.get('HTTP_HOST')  # 当前访问的域名
 	geturl = request.META.get('QUERY_STRING')  # 获取域名后缀的URL
@@ -703,6 +715,8 @@ def userjournal_api_json(request):  #api查询
 	get_url = dngadmin_common.dng_ckurl(request)[1]
 
 	ip = request.META.get('HTTP_X_FORWARDED_FOR')  # 获取ip信息
+	if not ip:
+		ip = request.META['REMOTE_ADDR']# 原生获取ip信息
 	liulanqi = request.META.get('HTTP_USER_AGENT')  # 获取浏览器信息
 	yuming_url = request.META.get('HTTP_HOST')  # 当前访问的域名
 	geturl = request.META.get('QUERY_STRING')  # 获取域名后缀的URL

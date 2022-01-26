@@ -36,6 +36,8 @@ def formdemo(request):
 	#    日记记录与COOKIE验证与权限 》》》开始
 	# ----------------------------------------------------------
 	ip = request.META.get('HTTP_X_FORWARDED_FOR')  # 获取ip信息
+	if not ip:
+		ip = request.META['REMOTE_ADDR']# 原生获取ip信息
 	liulanqi = request.META.get('HTTP_USER_AGENT')  # 获取浏览器信息
 	yuming_url = request.META.get('HTTP_HOST')  # 当前访问的域名
 	geturl = request.META.get('QUERY_STRING')  # 获取域名后缀的URL
@@ -154,6 +156,8 @@ def formdemo_post(request):
 	#    日记记录与COOKIE验证与权限 》》》开始
 	# ----------------------------------------------------------
 	ip = request.META.get('HTTP_X_FORWARDED_FOR')  # 获取ip信息
+	if not ip:
+		ip = request.META['REMOTE_ADDR']# 原生获取ip信息
 	liulanqi = request.META.get('HTTP_USER_AGENT')  # 获取浏览器信息
 	geturl = request.META.get('QUERY_STRING')  # 获取域名后缀的URL
 	mulu_url = request.path  # 获取不包含？号之前的映射路径
@@ -351,6 +355,8 @@ def formdemo_api_json(request):  #api查询
 	get_url = dngadmin_common.dng_ckurl(request)[1]
 
 	ip = request.META.get('HTTP_X_FORWARDED_FOR')  # 获取ip信息
+	if not ip:
+		ip = request.META['REMOTE_ADDR']# 原生获取ip信息
 	liulanqi = request.META.get('HTTP_USER_AGENT')  # 获取浏览器信息
 	yuming_url = request.META.get('HTTP_HOST')  # 当前访问的域名
 	geturl = request.META.get('QUERY_STRING')  # 获取域名后缀的URL
@@ -499,6 +505,8 @@ def formdemo_api_post(request):
 	#    日记记录与COOKIE验证与权限 》》》开始
 	# ----------------------------------------------------------
 	ip = request.META.get('HTTP_X_FORWARDED_FOR')  # 获取ip信息
+	if not ip:
+		ip = request.META['REMOTE_ADDR']# 原生获取ip信息
 	liulanqi = request.META.get('HTTP_USER_AGENT')  # 获取浏览器信息
 	geturl = request.META.get('QUERY_STRING')  # 获取域名后缀的URL
 	mulu_url = request.path  # 获取不包含？号之前的映射路径
