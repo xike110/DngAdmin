@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="618e4e31-55b9-477d-97ea-35cfffdc276c" name="默认更改列表" comment="" />
+    <list default="true" id="618e4e31-55b9-477d-97ea-35cfffdc276c" name="默认更改列表" comment="默认更改列表" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,24 +31,25 @@
     <option name="WARN_ABOUT_CRLF" value="false" />
     <option name="WARN_ABOUT_DETACHED_HEAD" value="false" />
   </component>
+  <component name="InvalidFacetManager">
+    <ignored-facets>
+      <facet id="DngAdmin/invalid/Django" />
+    </ignored-facets>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="1v1dVFE6WhsgIEBiylQml9EnJbl" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RunManager" selected="Python.demo.pyw">
     <configuration name="JQData.pyw" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="DngAdmin" />
@@ -58,12 +59,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="D:/360安全云盘同步版/360同步盘/+++项目模版与备份/py项目源码/py调试" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../360安全云盘同步版/360同步盘/+++项目模版与备份/py项目源码/py调试" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="D:/360安全云盘同步版/360同步盘/+++项目模版与备份/py项目源码/py调试/JQData.pyw" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../360安全云盘同步版/360同步盘/+++项目模版与备份/py项目源码/py调试/JQData.pyw" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -80,12 +81,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="D:/360安全云盘同步版/360同步盘/+++项目模版与备份/py项目源码/py调试" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../360安全云盘同步版/360同步盘/+++项目模版与备份/py项目源码/py调试" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="D:/360安全云盘同步版/360同步盘/+++项目模版与备份/py项目源码/py调试/Tushare.pyw" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../360安全云盘同步版/360同步盘/+++项目模版与备份/py项目源码/py调试/Tushare.pyw" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -102,12 +103,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="D:/360安全云盘同步版/360同步盘/+++项目模版与备份/py项目源码/py调试/MyTT" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../360安全云盘同步版/360同步盘/+++项目模版与备份/py项目源码/py调试/MyTT" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="D:/360安全云盘同步版/360同步盘/+++项目模版与备份/py项目源码/py调试/MyTT/demo.pyw" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../360安全云盘同步版/360同步盘/+++项目模版与备份/py项目源码/py调试/MyTT/demo.pyw" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -140,7 +141,6 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Django server.DngAdmin" />
       <item itemvalue="Python.Tushare.pyw" />
       <item itemvalue="Python.JQData.pyw" />
       <item itemvalue="Python.demo.pyw" />
@@ -153,6 +153,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="项目级" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -214,60 +215,16 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="414" y="180" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1635946932618">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="414" y="180" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1635946932618" />
-    <state x="425" y="127" key="#demo.pyw" timestamp="1634790125724">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="425" y="127" key="#demo.pyw/0.0.1920.1050@0.0.1920.1050" timestamp="1634790125724" />
-    <state x="475" y="280" key="FileChooserDialogImpl" timestamp="1635940499853">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="475" y="280" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1635940499853" />
-    <state width="675" height="938" key="GridCell.Tab.0.bottom" timestamp="1636443909949">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="675" height="938" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1636443909949" />
-    <state width="675" height="938" key="GridCell.Tab.0.center" timestamp="1636443909949">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="675" height="938" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1636443909949" />
-    <state width="675" height="938" key="GridCell.Tab.0.left" timestamp="1636443909949">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="675" height="938" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1636443909949" />
-    <state width="675" height="938" key="GridCell.Tab.0.right" timestamp="1636443909949">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="675" height="938" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1636443909949" />
-    <state width="1921" height="350" key="GridCell.Tab.1.bottom" timestamp="1635946919304">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1921" height="350" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1635946919304" />
-    <state width="1921" height="350" key="GridCell.Tab.1.center" timestamp="1635946919304">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1921" height="350" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1635946919304" />
-    <state width="1921" height="350" key="GridCell.Tab.1.left" timestamp="1635946919303">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1921" height="350" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1635946919303" />
-    <state width="1921" height="350" key="GridCell.Tab.1.right" timestamp="1635946919304">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1921" height="350" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1635946919304" />
-    <state x="-5" y="0" width="1721" height="1050" key="SettingsEditor" timestamp="1636443242582">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="-5" y="0" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1636443242582" />
-    <state x="707" y="0" width="1722" height="1049" key="find.popup" timestamp="1643203318305">
-      <screen x="0" y="0" width="2560" height="1049" />
-    </state>
-    <state x="530" y="0" width="1291" height="1050" key="find.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1637491313262" />
-    <state x="707" y="0" width="1722" height="1049" key="find.popup/0.0.2560.1049@0.0.2560.1049" timestamp="1643203318305" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -288,10 +245,5 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/DngAdmin$JQData_pyw.coverage" NAME="JQData.pyw Coverage Results" MODIFIED="1636006167125" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="D:/360安全云盘同步版/360同步盘/+++项目模版与备份/py项目源码/py调试" />
-    <SUITE FILE_PATH="coverage/DngAdmin$demo_pyw.coverage" NAME="demo.pyw Coverage Results" MODIFIED="1636443089732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="D:/360安全云盘同步版/360同步盘/+++项目模版与备份/py项目源码/py调试/MyTT" />
-    <SUITE FILE_PATH="coverage/DngAdmin$Tushare_pyw.coverage" NAME="Tushare.pyw Coverage Results" MODIFIED="1636006440273" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="D:/360安全云盘同步版/360同步盘/+++项目模版与备份/py项目源码/py调试" />
   </component>
 </project>
