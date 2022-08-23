@@ -3,7 +3,7 @@ certifi==2018.1.18
 cffi==1.13.2
 chardet==3.0.4
 cryptography==2.1.4
-Django==3.2.6
+Django==4.0.7
 gevent==1.4.0
 gevent-websocket==0.10.1
 greenlet==0.4.15
