@@ -2,7 +2,7 @@ asn1crypto==0.24.0
 certifi==2018.1.18
 cffi==1.13.2
 chardet==3.0.4
-cryptography==2.1.4
+cryptography==3.2
 Django==4.0.7
 gevent==1.4.0
 gevent-websocket==0.10.1
@@ -20,7 +20,7 @@ pycparser==2.19
 pycrypto==2.6.1
 PyMySQL==0.9.3
 pytz==2019.3
-pyxdg==0.25
+pyxdg==0.26
 PyYAML==5.4
 requests==2.18.4
 rsa==4.7.2
